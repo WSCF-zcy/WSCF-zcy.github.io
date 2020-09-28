@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="utf-8">
+  
+  <title>shell编程四剑客之awk | Cao Fan's Logs</title>
+  <meta name="author" content="Cao Fan" />
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="robots" content="index,follow" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <meta name="format-detection" content="telphone=no, email=no" />
+  
+    
+      <meta name="description" itemprop="description" content="" />
+    
+  
+  <meta name="description" content="[TOC]  shell编程四剑客之awkawk是一个优良的文本处理工具，Linux及UNIX环境中现有的功能最强大的数据处理引擎之一，以Aho、Weinberger、Kernighan三位发明者名字首字母命名为awk，awk是一个行级文本高效处理工具，awk经过改进生成的新的版本有nawk、gawk，一般Linux默认为gawk，gawk是awk的GNU开源免费版本。awk基本原理是逐行处理文件">
+<meta property="og:type" content="article">
+<meta property="og:title" content="shell编程四剑客之awk">
+<meta property="og:url" content="http://example.com/2020/08/08/shell%E7%BC%96%E7%A8%8B%E5%9B%9B%E5%89%91%E5%AE%A2%E4%B9%8BAWK/index.html">
+<meta property="og:site_name" content="Cao Fan&#39;s Logs">
+<meta property="og:description" content="[TOC]  shell编程四剑客之awkawk是一个优良的文本处理工具，Linux及UNIX环境中现有的功能最强大的数据处理引擎之一，以Aho、Weinberger、Kernighan三位发明者名字首字母命名为awk，awk是一个行级文本高效处理工具，awk经过改进生成的新的版本有nawk、gawk，一般Linux默认为gawk，gawk是awk的GNU开源免费版本。awk基本原理是逐行处理文件">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/null">
+<meta property="article:published_time" content="2020-08-08T08:07:16.208Z">
+<meta property="article:modified_time" content="2020-09-28T02:57:54.174Z">
+<meta property="article:author" content="Cao Fan">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/null">
+<meta name="twitter:site" content="@Candiinya">
+  
+  <!-- 样式表文件 -->
+  <link rel="stylesheet" id="kratos-css" href="/css/kratosr.min.css" type="text/css" media="all">
+  <link rel="stylesheet" id="highlight-css" href="/css/highlight.min.css" type="text/css" media="all">
+  <link rel="stylesheet" id="fontawe-css" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" type="text/css" media="all">
+  <link rel="stylesheet" id="nprogress-css" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" type="text/css" media="all">
+  
+  
+  
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
+  
+  
+    <link rel="stylesheet" id="darkmode-css" href="/css/kr-dark.min.css" type="text/css" media="all">
+  
+  <!-- 不得不预先加载的一些JS文件 -->
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+  
+    <script async src="https://cdn.jsdelivr.net/npm/qrcode_js@1.0.0/qrcode.min.js"></script>
+  
+  
+<meta name="generator" content="Hexo 5.2.0"></head>
+<body class="custom-background">
+    <div id="kratos-wrapper">
+        <div id="kratos-page">
+            <div id="kratos-header">
+                <div class="nav-toggle"><a class="kratos-nav-toggle js-kratos-nav-toggle"><i></i></a></div>
+                <header id="kratos-header-section">
+                    <div class="container">
+                        <div class="nav-header">
+                            <div class="color-logo"><a href="/">Cao Fan&#39;s Logs</a></div>
+                            <nav id="kratos-menu-wrap">
+                              <ul id="kratos-primary-menu" class="sf-menu">
+                              
+                                
+                                  <li><a href="/"><i class="fa fa-home"></i>首页</a></li>
+                                
+                              
+                                
+                                  <li><a href="/archives/"><i class="fa fa-file"></i>档案馆</a></li>
+                                
+                              
+                                
+                                  <li>
+                                    <a><i class="fa fa-link"></i>链接</a>
+                                    <ul class="sub-menu">
+                                      
+                                        
+                                      
+                                        
+                                          <li><a target="_blank" rel="noopener" href="https://candinya.com">作者博客</a></li>
+                                        
+                                      
+                                        
+                                          <li><a target="_blank" rel="noopener" href="https://github.com/Candinya/Kratos-Rebirth">项目链接</a></li>
+                                        
+                                      
+                                    </ul>
+                                  </li>
+                                
+                              
+                              </ul>
+                            </nav>
+                        </div>
+                    </div>
+                </header>
+            </div>
+
+<div class="kratos-start kratos-hero-2">
+    <!-- <div class="kratos-overlay"></div> -->
+    <div class="kratos-cover kratos-cover-2 text-center">
+        <div class="desc desc2 animate-box">
+            <a href="/"><h2>Cao Fan&#39;s Logs</h2><br><span></span></a>
+        </div>
+    </div>
+</div>
+
+<div id="kratos-blog-post">
+    <div class="container">
+            <div class="row">
+                
+<div id="main">
+    <section class="col-md-8">
+    <article>
+        <div class="kratos-hentry kratos-post-inner clearfix">
+            <header class="kratos-entry-header">
+                <h1 class="kratos-entry-title text-center">shell编程四剑客之awk</h1>
+                
+                <div class="kratos-post-meta text-center">
+                    <span>
+                    <i class="fa fa-calendar"></i> 2020-08-08
+                    <i class="fa fa-folder"></i> 分类于 
+                    <i class="fa fa-user"></i> 作者 Cao Fan
+                    </span>
+                </div>
+            </header>
+            <div class="kratos-post-content">
+                
+                <hr />
+                <p>[TOC]</p>
+<hr>
+<h1 id="shell编程四剑客之awk"><a href="#shell编程四剑客之awk" class="headerlink" title="shell编程四剑客之awk"></a>shell编程四剑客之awk</h1><p>awk是一个优良的文本处理工具，Linux及UNIX环境中现有的功能最强大的数据处理引擎之一，以Aho、Weinberger、Kernighan三位发明者名字首字母命名为awk，awk是一个行级文本高效处理工具，awk经过改进生成的新的版本有nawk、gawk，一般Linux默认为gawk，gawk是awk的GNU开源免费版本。<br>awk基本原理是逐行处理文件中的数据，查找与命令行中所给定内容相匹配的模式，如果发现匹配内容，则进行下一个编程步骤，如果找不到匹配内容，则继续处理下一行   </p>
+<p> awk语言的最基本功能是在文件或字符串中基于指定规则来分解抽取信息,也可以基于指定的规则来输出数据。完整的awk脚本通常用来格式化文本文件中的信息 </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">语句块可分为<span class="number">3</span>类：BEGIN语句块、END语句块和main语句块。其中BEGIN语句块和END语句块都是的格式分别为BEGIN&#123;...&#125;和END&#123;...&#125;，而main语句块是一种统称，它的pattern部分没有固定格式，也可以省略，main代码块是在读取文件的每一行的时候都执行的代码块。</span><br><span class="line"></span><br><span class="line">分析下面三个awk命令的执行结果：</span><br><span class="line"></span><br><span class="line">awk <span class="string">&#x27;BEGIN&#123;print &quot;我在前面&quot;&#125;&#123;print $0&#125;&#x27;</span> a.txt</span><br><span class="line">awk <span class="string">&#x27;END&#123;print &quot;我在后面&quot;&#125;&#123;print $0&#125;&#x27;</span> a.txt</span><br><span class="line">awk <span class="string">&#x27;BEGIN&#123;print &quot;我在前面&quot;&#125;&#123;print $0&#125;END&#123;print &quot;我在后面&quot;&#125;&#x27;</span> a.txt</span><br></pre></td></tr></table></figure>
+
+
+
+<p>awk基本用法<br>首先请记住：awk以文件的一行为处理单位。<br>在使用过程中，awk每接收一行，然后执行相应的命令，来处理这一行的文本。<br>不管你看到的一个awk命令多么复杂，多么高端，它总能归结于下述的这行命令模版。</p>
+<p>awk ‘pattern {action}’ filenames</p>
+<p>awk常用参数、变量、函数详解如下。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#（1）awk基本语法参数详解如下：</span></span><br><span class="line">•□　单引号<span class="string">&#x27;&#x27;</span>是为了和shell命令区分开。</span><br><span class="line">•□　大括号&#123;&#125;表示一个命令分组。</span><br><span class="line">•□　pattern是一个过滤器，表示匹配pattern条件的行才进行action处理。</span><br><span class="line">	awk <span class="string">&#x27;1 &#123;print $1&#125;&#x27;</span> <span class="number">2.</span>txt</span><br><span class="line">    awk <span class="string">&#x27;/[0-3]2/ &#123;print $1&#125;&#x27;</span> <span class="number">2.</span>txt</span><br><span class="line">    awk <span class="string">&#x27;BEGIN &#123;sum=0;&#125; &#123;sum=sum+$1;&#125; END &#123;print &quot;sum is &quot;,sum&#125;&#x27;</span> <span class="number">2.</span>txt</span><br><span class="line">    </span><br><span class="line">□　action是处理动作，常见动作为<span class="keyword">print</span>。</span><br><span class="line">•□　使用<span class="string">&#x27;#&#x27;</span> 作为注释，pattern和action可以只有其一，但不能两者都没有。</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#（2）awk内置变量详解如下：</span></span><br><span class="line">•□　FS：分隔符，默认是空格。awk <span class="string">&#x27;&#123;print FS&#125;&#x27;</span> <span class="number">1.</span>txt 对比 awk <span class="string">&#x27;&#123;print FS&#125;&#x27;</span> <span class="number">2.</span>txt</span><br><span class="line">•□　OFS：输出分隔符。   awk <span class="string">&#x27;&#123;print OFS&#125;&#x27;</span> <span class="number">1.</span>txt 对比 awk <span class="string">&#x27;&#123;print OFS&#125;&#x27;</span> <span class="number">2.</span>txt</span><br><span class="line">•□　NR：当前行数，从<span class="number">1</span>开始。  awk <span class="string">&#x27;&#123;print NF&#125;&#x27;</span> <span class="number">1.</span>txt</span><br><span class="line">•□　NF：当前记录字段个数。  awk <span class="string">&#x27;&#123;print NF&#125;&#x27;</span> <span class="number">1.</span>txt</span><br><span class="line">	$NF就是一行数据最后一列的那个值 awk <span class="string">&#x27;&#123;print $NF&#125;&#x27;</span> <span class="number">1.</span>txt</span><br><span class="line">•□　＄<span class="number">0</span>：当前记录。  awk <span class="string">&#x27;&#123;print $0&#125;&#x27;</span> <span class="number">1.</span>txt</span><br><span class="line">•□　＄<span class="number">1</span>～＄n：当前记录第n个字段（列）。 awk <span class="string">&#x27;&#123;print $1&#125;&#x27;</span> <span class="number">1.</span>txt</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#（3）awk内置函数详解如下：</span></span><br><span class="line">在awk中最好将变量的初始化放在 BEGIN 部分，然后主体部分做数据处理。</span><br><span class="line">要注意一下 END 部分的用法，在一些要对文本末尾进行处理或者不好处理的时候， END部分往往能比较便捷。</span><br><span class="line">awk <span class="string">&#x27;BEGIN&#123;print &quot;我在前面&quot;&#125;&#123;print $0&#125;&#x27;</span> a.txt</span><br><span class="line">awk <span class="string">&#x27;END&#123;print &quot;我在后面&quot;&#125;&#123;print $0&#125;&#x27;</span> a.txt</span><br><span class="line">awk <span class="string">&#x27;BEGIN&#123;print &quot;我在前面&quot;&#125;&#123;print $0&#125;END&#123;print &quot;我在后面&quot;&#125;&#x27;</span> a.txt</span><br><span class="line"></span><br><span class="line">https://www.runoob.com/w3cnote/awk-built-<span class="keyword">in</span>-functions.html</span><br><span class="line">    </span><br><span class="line">•□　gsub（r，s）：在＄<span class="number">0</span>中用s代替r。</span><br><span class="line">awk <span class="string">&#x27;BEGIN &#123;</span></span><br><span class="line"><span class="string">	str = &quot;Hello, World&quot; </span></span><br><span class="line"><span class="string">	print &quot;String before replacement = &quot; str</span></span><br><span class="line"><span class="string">	gsub(&quot;World&quot;, &quot;Jerry&quot;, str)</span></span><br><span class="line"><span class="string">	print &quot;String after replacement = &quot; str</span></span><br><span class="line"><span class="string">&#125;&#x27;</span></span><br><span class="line"></span><br><span class="line">•□　index（s，t）：返回s中t的第一个位置。</span><br><span class="line">	awk <span class="string">&#x27;BEGIN &#123;</span></span><br><span class="line"><span class="string">    str = &quot;One Two Three&quot;</span></span><br><span class="line"><span class="string">    subs = &quot;Two&quot;</span></span><br><span class="line"><span class="string">    ret = index(str, subs)</span></span><br><span class="line"><span class="string">    printf &quot;Substring \&quot;%s\&quot; found at %d location.\n&quot;, subs, ret</span></span><br><span class="line"><span class="string">&#125;&#x27;</span></span><br><span class="line"></span><br><span class="line">•□　length（s）：s的长度。</span><br><span class="line">	awk <span class="string">&#x27;BEGIN &#123;</span></span><br><span class="line"><span class="string">    str = &quot;Hello, World !!!&quot;</span></span><br><span class="line"><span class="string">    print &quot;Length = &quot;, length(str)</span></span><br><span class="line"><span class="string">&#125;&#x27;</span></span><br><span class="line"></span><br><span class="line">•□　match（s，r）：s是否匹配r。</span><br><span class="line">	awk <span class="string">&#x27;BEGIN &#123;</span></span><br><span class="line"><span class="string">    str = &quot;One Two Three&quot;</span></span><br><span class="line"><span class="string">    subs = &quot; &quot;</span></span><br><span class="line"><span class="string">    ret = match(str, subs)</span></span><br><span class="line"><span class="string">    printf &quot;Substring \&quot;%s\&quot; found at %d location.\n&quot;, subs, ret</span></span><br><span class="line"><span class="string">&#125;&#x27;</span></span><br><span class="line">在 String 参数指定的字符串（Ere 参数指定的扩展正则表达式出现在其中）中返回位置（字符形式），从 <span class="number">1</span> 开始编号，或如果 Ere 参数不出现，则返回 <span class="number">0</span>（零）</span><br><span class="line"></span><br><span class="line">•□　split（s，a，fs）：在fs上将s分成序列a。</span><br><span class="line">awk <span class="string">&#x27;BEGIN &#123;</span></span><br><span class="line"><span class="string">    str = &quot;One,Two,Three,Four&quot;</span></span><br><span class="line"><span class="string">    split(str, arr, &quot;,&quot;)</span></span><br><span class="line"><span class="string">    print arr[2]</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">&#125;&#x27;</span></span><br><span class="line">    <span class="keyword">print</span> arr[<span class="number">2</span>]</span><br><span class="line">    <span class="keyword">print</span> arr[<span class="number">3</span>]</span><br><span class="line">    <span class="keyword">print</span> arr[<span class="number">4</span>]</span><br><span class="line">•□　substr（s，p）：返回s从p开始的子串。</span><br><span class="line">	awk <span class="string">&#x27;BEGIN &#123;</span></span><br><span class="line"><span class="string">    str = &quot;Hello, World !!!&quot;</span></span><br><span class="line"><span class="string">    subs = substr(str, 1, 2)</span></span><br><span class="line"><span class="string">    print &quot;Substring = &quot; subs</span></span><br><span class="line"><span class="string">&#125;&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#（4）awk常用操作符、运算符及判断符，详解如下：</span></span><br><span class="line">= += -= *= /= %= ^= **=	赋值</span><br><span class="line"> awk <span class="string">&#x27;&#123;print x++1&#125;&#x27;</span> <span class="number">3.</span>txt</span><br><span class="line"> awk <span class="string">&#x27;&#123;print x--1&#125;&#x27;</span> <span class="number">3.</span>txt</span><br><span class="line"> awk <span class="string">&#x27;&#123;print --x1&#125;&#x27;</span> <span class="number">3.</span>txt</span><br><span class="line"> awk <span class="string">&#x27;&#123;print ++x1&#125;&#x27;</span> <span class="number">3.</span>txt</span><br><span class="line"> awk <span class="string">&#x27;&#123;print x+=1&#125;&#x27;</span> <span class="number">3.</span>txt</span><br><span class="line"> awk <span class="string">&#x27;&#123;print x-=1&#125;&#x27;</span> <span class="number">3.</span>txt</span><br><span class="line">  </span><br><span class="line">?:	C条件表达式</span><br><span class="line">awk <span class="string">&#x27;BEGIN&#123;</span></span><br><span class="line"><span class="string">info=&quot;this is a test2012test 11111!&quot;;</span></span><br><span class="line"><span class="string">print index(info,&quot;11111&quot;)?&quot;ok&quot;:&quot;no found&quot;;</span></span><br><span class="line"><span class="string">&#125;&#x27;</span></span><br><span class="line"></span><br><span class="line">awk <span class="string">&#x27;BEGIN&#123;</span></span><br><span class="line"><span class="string">info=&quot;this is a test2012test!&quot;;</span></span><br><span class="line"><span class="string">print index(info,&quot;11111&quot;)?&quot;ok&quot;:&quot;no found&quot;;</span></span><br><span class="line"><span class="string">&#125;&#x27;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">||	逻辑或</span><br><span class="line">&amp;&amp;	逻辑与</span><br><span class="line">awk <span class="string">&#x27;BEGIN&#123;a=1;b=2;print (a&gt;5 &amp;&amp; b&lt;=2),(a&gt;5 || b&lt;=2);&#125;&#x27;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">~ 和 !~	匹配正则表达式和不匹配正则表达式</span><br><span class="line">awk <span class="string">&#x27;BEGIN&#123;a=&quot;100testa&quot;;if(a ~ /^100*/)&#123;print &quot;ok&quot;;&#125;&#125;&#x27;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&lt; &lt;= &gt; &gt;= != ==	关系运算符</span><br><span class="line"> awk <span class="string">&#x27;BEGIN&#123;a=&quot;11&quot;;if(a &gt;= 9)&#123;print &quot;ok&quot;;&#125;&#125;&#x27;</span></span><br><span class="line"></span><br><span class="line">+ -	加，减</span><br><span class="line"> awk <span class="string">&#x27;BEGIN&#123;a=&quot;11&quot;;if(a+=9)&#123;print a;&#125;&#125;&#x27;</span></span><br><span class="line"> awk <span class="string">&#x27;BEGIN&#123;a=&quot;11&quot;;if(a-=9)&#123;print a;&#125;&#125;&#x27;</span></span><br><span class="line"></span><br><span class="line">* / %	乘，除与求余</span><br><span class="line">awk <span class="string">&#x27;BEGIN&#123;a=&quot;2&quot;;if(a*=9)&#123;print a;&#125;&#125;&#x27;</span></span><br><span class="line">awk <span class="string">&#x27;BEGIN&#123;a=&quot;18&quot;;if(a/=9)&#123;print a;&#125;&#125;&#x27;</span></span><br><span class="line">awk <span class="string">&#x27;BEGIN&#123;a=&quot;10&quot;;if(a%=9)&#123;print a;&#125;&#125;&#x27;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">^	求幂</span><br><span class="line">awk <span class="string">&#x27;BEGIN&#123;a=&quot;10&quot;;if(a^=9)&#123;print a;&#125;&#125;&#x27;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">in</span>	数组成员  判断数组中是否存在该键值。</span><br><span class="line">awk <span class="string">&#x27;BEGIN&#123;a=&quot;b&quot;;arr[0]=&quot;b&quot;;print (a in arr);&#125;&#x27;</span></span><br><span class="line">awk <span class="string">&#x27;BEGIN&#123;a=&quot;b&quot;;arr[0]=&quot;b&quot;;arr[&quot;b&quot;]=&quot;c&quot;;print (a in arr);&#125;&#x27;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 设置变量</span></span><br><span class="line">awk -v  </span><br><span class="line">awk -va=<span class="number">1</span> <span class="string">&#x27;&#123;print $1,$1+a&#125;&#x27;</span> <span class="number">1.</span>txt</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<hr>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 例子：</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#基本用法</span></span><br><span class="line">假设有一个文件test.txt，内容如下：</span><br><span class="line">i am a beautiful girl.</span><br><span class="line">hi, may i help you?</span><br><span class="line"></span><br><span class="line">接下来执行命令：</span><br><span class="line">awk <span class="string">&#x27;&#123;print $1&#125;&#x27;</span> <span class="number">1.</span>txt</span><br><span class="line">这里需要解释的是，awk默认使用空格或制表符作为分隔符对输入的一行文本进行分组处理，并删除多余的空格。分割后的结果中，$<span class="number">0</span>代表整行内容，$<span class="number">1</span>代表分割后的第一部分内容，$<span class="number">2</span>代表第二部分，依次类推。</span><br><span class="line"></span><br><span class="line">如果不想以空格为分隔符的话，也是可以的</span><br><span class="line">awk -F, <span class="string">&#x27;&#123;print $1&#125;&#x27;</span> test.txt</span><br><span class="line">使用-F参数，指定逗号作为分隔符，结果如下</span><br><span class="line"></span><br><span class="line">i am a beautiful girl.</span><br><span class="line">hi</span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用内置变量</span></span><br><span class="line"><span class="number">1.</span>文件内容：</span><br><span class="line">	<span class="number">31</span></span><br><span class="line">	<span class="number">32</span></span><br><span class="line">	<span class="number">33</span></span><br><span class="line">	<span class="number">34</span></span><br><span class="line">	<span class="number">35</span></span><br><span class="line">	<span class="number">36</span></span><br><span class="line">	<span class="number">37</span></span><br><span class="line">命令：</span><br><span class="line">awk <span class="string">&#x27;&#123;if(NR&gt;=3 &amp;&amp; NR&lt;=5) print $1&#125;&#x27;</span> <span class="number">2.</span>txt</span><br><span class="line">该命令是打印出<span class="number">3</span>到<span class="number">5</span>行之间，每一行文本的第一部分。其中NR是内置变量，表示行号，awk命令中还有很多内置变量的使用，感兴趣的同学请自行查阅，这里不再一一列出</span><br><span class="line"></span><br><span class="line"><span class="number">2.</span>常量pattern：</span><br><span class="line">命令：</span><br><span class="line">awk <span class="string">&#x27;1 &#123;print $1&#125;&#x27;</span> <span class="number">2.</span>txt</span><br><span class="line">该命令的pattern是一个常量<span class="number">1</span>，在这里就引出了一个问题，如果常量作为一个pattern，那么如何判定是否匹配成功呢，在这里规定：</span><br><span class="line">凡是非<span class="number">0</span>的数字,表示pattern匹配成功, pattern为真；否则表示匹配失败, 为假。</span><br><span class="line">凡是非空的字符串,表示pattern匹配成功, pattern为真；否则表示匹配失败, 为假。</span><br><span class="line"></span><br><span class="line"><span class="number">3.</span>正则表达式pattern：</span><br><span class="line">awk <span class="string">&#x27;/[0-3]2/ &#123;print $1&#125;&#x27;</span> <span class="number">2.</span>txt</span><br><span class="line">该命令的pattern就是一个正则表达式，它匹配出了以<span class="number">3</span>开头，第二位字符为从<span class="number">3</span>到<span class="number">5</span>的那些文本，并打印出来</span><br><span class="line"></span><br><span class="line"><span class="number">4.</span>BEGIN和END的使用：</span><br><span class="line">awk <span class="string">&#x27;BEGIN &#123;sum=0;&#125; &#123;sum=sum+$1;&#125; END &#123;print &quot;sum is &quot;,sum&#125;&#x27;</span> <span class="number">2.</span>txt</span><br><span class="line">该命令是打印每一行的第一部分相加之后的和。</span><br><span class="line">分析这条命令，包含了三条pattern &#123;action&#125; 规则，分别是：</span><br><span class="line">BEGIN &#123;sum=<span class="number">0</span>;&#125;</span><br><span class="line">&#123;sum=sum+$<span class="number">1</span>;&#125;</span><br><span class="line">END &#123;<span class="keyword">print</span> “sum <span class="keyword">is</span> “,sum&#125;’</span><br><span class="line">其中BEGIN 和 END 是两个特殊的pattern，分别表示在处理文件之前和处理文件之后匹配成功。</span><br><span class="line">第一条规则表示在处理文本之前，赋予变量sum值为<span class="number">0</span>。</span><br><span class="line">第二条规则表示，对于文本中的每一行的第一部分，都被加到sum变量上。</span><br><span class="line">第三条规则表示在处理文本之后，打印出sum的最终结果。</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<hr>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">打印九九乘法表:</span><br><span class="line">awk <span class="string">&#x27;BEGIN&#123;</span></span><br><span class="line"><span class="string">	 for(i=1;i&lt;10;i++)</span></span><br><span class="line"><span class="string">	 &#123;for(j=1;j&lt;=i;j++) </span></span><br><span class="line"><span class="string">     &#123;printf &quot;%d%s%d%s%d\t&quot;,j,&quot;*&quot;,i,&quot;=&quot;,i*j;&#125;</span></span><br><span class="line"><span class="string">     printf &quot;\n&quot;&#125;</span></span><br><span class="line"><span class="string">    &#125;&#x27;</span> </span><br><span class="line">\t水平制表 就是键盘上的tab键，这句程序的用的AWK数据处理工具，打印第一列和第三列，第一列和第三列中间用tab键分隔；</span><br></pre></td></tr></table></figure>
+
+
+
+
+            </div>
+            
+                <div class="kratos-copyright text-center clearfix">
+                    <h5>本作品采用 <a rel="license nofollow" target="_blank" href="http://creativecommons.org/licenses/by-sa/4.0/">知识共享署名-相同方式共享 4.0 国际许可协议</a> 进行许可</h5>
+                </div>
+            
+            <footer class="kratos-entry-footer clearfix">
+                
+                    <div class="post-like-donate text-center clearfix" id="post-like-donate">
+                    
+                    
+                        <a class="share" href="javascript:;"><i class="fa fa-share-alt"></i> 分享</a>
+                        <div class="share-wrap" style="display: none;">
+    <div class="share-group">
+        <a href="javascript:;" class="share-plain qq" onclick="share('qq');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-qq"></i>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain qzone" onclick="share('qzone');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-star"></i>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain weixin pop style-plain" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-weixin"></i>
+            </div>
+            <div class="share-int">
+                <div class="qrcode" id="wechat-qr"></div>
+                <p>打开微信“扫一扫”，打开网页后点击屏幕右上角分享按钮</p>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain weibo" onclick="share('weibo');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-weibo"></i>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain facebook style-plain" onclick="share('facebook');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-facebook"></i>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain twitter style-plain" onclick="share('twitter');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-twitter"></i>
+            </div>
+        </a>
+    </div>
+    <script type="text/javascript">
+        $(()=>{
+            new QRCode("wechat-qr", {
+                text: "http://example.com/2020/08/08/shell%E7%BC%96%E7%A8%8B%E5%9B%9B%E5%89%91%E5%AE%A2%E4%B9%8BAWK/",
+                width: 150,
+                height: 150,
+                correctLevel : QRCode.CorrectLevel.H
+            });
+        });
+        function share(dest) {
+            const qqBase        = "https://connect.qq.com/widget/shareqq/index.html?";
+            const weiboBase     = "https://service.weibo.com/share/share.php?";
+            const qzoneBase     = "https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?";
+            const facebookBase  = "https://www.facebook.com/sharer/sharer.php?";
+            const twitterBase   = "https://twitter.com/intent/tweet?";
+            const hostUrl       = "http://example.com/2020/08/08/shell%E7%BC%96%E7%A8%8B%E5%9B%9B%E5%89%91%E5%AE%A2%E4%B9%8BAWK/";
+            const title         = "「shell编程四剑客之awk」";
+            const excerpt       = `[TOC]
+
+shell编程四剑客之awkawk是一个优良的文本处理工具，Linux及UNIX环境中现有的功能最强大的数据处理引擎之一，以Aho、Weinberger、Kernighan三位发明者名字首字母命名为awk，awk是一个行...`;
+            let _URL;
+            switch (dest) {
+                case "qq"       : _URL = qqBase+"url="+hostUrl+"&title="+title+"&desc=&summary="+excerpt+"&site=cxpy";     break;
+                case "weibo"    : _URL = weiboBase+"url="+hostUrl+"&title="+title+excerpt;                                 break;
+                case "qzone"    : _URL = qzoneBase+"url="+hostUrl+"&title="+title+"&desc=&summary="+excerpt+"&site=cxpy";  break;
+                case "facebook" : _URL = facebookBase+"u="+hostUrl;                                                        break;
+                case "twitter"  : _URL = twitterBase+"text="+title+excerpt+"&url="+hostUrl;                                break;
+            }
+            window.open(_URL);
+        };
+    </script>
+</div>
+                    
+                    </div>
+                
+                <div class="footer-tag clearfix">
+                    <div class="pull-left">
+                    <i class="fa fa-tags"></i>
+                        
+                    </div>
+                    <div class="pull-date">
+                    <span>最后编辑：2020-09-28</span>
+                    </div>
+                </div>
+            </footer>
+        </div>
+        
+            <nav class="navigation post-navigation clearfix" role="navigation">
+                
+                <div class="nav-previous clearfix">
+                    <a title=" SHELL编程四剑客之Grep" href="/2020/08/08/Shell编程四剑客之GREP/">&lt; 上一篇</a>
+                </div>
+                
+                
+                <div class="nav-next clearfix">
+                    <a title=" shell编程四剑客" href="/2020/08/08/shell编程四剑客/">下一篇 &gt;</a>
+                </div>
+                
+            </nav>
+        
+        
+    </article>
+</section>
+</div>
+        
+            <section id="kratos-widget-area" class="col-md-4 hidden-xs hidden-sm">
+                
+                    <aside id="krw-about" class="widget widget-kratos-about clearfix">
+    
+    <div class="photo-background"></div>
+    <div class="photo-wrapper clearfix">
+        <div class="photo-wrapper-tip text-center">
+            <img class="about-photo" src="/images/头像.webp" />
+        </div>
+    </div>
+    <div class="textwidget">
+        
+            <p class="text-center"></p>
+        
+    </div>
+</aside>
+                
+                    <!-- Moved to about.ejs -->
+                
+                    
+
+                
+                    
+                
+                    
+  <aside id="krw-posts" class="widget widget-kratos-poststab">
+  <h4 class="widget-title"><i class="fa fa-file"></i>最新文章</h4>
+  <div class="tab-content">
+      <ul class="list-group">
+        
+        
+          
+          
+            <a class="list-group-item" href="/2020/09/28/%E5%9F%BA%E4%BA%8E%E6%97%B6%E9%97%B4%E8%A1%B0%E5%87%8F%E7%9A%84%E7%83%AD%E5%BA%A6%E7%AE%97%E6%B3%95/"><i class="fa  fa-book"></i> 基于时间衰减的热度算法</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2020/09/28/webssh/"><i class="fa  fa-book"></i> WebSSH</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2020/09/28/paramiko/"><i class="fa  fa-book"></i> Paramiko</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2020/09/28/Mysql%E6%90%AD%E5%BB%BA%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6/"><i class="fa  fa-book"></i> Mysql搭建主从复制</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2020/09/28/fastdfs%E6%96%87%E4%BB%B6%E5%AD%98%E5%82%A8%E7%B3%BB%E7%BB%9F/"><i class="fa  fa-book"></i> FastDFS文件存储系统</a>
+            
+          
+        
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+      </ul>
+  </div>
+  </aside>
+
+                
+            </section>
+        
+        </div>
+    </div>
+</div>
+<footer>
+    <div id="footer">
+        <div class="kr-tool text-center">
+            <div class="tool">
+                
+                    <div class="box search-box">
+                        <a href="/search/">
+                            <span class="fa fa-search"></span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="box theme-box" id="darkmode-switch">
+                        <span class="fa fa-adjust"></span>
+                    </div>
+                
+                
+            </div>
+            <div class="box gotop-box">
+                <span class="fa fa-chevron-up"></span>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3 footer-list text-center">
+                    <ul class="kratos-social-icons">
+                        
+                        
+                        <li><a target="_blank" rel="nofollow" href="https://t.me/CandyUnion"><i class="fa fa-telegram"></i></a></li>
+                        <li><a target="_blank" rel="nofollow" href="https://twitter.com/Candiinya"><i class="fa fa-twitter"></i></a></li>
+                        
+                        
+                        
+                        <li><a target="_blank" rel="nofollow" href="https://github.com/Candinya"><i class="fa fa-github"></i></a></li>
+                        
+                    </ul>
+                    <ul class="kratos-copyright">
+                        <div>
+                            <li>&copy; 2020 Cao Fan 版权所有.</li>
+                            <li>本站已运行<span id="span_dt">Loading...</span></li>
+                        </div>
+                        <div>
+                            <li>Theme <a href="https://github.com/Candinya/Kratos-Rebirth" target="_blank">Kratos:Rebirth</a></li>
+                            <li>Made with&nbsp;<i class="fa fa-heart throb" style="color:#d43f57"></i>&nbsp;by <a href="https://candinya.com" target="_blank" rel="nofollow">Candinya</a>.</li>
+                        </div>
+                        <div>
+                            <li>Powered by <a href="https://hexo.io" target="_blank" rel="nofollow">Hexo</a></li>
+                            <li>Hosted on <a href="https://github.io" target="_blank">Github Pages</a></li>
+                        </div>
+                        <div>
+                            
+                            
+                        </div>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+</div>
+</div>
+<script defer src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.4/dist/js/bootstrap.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.js"></script>
+<script>const notMobile = (!(navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)));</script>
+
+<script async src="/js/candy.min.js"></script>
+
+
+    <script defer src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+
+<script defer src="/js/kratosr.min.js"></script>
+<script defer src="/js/pjax.min.js"></script>
+
+
+    <script defer src="/js/kr-dark.min.js"></script>
+
+
+
+
+</body>
+</html>

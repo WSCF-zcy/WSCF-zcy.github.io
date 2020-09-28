@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="utf-8">
+  
+  <title>基于时间衰减的热度算法 | Cao Fan's Logs</title>
+  <meta name="author" content="Cao Fan" />
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="robots" content="index,follow" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <meta name="format-detection" content="telphone=no, email=no" />
+  
+    
+      <meta name="description" itemprop="description" content="" />
+    
+  
+  <meta name="description" content="热度算法热门推荐是互联网产品中最常见的功能之一，比如“大家都在看”、“今日热卖榜”这些在各大网站上都随意可见，堪称标配。而其中推荐算法的好坏，则不仅密切关系着内容对用户的吸引程度，也同时反应了产品对内容的分发能力  在一个产品中，如果不能及时发掘新鲜内容，并将优秀内容传播出去，甚至引爆，那么整个内容生态也难以搭建起来。 虽然时下，大家更有兴致讨论的都是个性化推荐，但它并不适用于所有产品，尤其是初创">
+<meta property="og:type" content="article">
+<meta property="og:title" content="基于时间衰减的热度算法">
+<meta property="og:url" content="http://example.com/2020/09/28/%E5%9F%BA%E4%BA%8E%E6%97%B6%E9%97%B4%E8%A1%B0%E5%87%8F%E7%9A%84%E7%83%AD%E5%BA%A6%E7%AE%97%E6%B3%95/index.html">
+<meta property="og:site_name" content="Cao Fan&#39;s Logs">
+<meta property="og:description" content="热度算法热门推荐是互联网产品中最常见的功能之一，比如“大家都在看”、“今日热卖榜”这些在各大网站上都随意可见，堪称标配。而其中推荐算法的好坏，则不仅密切关系着内容对用户的吸引程度，也同时反应了产品对内容的分发能力  在一个产品中，如果不能及时发掘新鲜内容，并将优秀内容传播出去，甚至引爆，那么整个内容生态也难以搭建起来。 虽然时下，大家更有兴致讨论的都是个性化推荐，但它并不适用于所有产品，尤其是初创">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/null">
+<meta property="article:published_time" content="2020-09-28T02:34:58.315Z">
+<meta property="article:modified_time" content="2020-09-28T02:38:43.582Z">
+<meta property="article:author" content="Cao Fan">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/null">
+<meta name="twitter:site" content="@Candiinya">
+  
+  <!-- 样式表文件 -->
+  <link rel="stylesheet" id="kratos-css" href="/css/kratosr.min.css" type="text/css" media="all">
+  <link rel="stylesheet" id="highlight-css" href="/css/highlight.min.css" type="text/css" media="all">
+  <link rel="stylesheet" id="fontawe-css" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" type="text/css" media="all">
+  <link rel="stylesheet" id="nprogress-css" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" type="text/css" media="all">
+  
+  
+  
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
+  
+  
+    <link rel="stylesheet" id="darkmode-css" href="/css/kr-dark.min.css" type="text/css" media="all">
+  
+  <!-- 不得不预先加载的一些JS文件 -->
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+  
+    <script async src="https://cdn.jsdelivr.net/npm/qrcode_js@1.0.0/qrcode.min.js"></script>
+  
+  
+<meta name="generator" content="Hexo 5.2.0"></head>
+<body class="custom-background">
+    <div id="kratos-wrapper">
+        <div id="kratos-page">
+            <div id="kratos-header">
+                <div class="nav-toggle"><a class="kratos-nav-toggle js-kratos-nav-toggle"><i></i></a></div>
+                <header id="kratos-header-section">
+                    <div class="container">
+                        <div class="nav-header">
+                            <div class="color-logo"><a href="/">Cao Fan&#39;s Logs</a></div>
+                            <nav id="kratos-menu-wrap">
+                              <ul id="kratos-primary-menu" class="sf-menu">
+                              
+                                
+                                  <li><a href="/"><i class="fa fa-home"></i>首页</a></li>
+                                
+                              
+                                
+                                  <li><a href="/archives/"><i class="fa fa-file"></i>档案馆</a></li>
+                                
+                              
+                                
+                                  <li>
+                                    <a><i class="fa fa-link"></i>链接</a>
+                                    <ul class="sub-menu">
+                                      
+                                        
+                                      
+                                        
+                                          <li><a target="_blank" rel="noopener" href="https://candinya.com">作者博客</a></li>
+                                        
+                                      
+                                        
+                                          <li><a target="_blank" rel="noopener" href="https://github.com/Candinya/Kratos-Rebirth">项目链接</a></li>
+                                        
+                                      
+                                    </ul>
+                                  </li>
+                                
+                              
+                              </ul>
+                            </nav>
+                        </div>
+                    </div>
+                </header>
+            </div>
+
+<div class="kratos-start kratos-hero-2">
+    <!-- <div class="kratos-overlay"></div> -->
+    <div class="kratos-cover kratos-cover-2 text-center">
+        <div class="desc desc2 animate-box">
+            <a href="/"><h2>Cao Fan&#39;s Logs</h2><br><span></span></a>
+        </div>
+    </div>
+</div>
+
+<div id="kratos-blog-post">
+    <div class="container">
+            <div class="row">
+                
+<div id="main">
+    <section class="col-md-8">
+    <article>
+        <div class="kratos-hentry kratos-post-inner clearfix">
+            <header class="kratos-entry-header">
+                <h1 class="kratos-entry-title text-center">基于时间衰减的热度算法</h1>
+                
+                <div class="kratos-post-meta text-center">
+                    <span>
+                    <i class="fa fa-calendar"></i> 2020-09-28
+                    <i class="fa fa-folder"></i> 分类于 
+                    <i class="fa fa-user"></i> 作者 Cao Fan
+                    </span>
+                </div>
+            </header>
+            <div class="kratos-post-content">
+                
+                <hr />
+                <h1 id="热度算法"><a href="#热度算法" class="headerlink" title="热度算法"></a>热度算法</h1><p>热门推荐是互联网产品中最常见的功能之一，比如“大家都在看”、“今日热卖榜”这些在各大网站上都随意可见，堪称标配。而其中推荐算法的好坏，则不仅密切关系着内容对用户的吸引程度，也同时反应了产品对内容的分发能力</p>
+<hr>
+<p>在一个产品中，如果不能及时发掘新鲜内容，并将优秀内容传播出去，甚至引爆，那么整个内容生态也难以搭建起来。</p>
+<p>虽然时下，大家更有兴致讨论的都是个性化推荐，但它并不适用于所有产品，尤其是初创的、小众的产品。因为个性化推荐它必需依赖大量的用户数据以及对内容深入的挖掘，若不然强行个性化推荐只会适得其反。</p>
+<p>这次，本文主要探讨实用性更强热度算法，它也并非想象中的简单粗暴，反而有不少只属于它的亮点</p>
+<h2 id="基本原理"><a href="#基本原理" class="headerlink" title="基本原理"></a>基本原理</h2><p>热度算法表层之下，还有不少的基础原理在支撑着它，但在本文中将不先扩展，而是以最普遍运用的牛顿冷却定律为例</p>
+<p>牛顿冷却定律若用函数来代表，则为：<br>$$<br>热度 = 初始热度 + 互动热度 – 随时间衰减的热度<br>$$</p>
+<hr>
+<p>当一条微博产生后，随着用户的浏览、点赞、转发、它的热度逐渐攀升，进入榜单。</p>
+<p>但因为这条内容本身具有时效性，如果不考虑这点，那么它可能长期霸榜，所以我们必须考虑到如何令它的热度随着时间的推移而衰减，从而令新的微博有机会取而替代，达到热门榜单动态变化的效果</p>
+<h2 id="牛顿冷却定律"><a href="#牛顿冷却定律" class="headerlink" title="牛顿冷却定律"></a>牛顿冷却定律</h2><p>温度高于周围环境的物体向周围媒质传递热量逐渐冷却时所遵循的规律。当物体表面与周围存在温度差时，单位时间从单位面积散失的热量与温度差成正比，<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E6%AF%94%E4%BE%8B%E7%B3%BB%E6%95%B0/8555193">比例系数</a>称为<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E7%83%AD%E4%BC%A0%E9%80%92/875636">热传递</a>系数。牛顿冷却定律是牛顿在1701年用实验确定的，在<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E5%BC%BA%E5%88%B6%E5%AF%B9%E6%B5%81/9975149">强制对流</a>时与实际符合较好，在<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E8%87%AA%E7%84%B6%E5%AF%B9%E6%B5%81/10167190">自然对流</a>时只在温度差不太大时才成立。 是传热学的基本定律之一，用于计算对流热量的多少<br>$$<br>\frac{dN}{dt} = −αN<br>$$</p>
+<ul>
+<li>经过解微方方程可得</li>
+</ul>
+<p>$$<br>N(t)=N_0e^{-αt}<br>$$</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">exponential_decay</span>(<span class="params">t, init, m=<span class="number">30</span>, finish=<span class="number">0.2</span></span>):</span></span><br><span class="line">    alpha = np.log(init / finish) / m</span><br><span class="line">    l = - np.log(init) / alpha</span><br><span class="line">    decay = np.exp(-alpha * (t + l))</span><br><span class="line">    <span class="keyword">return</span> decay,alpha</span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">init:分别代表初始衰减值</span></span><br><span class="line"><span class="string">m:衰减时间长度</span></span><br><span class="line"><span class="string">finish:完成衰减值</span></span><br><span class="line"><span class="string">t:天数</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line">init = <span class="number">0.8</span></span><br><span class="line">now = init</span><br><span class="line"><span class="keyword">for</span> var <span class="keyword">in</span> range(<span class="number">30</span>):</span><br><span class="line">    rt,alpha = exponential_decay(var,init)</span><br><span class="line">    print(rt,<span class="string">&#x27; &#x27;</span>,now - rt,<span class="string">&#x27; &#x27;</span>,alpha)</span><br><span class="line">    now = rt</span><br></pre></td></tr></table></figure>
+
+<h2 id="热度影响原因"><a href="#热度影响原因" class="headerlink" title="热度影响原因"></a>热度影响原因</h2><h3 id="初始热度"><a href="#初始热度" class="headerlink" title="初始热度"></a>初始热度</h3><p>首先是<strong>原始热度</strong>，正如内容千差万别，再加上产品本身的定位、偏爱。</p>
+<p>我们不太可能去为所有的内容赋予同样的初始热度，就比如一个大V发的微博和一个好友发的微博，以及一个陌生小号发的微博，它们从一开始就难以相提并论。</p>
+<p>而我们又该如何给每个内容赋予不同的原始热度呢</p>
+<h4 id="创作者"><a href="#创作者" class="headerlink" title="创作者"></a>创作者</h4><blockquote>
+<p>  即创作这个内容的人，也可以是机构。</p>
+</blockquote>
+<p>还是以微博为例，微博对用户做了不少划分，个人、垂直领域的知名博主、自媒体、机构、企业、政府等等，不同类型的身份也隐含他们的创作能力和传播价值。</p>
+<p>所以在初始热度的考量上，我们就会考虑是否让大V用户发表的新内容更先一步的进入热榜。</p>
+<p>当然，其它产品就算不像微博那样对用户有明确的归类，也可以利用一些基础的用户数据，比如：</p>
+<ul>
+<li>注册时长：是否激励新用户，还是优待老用户？</li>
+<li>活跃程度：一个投入更多时间精力的常驻用户是不是更大概率会创作出优秀内容？</li>
+</ul>
+<h4 id="内容属性"><a href="#内容属性" class="headerlink" title="内容属性"></a>内容属性</h4><blockquote>
+<p>  则是从内容本身出发，根据它的类别、字数长度、丰富度、流行指数等有所侧重。</p>
+</blockquote>
+<p>就比如在热门微博管理规范，就表示过含多张的图片，含#话题的就会加重热度，而带外链的，已有相似内容的则会降低热度。</p>
+<p>具体哪些内容该赋予更高的热度，哪些内容又该冷处理，关键看这个产品的内容调性和氛关键可能看这个产品中主流用户的偏爱，以及运营人员想营造什么样的内容生态。</p>
+<h4 id="热词匹配"><a href="#热词匹配" class="headerlink" title="热词匹配"></a>热词匹配</h4><p>对于重大事件的报道，如何让它入库时就有更高的热度，可以采用热词匹配的方式</p>
+<p>即对大型新闻站点的头条，Twitter热点，竞品的头条做监控和扒取，并将这批新闻的关键词维护到热词库并保持更新；每条新闻入库的时候，让新闻的关键词去匹配热词库，匹配度越高，就有越高的初始热度分</p>
+<h3 id="互动热度"><a href="#互动热度" class="headerlink" title="互动热度"></a>互动热度</h3><p>初始热度这一因素虽然看上去具有极大的天然优势，但往往在实际推荐算法中也不会占据主要的地位。</p>
+<p>比如就算是一条超级大V发的和一条普通用户发的内容，可能在初始热度上差距也不会特别大，因为内容是否真的够好，还是要靠更广泛的用户来检验。</p>
+<p>这也就是影响热度的第二因素——互动热度，这也是最为重要的，也可以理解为用户的行为数据。</p>
+<hr>
+<p>我们需要先定义哪些用户行为可以提高这条内容的热度，像对一条微博的浏览、点赞、评论、转发、分享等，都可以代表了用户对它的感兴趣程度。</p>
+<p>同时需要注意的是，不同行为的权重应该也是不同的。</p>
+<p>比如，评论明显比点赞更有诚意，所以我们在计算互动热度时，可以对这些用户行为进行评级</p>
+<blockquote>
+<p>  浏览+1分，点赞+3分，评论+10分，转发+15分，分享+15分。</p>
+</blockquote>
+<p>且在实际产品运营过程中，我们还需要根据用户规模、周期效应不断调整用户的行为分，同时考虑如何反作弊，若规则太生硬，就会被有心人利用</p>
+<h3 id="随时间衰减的热度"><a href="#随时间衰减的热度" class="headerlink" title="-随时间衰减的热度"></a>-随时间衰减的热度</h3><p>由于大部分内容是属于一次消费型，用户看过也就过了。若热门推荐的榜单总是固定那几条，他可能很快就觉得乏味，从而转向别的产品。所以我们自然希望内容能不断更新，而若只看初始热度+互动热度，那么后来者必定很难超越前者。</p>
+<p>所以，我们还需要考虑另一个因素——<strong>随时间衰减的热度</strong>。</p>
+<hr>
+<p>以社会热点来说，往往一件事情的时效性是在24小时内。</p>
+<p>比如一项政策出台，大家都在关注，若不能及时推送，用户很可能已从别的渠道得知；而新鲜劲一过，这条内容再占着榜单也少有人问津了。</p>
+<hr>
+<blockquote>
+<p>  所以我们可以制定一个策略，这个内容在发布后，随着时间的推移，热度也开始逐步衰减。</p>
+</blockquote>
+<p>同时需要注意的是，<strong>时间衰减通常不是线性的</strong>。</p>
+<hr>
+<p>毕竟结合现实情况来看，一条新内容产生后，我们可能先需要几个小时去传播它，看看它的热度反应。</p>
+<p>在刚开始这期间，可以不必过多的去考虑时间衰减；而到了有效传播期之后，比如一条新闻过了24小时，那么我们就可以加重时间衰减的因素，尽量不让用户看到昨天的新闻</p>
+<h2 id="人工干预"><a href="#人工干预" class="headerlink" title="人工干预"></a>人工干预</h2><p>在实际的内容运营中，哪怕一套算法再可靠，我们有时候还是难免想要进行一些人工干预</p>
+<p>这就涉及到了我们常用的一个手段：调整权重。</p>
+<p>我们可以将权重这一因素，扩展到热度算法中，如：<br>$$<br>热度 = 初始热度 + 互动热度 – 随时间衰减的热度 +/- 权重<br>$$<br>然后在运营后台中，开放对内容进行加权、降权的功能。</p>
+<p>权重调整其实另一方面也可以弥补热度算法的不足，因为通过传播去获取热度总是需要一定时间，可能没办法应对突发的大热点，而也有某些内容明明在被持续关注着，但却不得不随着时间衰减退出热榜</p>
+<h2 id="偶然和极端"><a href="#偶然和极端" class="headerlink" title="偶然和极端"></a>偶然和极端</h2><p>其实，除了上述我们预先规定好的因素外，还会有一些偶然的元素可能会影响到热度算法。</p>
+<p>比如，一条内容在产品往往不止在热榜中可见，我们还会通过其它的方式去传播它</p>
+<p>比如开屏、PUSH等，这些都会带来巨量的热度提升，而不是它自身在热榜里竞争所得，若不剔除这些偶然因素，则热榜的前几名很有可能就充满了运营导向的味道。</p>
+<p>而且，在设计热度算法时，需要多考虑极端情况，比如若在网站流量不大的情况下</p>
+<p><strong>一条初始热度最高的内容，是不是可能永久无法被初始热量最低的内容超越</strong></p>
+<h2 id="反作弊"><a href="#反作弊" class="headerlink" title="反作弊"></a>反作弊</h2><p>在一些知名产品中，热门榜单往往伴随着数据造假，如果我们不能有效的反作弊</p>
+<p>那么所谓热榜则相当于名存死亡，成了营销者的聚集之地</p>
+<h3 id="将不同用户对互动热度的贡献再次分级"><a href="#将不同用户对互动热度的贡献再次分级" class="headerlink" title="将不同用户对互动热度的贡献再次分级"></a>将不同用户对互动热度的贡献再次分级</h3><p>前文提到了我们需要对用户的不同行为分级，贡献不同的互动热度；现在考虑到许多刷数据者使用都是批量小号，具有一些区别于正常用户的特征，比如注册时长慢，活跃度低。</p>
+<hr>
+<p>那我们就可以对用户进行分群，比如新用户的点赞+0.3分，正常用户的点赞+1分，从而抬高了数据造假的难度和成本</p>
+<hr>
+<h3 id="实时监控异常数据，若发现违规，将人工降权"><a href="#实时监控异常数据，若发现违规，将人工降权" class="headerlink" title="实时监控异常数据，若发现违规，将人工降权"></a>实时监控异常数据，若发现违规，将人工降权</h3><p>因为数据造假是很难模拟出像优秀内容那样的热度上升曲线</p>
+<p>所以可以通过监控数据波动，来判断这条内容是否为自然增长，若察觉存在违规现象，则运营可以通过降权进行处罚</p>
+<h2 id="抖音视频的推荐算法"><a href="#抖音视频的推荐算法" class="headerlink" title="抖音视频的推荐算法"></a>抖音视频的推荐算法</h2><ol>
+<li>首先，抖音有一个<strong>流量池</strong>的概念，不论新人还是网红，当用户新发一条视频后，抖音都会将它推荐给一定的人，即启动流量，可能是300-1000人</li>
+<li>然后根据这条视频在流量池内的数据表现，比如完播率、点赞率、评论数、转发率等，再来决定是否要将这条视频推荐给更多人</li>
+<li>而在数据达标之后，抖音会再将这条视频引向更大的流量池，让新的1W-10W人看到，即<strong>叠加推荐</strong>，以此类推，数据越好，叠加越多的流量</li>
+<li>同时，上述所说的流量池是有区间的，决定具体数值，则就是上述影响因素的概念</li>
+</ol>
+<hr>
+<h3 id="抖音影响因素"><a href="#抖音影响因素" class="headerlink" title="抖音影响因素"></a>抖音影响因素</h3><ul>
+<li>从创作者来看：比如注册信息、粉丝数、历史视频数、以往成绩等</li>
+<li>从内容来看：比如视频画质、是否原创、是否独特等</li>
+</ul>
+
+            </div>
+            
+                <div class="kratos-copyright text-center clearfix">
+                    <h5>本作品采用 <a rel="license nofollow" target="_blank" href="http://creativecommons.org/licenses/by-sa/4.0/">知识共享署名-相同方式共享 4.0 国际许可协议</a> 进行许可</h5>
+                </div>
+            
+            <footer class="kratos-entry-footer clearfix">
+                
+                    <div class="post-like-donate text-center clearfix" id="post-like-donate">
+                    
+                    
+                        <a class="share" href="javascript:;"><i class="fa fa-share-alt"></i> 分享</a>
+                        <div class="share-wrap" style="display: none;">
+    <div class="share-group">
+        <a href="javascript:;" class="share-plain qq" onclick="share('qq');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-qq"></i>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain qzone" onclick="share('qzone');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-star"></i>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain weixin pop style-plain" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-weixin"></i>
+            </div>
+            <div class="share-int">
+                <div class="qrcode" id="wechat-qr"></div>
+                <p>打开微信“扫一扫”，打开网页后点击屏幕右上角分享按钮</p>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain weibo" onclick="share('weibo');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-weibo"></i>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain facebook style-plain" onclick="share('facebook');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-facebook"></i>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain twitter style-plain" onclick="share('twitter');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-twitter"></i>
+            </div>
+        </a>
+    </div>
+    <script type="text/javascript">
+        $(()=>{
+            new QRCode("wechat-qr", {
+                text: "http://example.com/2020/09/28/%E5%9F%BA%E4%BA%8E%E6%97%B6%E9%97%B4%E8%A1%B0%E5%87%8F%E7%9A%84%E7%83%AD%E5%BA%A6%E7%AE%97%E6%B3%95/",
+                width: 150,
+                height: 150,
+                correctLevel : QRCode.CorrectLevel.H
+            });
+        });
+        function share(dest) {
+            const qqBase        = "https://connect.qq.com/widget/shareqq/index.html?";
+            const weiboBase     = "https://service.weibo.com/share/share.php?";
+            const qzoneBase     = "https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?";
+            const facebookBase  = "https://www.facebook.com/sharer/sharer.php?";
+            const twitterBase   = "https://twitter.com/intent/tweet?";
+            const hostUrl       = "http://example.com/2020/09/28/%E5%9F%BA%E4%BA%8E%E6%97%B6%E9%97%B4%E8%A1%B0%E5%87%8F%E7%9A%84%E7%83%AD%E5%BA%A6%E7%AE%97%E6%B3%95/";
+            const title         = "「基于时间衰减的热度算法」";
+            const excerpt       = `热度算法热门推荐是互联网产品中最常见的功能之一，比如“大家都在看”、“今日热卖榜”这些在各大网站上都随意可见，堪称标配。而其中推荐算法的好坏，则不仅密切关系着内容对用户的吸引程度，也同时反应了产品对内容的分发能力
+
+在一个产品中，如果...`;
+            let _URL;
+            switch (dest) {
+                case "qq"       : _URL = qqBase+"url="+hostUrl+"&title="+title+"&desc=&summary="+excerpt+"&site=cxpy";     break;
+                case "weibo"    : _URL = weiboBase+"url="+hostUrl+"&title="+title+excerpt;                                 break;
+                case "qzone"    : _URL = qzoneBase+"url="+hostUrl+"&title="+title+"&desc=&summary="+excerpt+"&site=cxpy";  break;
+                case "facebook" : _URL = facebookBase+"u="+hostUrl;                                                        break;
+                case "twitter"  : _URL = twitterBase+"text="+title+excerpt+"&url="+hostUrl;                                break;
+            }
+            window.open(_URL);
+        };
+    </script>
+</div>
+                    
+                    </div>
+                
+                <div class="footer-tag clearfix">
+                    <div class="pull-left">
+                    <i class="fa fa-tags"></i>
+                        
+                    </div>
+                    <div class="pull-date">
+                    <span>最后编辑：2020-09-28</span>
+                    </div>
+                </div>
+            </footer>
+        </div>
+        
+            <nav class="navigation post-navigation clearfix" role="navigation">
+                
+                <div class="nav-previous clearfix">
+                    <a title=" WebSSH" href="/2020/09/28/webssh/">&lt; 上一篇</a>
+                </div>
+                
+                
+            </nav>
+        
+        
+    </article>
+</section>
+</div>
+        
+            <section id="kratos-widget-area" class="col-md-4 hidden-xs hidden-sm">
+                
+                    <aside id="krw-about" class="widget widget-kratos-about clearfix">
+    
+    <div class="photo-background"></div>
+    <div class="photo-wrapper clearfix">
+        <div class="photo-wrapper-tip text-center">
+            <img class="about-photo" src="/images/头像.webp" />
+        </div>
+    </div>
+    <div class="textwidget">
+        
+            <p class="text-center"></p>
+        
+    </div>
+</aside>
+                
+                    <!-- Moved to about.ejs -->
+                
+                    
+
+                
+                    
+                
+                    
+  <aside id="krw-posts" class="widget widget-kratos-poststab">
+  <h4 class="widget-title"><i class="fa fa-file"></i>最新文章</h4>
+  <div class="tab-content">
+      <ul class="list-group">
+        
+        
+          
+          
+            <a class="list-group-item" href="/2020/09/28/%E5%9F%BA%E4%BA%8E%E6%97%B6%E9%97%B4%E8%A1%B0%E5%87%8F%E7%9A%84%E7%83%AD%E5%BA%A6%E7%AE%97%E6%B3%95/"><i class="fa  fa-book"></i> 基于时间衰减的热度算法</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2020/09/28/webssh/"><i class="fa  fa-book"></i> WebSSH</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2020/09/28/paramiko/"><i class="fa  fa-book"></i> Paramiko</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2020/09/28/Mysql%E6%90%AD%E5%BB%BA%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6/"><i class="fa  fa-book"></i> Mysql搭建主从复制</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2020/09/28/fastdfs%E6%96%87%E4%BB%B6%E5%AD%98%E5%82%A8%E7%B3%BB%E7%BB%9F/"><i class="fa  fa-book"></i> FastDFS文件存储系统</a>
+            
+          
+        
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+      </ul>
+  </div>
+  </aside>
+
+                
+            </section>
+        
+        </div>
+    </div>
+</div>
+<footer>
+    <div id="footer">
+        <div class="kr-tool text-center">
+            <div class="tool">
+                
+                    <div class="box search-box">
+                        <a href="/search/">
+                            <span class="fa fa-search"></span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="box theme-box" id="darkmode-switch">
+                        <span class="fa fa-adjust"></span>
+                    </div>
+                
+                
+            </div>
+            <div class="box gotop-box">
+                <span class="fa fa-chevron-up"></span>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3 footer-list text-center">
+                    <ul class="kratos-social-icons">
+                        
+                        
+                        <li><a target="_blank" rel="nofollow" href="https://t.me/CandyUnion"><i class="fa fa-telegram"></i></a></li>
+                        <li><a target="_blank" rel="nofollow" href="https://twitter.com/Candiinya"><i class="fa fa-twitter"></i></a></li>
+                        
+                        
+                        
+                        <li><a target="_blank" rel="nofollow" href="https://github.com/Candinya"><i class="fa fa-github"></i></a></li>
+                        
+                    </ul>
+                    <ul class="kratos-copyright">
+                        <div>
+                            <li>&copy; 2020 Cao Fan 版权所有.</li>
+                            <li>本站已运行<span id="span_dt">Loading...</span></li>
+                        </div>
+                        <div>
+                            <li>Theme <a href="https://github.com/Candinya/Kratos-Rebirth" target="_blank">Kratos:Rebirth</a></li>
+                            <li>Made with&nbsp;<i class="fa fa-heart throb" style="color:#d43f57"></i>&nbsp;by <a href="https://candinya.com" target="_blank" rel="nofollow">Candinya</a>.</li>
+                        </div>
+                        <div>
+                            <li>Powered by <a href="https://hexo.io" target="_blank" rel="nofollow">Hexo</a></li>
+                            <li>Hosted on <a href="https://github.io" target="_blank">Github Pages</a></li>
+                        </div>
+                        <div>
+                            
+                            
+                        </div>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+</div>
+</div>
+<script defer src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.4/dist/js/bootstrap.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.js"></script>
+<script>const notMobile = (!(navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)));</script>
+
+<script async src="/js/candy.min.js"></script>
+
+
+    <script defer src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+
+<script defer src="/js/kratosr.min.js"></script>
+<script defer src="/js/pjax.min.js"></script>
+
+
+    <script defer src="/js/kr-dark.min.js"></script>
+
+
+
+
+</body>
+</html>

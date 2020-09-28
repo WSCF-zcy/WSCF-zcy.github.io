@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="utf-8">
+  
+  <title>Paramiko | Cao Fan's Logs</title>
+  <meta name="author" content="Cao Fan" />
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="robots" content="index,follow" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <meta name="format-detection" content="telphone=no, email=no" />
+  
+    
+      <meta name="description" itemprop="description" content="" />
+    
+  
+  <meta name="description" content="ParamikoParamiko是SSHv2协议的Python实现，提供客户端和服务器功能 Paramiko本身是一个围绕SSH网络概念的纯Python接口 利用paramiko我们可以通过Python方便的进行ssh操作  paramiko包含两个核心组件：SSHClient和SFTPClient SSHClientSSHClient的作用类似于Linux的ssh命令，是对SSH会话的封装 该类">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Paramiko">
+<meta property="og:url" content="http://example.com/2020/09/28/paramiko/index.html">
+<meta property="og:site_name" content="Cao Fan&#39;s Logs">
+<meta property="og:description" content="ParamikoParamiko是SSHv2协议的Python实现，提供客户端和服务器功能 Paramiko本身是一个围绕SSH网络概念的纯Python接口 利用paramiko我们可以通过Python方便的进行ssh操作  paramiko包含两个核心组件：SSHClient和SFTPClient SSHClientSSHClient的作用类似于Linux的ssh命令，是对SSH会话的封装 该类">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/null">
+<meta property="article:published_time" content="2020-09-28T02:34:08.244Z">
+<meta property="article:modified_time" content="2020-09-28T02:57:27.618Z">
+<meta property="article:author" content="Cao Fan">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/null">
+<meta name="twitter:site" content="@Candiinya">
+  
+  <!-- 样式表文件 -->
+  <link rel="stylesheet" id="kratos-css" href="/css/kratosr.min.css" type="text/css" media="all">
+  <link rel="stylesheet" id="highlight-css" href="/css/highlight.min.css" type="text/css" media="all">
+  <link rel="stylesheet" id="fontawe-css" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" type="text/css" media="all">
+  <link rel="stylesheet" id="nprogress-css" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" type="text/css" media="all">
+  
+  
+  
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
+  
+  
+    <link rel="stylesheet" id="darkmode-css" href="/css/kr-dark.min.css" type="text/css" media="all">
+  
+  <!-- 不得不预先加载的一些JS文件 -->
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+  
+    <script async src="https://cdn.jsdelivr.net/npm/qrcode_js@1.0.0/qrcode.min.js"></script>
+  
+  
+<meta name="generator" content="Hexo 5.2.0"></head>
+<body class="custom-background">
+    <div id="kratos-wrapper">
+        <div id="kratos-page">
+            <div id="kratos-header">
+                <div class="nav-toggle"><a class="kratos-nav-toggle js-kratos-nav-toggle"><i></i></a></div>
+                <header id="kratos-header-section">
+                    <div class="container">
+                        <div class="nav-header">
+                            <div class="color-logo"><a href="/">Cao Fan&#39;s Logs</a></div>
+                            <nav id="kratos-menu-wrap">
+                              <ul id="kratos-primary-menu" class="sf-menu">
+                              
+                                
+                                  <li><a href="/"><i class="fa fa-home"></i>首页</a></li>
+                                
+                              
+                                
+                                  <li><a href="/archives/"><i class="fa fa-file"></i>档案馆</a></li>
+                                
+                              
+                                
+                                  <li>
+                                    <a><i class="fa fa-link"></i>链接</a>
+                                    <ul class="sub-menu">
+                                      
+                                        
+                                      
+                                        
+                                          <li><a target="_blank" rel="noopener" href="https://candinya.com">作者博客</a></li>
+                                        
+                                      
+                                        
+                                          <li><a target="_blank" rel="noopener" href="https://github.com/Candinya/Kratos-Rebirth">项目链接</a></li>
+                                        
+                                      
+                                    </ul>
+                                  </li>
+                                
+                              
+                              </ul>
+                            </nav>
+                        </div>
+                    </div>
+                </header>
+            </div>
+
+<div class="kratos-start kratos-hero-2">
+    <!-- <div class="kratos-overlay"></div> -->
+    <div class="kratos-cover kratos-cover-2 text-center">
+        <div class="desc desc2 animate-box">
+            <a href="/"><h2>Cao Fan&#39;s Logs</h2><br><span></span></a>
+        </div>
+    </div>
+</div>
+
+<div id="kratos-blog-post">
+    <div class="container">
+            <div class="row">
+                
+<div id="main">
+    <section class="col-md-8">
+    <article>
+        <div class="kratos-hentry kratos-post-inner clearfix">
+            <header class="kratos-entry-header">
+                <h1 class="kratos-entry-title text-center">Paramiko</h1>
+                
+                <div class="kratos-post-meta text-center">
+                    <span>
+                    <i class="fa fa-calendar"></i> 2020-09-28
+                    <i class="fa fa-folder"></i> 分类于 
+                    <i class="fa fa-user"></i> 作者 Cao Fan
+                    </span>
+                </div>
+            </header>
+            <div class="kratos-post-content">
+                
+                <hr />
+                <h2 id="Paramiko"><a href="#Paramiko" class="headerlink" title="Paramiko"></a>Paramiko</h2><p><code>Paramiko</code>是<code>SSHv2</code>协议的<code>Python</code>实现，提供客户端和服务器功能</p>
+<p><code>Paramiko</code>本身是一个围绕<code>SSH</code>网络概念的纯<code>Python</code>接口</p>
+<p>利用<code>paramiko</code>我们可以通过<code>Python</code>方便的进行<code>ssh</code>操作</p>
+<hr>
+<p><code>paramiko</code>包含两个核心组件：<code>SSHClient</code>和<code>SFTPClient</code></p>
+<h3 id="SSHClient"><a href="#SSHClient" class="headerlink" title="SSHClient"></a>SSHClient</h3><p><code>SSHClient</code>的作用类似于<code>Linux</code>的<code>ssh</code>命令，是对<code>SSH</code>会话的封装</p>
+<p>该类封装了传输<code>Transport</code>，通道<code>Channel</code>及<code>SFTPClient</code>建立的方法<code>open_sftp</code>，通常用于执行远程命令</p>
+<h4 id="API"><a href="#API" class="headerlink" title="API"></a>API</h4><ul>
+<li><code>class paramiko.client.SSHClient</code></li>
+</ul>
+<p>创建<code>SSH</code>客户端实例</p>
+<ul>
+<li><code>SSHClient.connect(hostname, port=22, username=None, password=None, pkey=None, key_filename=None, timeout=None, allow_agent=True, look_for_keys=True, compress=False..)</code></li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 参数解释</span></span><br><span class="line">- hostname：连接的目标主机</span><br><span class="line">- port=SSH_PORT：指定端口</span><br><span class="line">- username=<span class="literal">None</span>：验证的用户名</span><br><span class="line">- password=<span class="literal">None</span>：验证的用户密码</span><br><span class="line">- pkey=<span class="literal">None</span>：私钥方式用于身份验证</span><br><span class="line">- key_filename=<span class="literal">None</span>：一个文件名或文件列表，指定私钥文件</span><br><span class="line">- timeout=<span class="literal">None</span>：可选的tcp连接超时时间</span><br><span class="line">- allow_agent=<span class="literal">True</span>：是否允许连接到ssh代理，默认为<span class="literal">True</span> 允许</span><br><span class="line">- look_for_keys=<span class="literal">True</span>：是否在~/.ssh中搜索私钥文件，默认为<span class="literal">True</span> 允许</span><br><span class="line">- compress=<span class="literal">False</span>：是否打开压缩</span><br></pre></td></tr></table></figure>
+
+<p>通过验证连接远程服务端</p>
+<hr>
+<ul>
+<li><code>SSHClient.exec_command(command, bufsize=-1, timeout=None, get_pty=False, environment=None) </code></li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 参数解释</span></span><br><span class="line">- command：要执行的命令</span><br><span class="line">- bufsize：与Python中文件对象的同名函数解释相同，缓冲区大小</span><br><span class="line">- timeout：设置命令的超时相应事件</span><br><span class="line">- get_pty：从服务器请求一个伪终端（默认为假）</span><br><span class="line">- environment：一个当前shell环境的字典，远程命令的默认执行环境</span><br></pre></td></tr></table></figure>
+
+<p><code>command</code>参数为要执行的<code>shell</code>命令，打开一个新通道并执行请求的命令</p>
+<p>该函数的返回结果为一个元组，其中包含<code>stdin</code>、<code>stdout</code>和<code>stderr</code>，也就是我们常见的标准输入，输出以及出错</p>
+<p>一般来说，命令的结果我们将通过<code>stdout</code>进行获取</p>
+<hr>
+<ul>
+<li><code>SSHClient.close()</code></li>
+</ul>
+<blockquote>
+<p>关闭<code>SSH</code>连接</p>
+</blockquote>
+<hr>
+<ul>
+<li><code>SSHClient.invoke_shell(term=’vt100’, width=80, height=24, width_pixels=0, height_pixels=0, environment=None) </code></li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 参数解释</span></span><br><span class="line">- term：模拟终端类型</span><br><span class="line">- width：终端长度</span><br><span class="line">- height：终端宽度</span><br><span class="line">- width_pixels：终端的像素宽度</span><br><span class="line">- height_pixels：终端的像素高度</span><br><span class="line">- environment：命令的shell环境</span><br></pre></td></tr></table></figure>
+
+<p>在<code>ssh</code>服务器上启动交互式<code>shell</code>会话</p>
+<p>一个新的通道被打开并连接到，使用请求的终端类型和大小的伪终端，并作为返回值</p>
+<p>换句通俗的话来讲，就是创建了一个实际的<code>shell</code>窗口空间进行命令交互</p>
+<hr>
+<ul>
+<li><code>SSHClient.set_missing_host_key_policy(policy)</code></li>
+</ul>
+<p>设置连接到没有已知主机密钥的服务器时要使用的策略</p>
+<p>常见使用策略为<code>paramiko.client.AutoAddPolicy</code>，其意义为自动将主机名和新主机密钥添加到本地主机密钥对象并保存</p>
+<h4 id="实例代码"><a href="#实例代码" class="headerlink" title="实例代码"></a>实例代码</h4><blockquote>
+<p>以下是一个简单的通过<code>SSHClient</code>建立的通道进行命令的传输与返回结果的获取的代码！</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> paramiko </span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">connect</span>(<span class="params">hostname,username,password</span>):</span></span><br><span class="line">	client = paramiko.SSHClient() </span><br><span class="line">    <span class="comment"># 初始化</span></span><br><span class="line">	client.set_missing_host_key_policy(paramiko.AutoAddPolicy())</span><br><span class="line">    <span class="comment"># 设置密钥策略</span></span><br><span class="line">	client.connect(hostname,username=username,password=password)</span><br><span class="line">    <span class="comment"># 连接主机</span></span><br><span class="line">	<span class="keyword">return</span> client</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">exec_cmd</span>(<span class="params">client,cmd</span>):</span></span><br><span class="line">	stdin,stdout,stderr = client.exec_command(cmd)</span><br><span class="line">	<span class="keyword">return</span> stdout.read().decode(),stderr.read().decode()</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span>():</span></span><br><span class="line">	hostname = <span class="string">&#x27;192.168.0.104&#x27;</span></span><br><span class="line">	username = <span class="string">&#x27;pi&#x27;</span></span><br><span class="line">	password = <span class="string">&#x27;123456&#x27;</span></span><br><span class="line">	cmd = <span class="string">&#x27;ps -aux&#x27;</span></span><br><span class="line"></span><br><span class="line">	client = connect(hostname,username,password)</span><br><span class="line">	res = exec_cmd(client, cmd)</span><br><span class="line">	<span class="keyword">if</span> res[<span class="number">0</span>]:</span><br><span class="line">		print(res[<span class="number">0</span>])</span><br><span class="line">	<span class="keyword">if</span> res[<span class="number">1</span>]:</span><br><span class="line">		print(<span class="string">&#x27;[E]:\n&#x27;</span>,res[<span class="number">1</span>])</span><br><span class="line">	client.close()</span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">	main()</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>上面的代码通过默认建立好的连接对象进行命令的传输以及返回结果的获取</p>
+</blockquote>
+<h4 id="invoke-shell"><a href="#invoke-shell" class="headerlink" title="invoke_shell"></a>invoke_shell</h4><ul>
+<li>接下来使用<code>invoke_shell</code>进行虚拟终端的连接，首先初始化<code>SSH</code>通道</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">SSHChannle</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self, host, username, password, port=<span class="number">22</span></span>):</span></span><br><span class="line">        <span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">            初始化SSH通道</span></span><br><span class="line"><span class="string">        &#x27;&#x27;&#x27;</span></span><br><span class="line">        self.sh = paramiko.SSHClient()</span><br><span class="line">        self.sh.set_missing_host_key_policy(paramiko.AutoAddPolicy())</span><br><span class="line">        self.sh.connect(host, username=username, password=password)</span><br><span class="line">        self.channle = self.sh.invoke_shell()</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>思路为开启两个线程，分别负责命令的接收与命令的发送</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_ssh_recv</span>(<span class="params">self</span>):</span></span><br><span class="line">    <span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">        接收SSH通道中发来的消息</span></span><br><span class="line"><span class="string">    &#x27;&#x27;&#x27;</span></span><br><span class="line">    <span class="keyword">while</span> <span class="keyword">not</span> self.channle.exit_status_ready():</span><br><span class="line">        <span class="comment"># 如果远程进程已退出并返回退出状态，则返回true</span></span><br><span class="line">        time.sleep(<span class="number">0.1</span>)</span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            buf = self.channle.recv(<span class="number">1024</span>).decode(<span class="string">&#x27;utf-8&#x27;</span>)</span><br><span class="line">            print(buf,end=<span class="string">&#x27;&#x27;</span>)</span><br><span class="line">            sys.stdout.flush()</span><br><span class="line">        <span class="keyword">except</span> Exception <span class="keyword">as</span> ex:</span><br><span class="line">            print(ex)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">send_ssh_cmd</span>(<span class="params">self</span>):</span></span><br><span class="line">    <span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">        发送命令给SSH通道</span></span><br><span class="line"><span class="string">    &#x27;&#x27;&#x27;</span></span><br><span class="line">    <span class="keyword">while</span> <span class="keyword">not</span> self.channle.exit_status_ready():</span><br><span class="line">        cmd = input()</span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            self.channle.send(cmd + <span class="string">&#x27;\r&#x27;</span>)</span><br><span class="line">        <span class="keyword">except</span> Exception <span class="keyword">as</span> ex:</span><br><span class="line">            print(ex)</span><br><span class="line">        sys.stdin.flush()</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>在实例中定义<code>run</code>函数用来开启两个线程并负责线程的资源回收以及SSH通道的关闭</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">run</span>(<span class="params">self</span>):</span></span><br><span class="line">    ssh_recv_thread = threading.Thread(target=self.get_ssh_recv)</span><br><span class="line">    ssh_send_thread = threading.Thread(target=self.send_ssh_cmd)</span><br><span class="line">    ssh_recv_thread.start()</span><br><span class="line">    ssh_send_thread.start()</span><br><span class="line"></span><br><span class="line">    ssh_recv_thread.join()</span><br><span class="line">    ssh_send_thread.join()</span><br><span class="line"></span><br><span class="line">    self.sh.close()  <span class="comment"># 关闭通道</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>在<code>win</code>下的<code>CMD</code>中查看效果，其中的乱码格式其实为连接后命令传输的特殊标记格式，可以在后面结合前端中类似<code>xterm.js</code>等插件查看到实际花里胡哨的效果</li>
+</ul>
+<h3 id="SFTPClient"><a href="#SFTPClient" class="headerlink" title="SFTPClient"></a>SFTPClient</h3><p><code>SFTPClient</code>的作用类似与<code>Linux</code>的<code>sftp</code>命令，是对<code>SFTP</code>客户端的封装</p>
+<p>用以实现远程文件操作，如文件上传、下载、修改文件权限等操作</p>
+<h4 id="API-1"><a href="#API-1" class="headerlink" title="API"></a>API</h4><ul>
+<li><p>官方文档：docs.paramiko.org/en/2.4/api/sftp.html</p>
+</li>
+<li><p><code>sftp=paramiko.SFTPClient.from_transport(t,window_size=None,max_packet_size=None)</code></p>
+</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 参数解释</span></span><br><span class="line">- t：该参数可以通过paramiko.Transport( (ip,port ))，创建一个已通过验证的传输通道，参数为IP和端口的二元组</span><br></pre></td></tr></table></figure>
+
+<p>根据参数<code>t</code>指定的已验证传输通道进行<code>SFTP</code>客户端的创建</p>
+<ul>
+<li><code>sftp.put(localpath, remotepath, callback=None, confirm=True)</code></li>
+</ul>
+<p>上传本地路径为<code>localpath</code>的文件到目标主机<code>remotepath</code>处</p>
+<ul>
+<li><code>sftp.get(remotepath, localpath, callback=None)</code></li>
+</ul>
+<p>下载远程路径为<code>remotepath</code>路径的的文件到本地主机<code>localpath</code>处</p>
+<ul>
+<li><code>open(filename, mode=’r’, bufsize=-1)</code></li>
+</ul>
+<p>打开位于远程主机上的文件，与<code>open</code>函数类似，返回文件对象</p>
+<ul>
+<li><code>listdir(path=&#39;.&#39;)</code></li>
+</ul>
+<p>返回给定路径下文件及目录的列表，默认路径为当前工作目录</p>
+<ul>
+<li><code>chdir(path=None)</code></li>
+</ul>
+<p>修改当前<code>SFTP</code>连接会话的工作目录</p>
+<ul>
+<li><code>lstat(path)</code></li>
+</ul>
+<p>检索当前<code>path</code>所指向的文件信息</p>
+<ul>
+<li><code>mkdir(path,mode=511)</code></li>
+</ul>
+<p>根据<code>path</code>在目标主机创建默认权限为<code>511</code>的目录</p>
+<ul>
+<li><code>rmdir(path)</code></li>
+</ul>
+<p>删除给定<code>path</code>所指向的目录</p>
+<ul>
+<li><code>remove(path)</code></li>
+</ul>
+<p>删除给定<code>path</code>所指向的文件</p>
+<h4 id="实例代码-1"><a href="#实例代码-1" class="headerlink" title="实例代码"></a>实例代码</h4><blockquote>
+<p>以下是一个比较简陋的关于<code>SFTPClient</code>的测试代码</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> paramiko</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">connecnt</span>(<span class="params">hostname,username,password</span>):</span> <span class="comment">#创建连接对象</span></span><br><span class="line">    client = paramiko.Transport( (hostname,<span class="number">22</span>))</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        client.connect(username=username,password=password)</span><br><span class="line">    <span class="keyword">except</span> paramiko.SSHException:</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">None</span></span><br><span class="line">    sftp_client = paramiko.SFTPClient.from_transport(client)</span><br><span class="line">    <span class="keyword">return</span> sftp_client</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span>():</span></span><br><span class="line">    hostname = <span class="string">&#x27;192.168.0.104&#x27;</span></span><br><span class="line">    username = <span class="string">&#x27;pi&#x27;</span></span><br><span class="line">    password = <span class="string">&#x27;123456&#x27;</span></span><br><span class="line">    sftp_client = connecnt(hostname,username,password)</span><br><span class="line">    remotefile_path = <span class="string">&#x27;/home/pi/test&#x27;</span> <span class="comment"># 目标主机文件路径</span></span><br><span class="line">    localfile_path = <span class="string">&#x27;/home/test&#x27;</span> <span class="comment"># 本地主机文件路径</span></span><br><span class="line"></span><br><span class="line">    sftp_client.put(localfile_path, remotefile_path) <span class="comment">#上传本地test文件到远程</span></span><br><span class="line">    sftp_client.get(remotefile_path, localfile_path) <span class="comment">#下载远程test文件到本地</span></span><br><span class="line">    print(sftp_client.listdir())</span><br><span class="line">    print(sftp_client.lstat(remotefile_path))</span><br><span class="line">    <span class="keyword">with</span> sftp_client.open(remotefile_path) <span class="keyword">as</span> fp:</span><br><span class="line">        print(fp.read().decode())</span><br><span class="line">    <span class="comment">#print(sftp_client.remove(remotefile_path))</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    main()</span><br></pre></td></tr></table></figure>
+
+
+            </div>
+            
+                <div class="kratos-copyright text-center clearfix">
+                    <h5>本作品采用 <a rel="license nofollow" target="_blank" href="http://creativecommons.org/licenses/by-sa/4.0/">知识共享署名-相同方式共享 4.0 国际许可协议</a> 进行许可</h5>
+                </div>
+            
+            <footer class="kratos-entry-footer clearfix">
+                
+                    <div class="post-like-donate text-center clearfix" id="post-like-donate">
+                    
+                    
+                        <a class="share" href="javascript:;"><i class="fa fa-share-alt"></i> 分享</a>
+                        <div class="share-wrap" style="display: none;">
+    <div class="share-group">
+        <a href="javascript:;" class="share-plain qq" onclick="share('qq');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-qq"></i>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain qzone" onclick="share('qzone');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-star"></i>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain weixin pop style-plain" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-weixin"></i>
+            </div>
+            <div class="share-int">
+                <div class="qrcode" id="wechat-qr"></div>
+                <p>打开微信“扫一扫”，打开网页后点击屏幕右上角分享按钮</p>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain weibo" onclick="share('weibo');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-weibo"></i>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain facebook style-plain" onclick="share('facebook');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-facebook"></i>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain twitter style-plain" onclick="share('twitter');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-twitter"></i>
+            </div>
+        </a>
+    </div>
+    <script type="text/javascript">
+        $(()=>{
+            new QRCode("wechat-qr", {
+                text: "http://example.com/2020/09/28/paramiko/",
+                width: 150,
+                height: 150,
+                correctLevel : QRCode.CorrectLevel.H
+            });
+        });
+        function share(dest) {
+            const qqBase        = "https://connect.qq.com/widget/shareqq/index.html?";
+            const weiboBase     = "https://service.weibo.com/share/share.php?";
+            const qzoneBase     = "https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?";
+            const facebookBase  = "https://www.facebook.com/sharer/sharer.php?";
+            const twitterBase   = "https://twitter.com/intent/tweet?";
+            const hostUrl       = "http://example.com/2020/09/28/paramiko/";
+            const title         = "「Paramiko」";
+            const excerpt       = `ParamikoParamiko是SSHv2协议的Python实现，提供客户端和服务器功能
+Paramiko本身是一个围绕SSH网络概念的纯Python接口
+利用paramiko我们可以通过Python方便的进行ssh操作
+
+para...`;
+            let _URL;
+            switch (dest) {
+                case "qq"       : _URL = qqBase+"url="+hostUrl+"&title="+title+"&desc=&summary="+excerpt+"&site=cxpy";     break;
+                case "weibo"    : _URL = weiboBase+"url="+hostUrl+"&title="+title+excerpt;                                 break;
+                case "qzone"    : _URL = qzoneBase+"url="+hostUrl+"&title="+title+"&desc=&summary="+excerpt+"&site=cxpy";  break;
+                case "facebook" : _URL = facebookBase+"u="+hostUrl;                                                        break;
+                case "twitter"  : _URL = twitterBase+"text="+title+excerpt+"&url="+hostUrl;                                break;
+            }
+            window.open(_URL);
+        };
+    </script>
+</div>
+                    
+                    </div>
+                
+                <div class="footer-tag clearfix">
+                    <div class="pull-left">
+                    <i class="fa fa-tags"></i>
+                        
+                    </div>
+                    <div class="pull-date">
+                    <span>最后编辑：2020-09-28</span>
+                    </div>
+                </div>
+            </footer>
+        </div>
+        
+            <nav class="navigation post-navigation clearfix" role="navigation">
+                
+                <div class="nav-previous clearfix">
+                    <a title=" Mysql搭建主从复制" href="/2020/09/28/Mysql搭建主从复制/">&lt; 上一篇</a>
+                </div>
+                
+                
+                <div class="nav-next clearfix">
+                    <a title=" WebSSH" href="/2020/09/28/webssh/">下一篇 &gt;</a>
+                </div>
+                
+            </nav>
+        
+        
+    </article>
+</section>
+</div>
+        
+            <section id="kratos-widget-area" class="col-md-4 hidden-xs hidden-sm">
+                
+                    <aside id="krw-about" class="widget widget-kratos-about clearfix">
+    
+    <div class="photo-background"></div>
+    <div class="photo-wrapper clearfix">
+        <div class="photo-wrapper-tip text-center">
+            <img class="about-photo" src="/images/头像.webp" />
+        </div>
+    </div>
+    <div class="textwidget">
+        
+            <p class="text-center"></p>
+        
+    </div>
+</aside>
+                
+                    <!-- Moved to about.ejs -->
+                
+                    
+
+                
+                    
+                
+                    
+  <aside id="krw-posts" class="widget widget-kratos-poststab">
+  <h4 class="widget-title"><i class="fa fa-file"></i>最新文章</h4>
+  <div class="tab-content">
+      <ul class="list-group">
+        
+        
+          
+          
+            <a class="list-group-item" href="/2020/09/28/%E5%9F%BA%E4%BA%8E%E6%97%B6%E9%97%B4%E8%A1%B0%E5%87%8F%E7%9A%84%E7%83%AD%E5%BA%A6%E7%AE%97%E6%B3%95/"><i class="fa  fa-book"></i> 基于时间衰减的热度算法</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2020/09/28/webssh/"><i class="fa  fa-book"></i> WebSSH</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2020/09/28/paramiko/"><i class="fa  fa-book"></i> Paramiko</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2020/09/28/Mysql%E6%90%AD%E5%BB%BA%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6/"><i class="fa  fa-book"></i> Mysql搭建主从复制</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2020/09/28/fastdfs%E6%96%87%E4%BB%B6%E5%AD%98%E5%82%A8%E7%B3%BB%E7%BB%9F/"><i class="fa  fa-book"></i> FastDFS文件存储系统</a>
+            
+          
+        
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+      </ul>
+  </div>
+  </aside>
+
+                
+            </section>
+        
+        </div>
+    </div>
+</div>
+<footer>
+    <div id="footer">
+        <div class="kr-tool text-center">
+            <div class="tool">
+                
+                    <div class="box search-box">
+                        <a href="/search/">
+                            <span class="fa fa-search"></span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="box theme-box" id="darkmode-switch">
+                        <span class="fa fa-adjust"></span>
+                    </div>
+                
+                
+            </div>
+            <div class="box gotop-box">
+                <span class="fa fa-chevron-up"></span>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3 footer-list text-center">
+                    <ul class="kratos-social-icons">
+                        
+                        
+                        <li><a target="_blank" rel="nofollow" href="https://t.me/CandyUnion"><i class="fa fa-telegram"></i></a></li>
+                        <li><a target="_blank" rel="nofollow" href="https://twitter.com/Candiinya"><i class="fa fa-twitter"></i></a></li>
+                        
+                        
+                        
+                        <li><a target="_blank" rel="nofollow" href="https://github.com/Candinya"><i class="fa fa-github"></i></a></li>
+                        
+                    </ul>
+                    <ul class="kratos-copyright">
+                        <div>
+                            <li>&copy; 2020 Cao Fan 版权所有.</li>
+                            <li>本站已运行<span id="span_dt">Loading...</span></li>
+                        </div>
+                        <div>
+                            <li>Theme <a href="https://github.com/Candinya/Kratos-Rebirth" target="_blank">Kratos:Rebirth</a></li>
+                            <li>Made with&nbsp;<i class="fa fa-heart throb" style="color:#d43f57"></i>&nbsp;by <a href="https://candinya.com" target="_blank" rel="nofollow">Candinya</a>.</li>
+                        </div>
+                        <div>
+                            <li>Powered by <a href="https://hexo.io" target="_blank" rel="nofollow">Hexo</a></li>
+                            <li>Hosted on <a href="https://github.io" target="_blank">Github Pages</a></li>
+                        </div>
+                        <div>
+                            
+                            
+                        </div>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+</div>
+</div>
+<script defer src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.4/dist/js/bootstrap.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.js"></script>
+<script>const notMobile = (!(navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)));</script>
+
+<script async src="/js/candy.min.js"></script>
+
+
+    <script defer src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+
+<script defer src="/js/kratosr.min.js"></script>
+<script defer src="/js/pjax.min.js"></script>
+
+
+    <script defer src="/js/kr-dark.min.js"></script>
+
+
+
+
+</body>
+</html>

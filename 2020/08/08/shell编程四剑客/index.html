@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Hello World | Cao Fan's Logs</title>
+  <title>shell编程四剑客 | Cao Fan's Logs</title>
   <meta name="author" content="Cao Fan" />
   <meta http-equiv="Cache-Control" content="no-transform" />
   <meta http-equiv="Cache-Control" content="no-siteapp" />
@@ -16,16 +16,16 @@
       <meta name="description" itemprop="description" content="" />
     
   
-  <meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+  <meta name="description" content="shell编程四剑客之sed shell编程四剑客分别的作用 12345678① grep：文本过滤（模式:pattern）工具，grep，egrep，fgrep，擅长过滤。② sed：stream editor 文本编辑工具；（流编辑器），擅长取行、替换。③ awk：linux上的实现gawk，文件报告生成器；（独立的编程语言），过滤内容，擅长取列。④ find： linux上实时查找工具，通过">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hello World">
-<meta property="og:url" content="http://example.com/2020/09/25/hello-world/index.html">
+<meta property="og:title" content="shell编程四剑客">
+<meta property="og:url" content="http://example.com/2020/08/08/shell%E7%BC%96%E7%A8%8B%E5%9B%9B%E5%89%91%E5%AE%A2/index.html">
 <meta property="og:site_name" content="Cao Fan&#39;s Logs">
-<meta property="og:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+<meta property="og:description" content="shell编程四剑客之sed shell编程四剑客分别的作用 12345678① grep：文本过滤（模式:pattern）工具，grep，egrep，fgrep，擅长过滤。② sed：stream editor 文本编辑工具；（流编辑器），擅长取行、替换。③ awk：linux上的实现gawk，文件报告生成器；（独立的编程语言），过滤内容，擅长取列。④ find： linux上实时查找工具，通过">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="http://example.com/null">
-<meta property="article:published_time" content="2020-09-25T07:28:13.919Z">
-<meta property="article:modified_time" content="2020-09-25T07:28:13.919Z">
+<meta property="article:published_time" content="2020-08-08T08:07:29.573Z">
+<meta property="article:modified_time" content="2020-09-28T02:43:51.015Z">
 <meta property="article:author" content="Cao Fan">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://example.com/null">
@@ -115,11 +115,11 @@
     <article>
         <div class="kratos-hentry kratos-post-inner clearfix">
             <header class="kratos-entry-header">
-                <h1 class="kratos-entry-title text-center">Hello World</h1>
+                <h1 class="kratos-entry-title text-center">shell编程四剑客</h1>
                 
                 <div class="kratos-post-meta text-center">
                     <span>
-                    <i class="fa fa-calendar"></i> 2020-09-25
+                    <i class="fa fa-calendar"></i> 2020-08-08
                     <i class="fa fa-folder"></i> 分类于 
                     <i class="fa fa-user"></i> 作者 Cao Fan
                     </span>
@@ -128,19 +128,32 @@
             <div class="kratos-post-content">
                 
                 <hr />
-                <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+                <h1 id="shell编程四剑客之sed"><a href="#shell编程四剑客之sed" class="headerlink" title="shell编程四剑客之sed"></a>shell编程四剑客之sed</h1><ol>
+<li><p><strong>shell编程四剑客分别的作用</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">① grep：文本过滤（模式:pattern）工具，grep，egrep，fgrep，擅长过滤。</span><br><span class="line"></span><br><span class="line">② sed：stream editor 文本编辑工具；（流编辑器），擅长取行、替换。</span><br><span class="line"></span><br><span class="line">③ awk：linux上的实现gawk，文件报告生成器；（独立的编程语言），过滤内容，擅长取列。</span><br><span class="line"></span><br><span class="line">④ find： linux上实时查找工具，通过便利指定路径下得文件系统完成文件查找。</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>sed 命令</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">① sed是一种流编辑器，它是文本处理中非常中的工具，</span><br><span class="line">② 能够完美的配合正则表达式使用，功能不同凡响。</span><br><span class="line">③ 处理时，把当前处理的行存储在临时缓冲区中，称为“模式空间”（pattern space），接着用sed命令处理缓冲区中的内容，处理完成后，把缓冲区的内容送往屏幕。</span><br><span class="line">④ 接着处理下一行，这样不断重复，直到文件末尾。文件内容并没有 改变，除非你使用重定向存储输出。</span><br><span class="line">⑤ Sed主要用来自动编辑一个或多个文件；简化对文件的反复操作；编写转换程序等。</span><br></pre></td></tr></table></figure>
+</li>
+<li><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">① <span class="comment">#创建目录：</span></span><br><span class="line">	mkdir text.txt</span><br><span class="line">② <span class="comment">#删除目录：</span></span><br><span class="line">	rmdir text.txt</span><br><span class="line">③ <span class="comment">#查看目录：</span></span><br><span class="line">	ls</span><br><span class="line">④ <span class="comment">#创建文件夹：</span></span><br><span class="line">	touch text.txt</span><br><span class="line">⑤ <span class="comment">#删除文件夹：</span></span><br><span class="line">	rm -f text.txt</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>参数及命令</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line">   　	  x：指定行号</span><br><span class="line">   </span><br><span class="line">   　　　　x,y：指定从x到y的行号范围</span><br><span class="line">   </span><br><span class="line">   　　　　/pattern/：查询包含模式的行</span><br><span class="line">   </span><br><span class="line">   　　　　/pattern/pattern/：查询包含两个模式的行</span><br><span class="line">   </span><br><span class="line">   　　　　/pattern/,x：从与pattern的匹配行到x号行之间的行</span><br><span class="line">   </span><br><span class="line">   　　　　x,/pattern/：从x号行到与pattern的匹配行之间的行</span><br><span class="line">   </span><br><span class="line">   　　　　x,y!：查询不包括x和y行号的行</span><br><span class="line">   </span><br><span class="line">   　　　　r：从另一个文件中读文件</span><br><span class="line">   </span><br><span class="line">   　　　　w：将文本写入到一个文件</span><br><span class="line">   </span><br><span class="line">   　　　　y：变换字符</span><br><span class="line">   </span><br><span class="line">   　　　　q：第一个模式匹配完成后退出</span><br><span class="line">   </span><br><span class="line">   　　　　l：显示与八进制ASCII码等价的控制字符</span><br><span class="line">   </span><br><span class="line">   　　　　&#123;&#125;：在定位行执行的命令组</span><br><span class="line">   </span><br><span class="line">   　　　　p：打印匹配行</span><br><span class="line">   </span><br><span class="line">   　　　　P：打印模板块的行</span><br><span class="line">   </span><br><span class="line">   　　　　=：打印文件行号</span><br><span class="line">   </span><br><span class="line">   　　　　a\：在定位行号之后追加文本信息</span><br><span class="line">   </span><br><span class="line">   　　　　i\：在定位行号之前插入文本信息</span><br><span class="line">   </span><br><span class="line">   　　　　d：删除定位行</span><br><span class="line">   </span><br><span class="line">   　　　　D：删除模板快第一行</span><br><span class="line">   </span><br><span class="line">   　　　　c\：用新文本替换定位文本</span><br><span class="line">   </span><br><span class="line">   　　　　s：使用替换模式替换相应模式</span><br><span class="line">   </span><br><span class="line">   　　　　n：读取下一个输入行，用下一个命令处理新的行</span><br><span class="line">   </span><br><span class="line">   　　　　N：将当前都入行的下一行读取到当前的模式空间</span><br><span class="line">   </span><br><span class="line">   　　　　h：将模式缓冲区的文本赋值到保持缓冲区</span><br><span class="line">   </span><br><span class="line">   　　　　H：将模式缓冲区的文本追加到保持缓冲区</span><br><span class="line">   </span><br><span class="line">   　　　　x：互换模式缓冲区和保持缓冲区的内容</span><br><span class="line">   </span><br><span class="line">   　　　　g：将保持缓冲区的内容赋值到模式缓冲区</span><br><span class="line">   </span><br><span class="line">   　　　　G：将保持缓冲区的内容追加到模式缓冲区</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>元字符集</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">   　　　　^ ：匹配行开始，/^sed/</span><br><span class="line">   </span><br><span class="line">   　　　　$：匹配行结束</span><br><span class="line">   </span><br><span class="line">   　　　　.：匹配一个非换行符的任意字符，如：/s.d/匹配s后接一个任意字符，最后是d</span><br><span class="line">   </span><br><span class="line">   　　　　*：匹配<span class="number">0</span>个或多个字符,/*sed/</span><br><span class="line">   </span><br><span class="line">   　　　　[]：匹配一个指定范围内的字符/[sS]ed/</span><br><span class="line">   </span><br><span class="line">   　　　　[^]：匹配一个不在指定范围内的字符，/[^A-RT-Z]E/匹配A-R和T-Z的一个字幕开头，紧跟ed 的行</span><br><span class="line">   </span><br><span class="line">   　　　　(..)：匹配子串，保存匹配的字符，如s/(abc)de/\<span class="number">1</span>rs,abcde被替换成abcrs。</span><br><span class="line">   </span><br><span class="line">   　　　　&amp;：保存搜索字符用来替换其他字符，s/abc/&amp;/，abc成abc</span><br><span class="line">   </span><br><span class="line">   　　　　&lt;：匹配单词的开始，如：/&lt;abc/匹配包含以abc开头的单词的行</span><br><span class="line">   </span><br><span class="line">   　　　　&gt;：匹配单词的结束</span><br><span class="line">   </span><br><span class="line">   　　　　x&#123;m&#125;：重复字符x，m次，/<span class="number">0</span>&#123;<span class="number">5</span>&#125;/匹配包含<span class="number">5</span>个<span class="number">0</span>的行</span><br><span class="line">   </span><br><span class="line">   　　　　x&#123;m,&#125;：重复字符x,至少m次</span><br><span class="line">   </span><br><span class="line">   　　　　x&#123;m,n&#125;：重复字符x，至少m次，不多于n次</span><br></pre></td></tr></table></figure>
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+
+
+
+
+
+
+</li>
+</ol>
 
             </div>
             
@@ -194,7 +207,7 @@
     <script type="text/javascript">
         $(()=>{
             new QRCode("wechat-qr", {
-                text: "http://example.com/2020/09/25/hello-world/",
+                text: "http://example.com/2020/08/08/shell%E7%BC%96%E7%A8%8B%E5%9B%9B%E5%89%91%E5%AE%A2/",
                 width: 150,
                 height: 150,
                 correctLevel : QRCode.CorrectLevel.H
@@ -206,9 +219,11 @@
             const qzoneBase     = "https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?";
             const facebookBase  = "https://www.facebook.com/sharer/sharer.php?";
             const twitterBase   = "https://twitter.com/intent/tweet?";
-            const hostUrl       = "http://example.com/2020/09/25/hello-world/";
-            const title         = "「Hello World」";
-            const excerpt       = `Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using ...`;
+            const hostUrl       = "http://example.com/2020/08/08/shell%E7%BC%96%E7%A8%8B%E5%9B%9B%E5%89%91%E5%AE%A2/";
+            const title         = "「shell编程四剑客」";
+            const excerpt       = `shell编程四剑客之sed
+shell编程四剑客分别的作用
+12345678① grep：文本过滤（模式:pattern）工具，grep，egrep，fgrep，擅长过滤。② sed：stream editor 文本编辑工具；（流编...`;
             let _URL;
             switch (dest) {
                 case "qq"       : _URL = qqBase+"url="+hostUrl+"&title="+title+"&desc=&summary="+excerpt+"&site=cxpy";     break;
@@ -230,7 +245,7 @@
                         
                     </div>
                     <div class="pull-date">
-                    <span>最后编辑：2020-09-25</span>
+                    <span>最后编辑：2020-09-28</span>
                     </div>
                 </div>
             </footer>
@@ -239,12 +254,12 @@
             <nav class="navigation post-navigation clearfix" role="navigation">
                 
                 <div class="nav-previous clearfix">
-                    <a title=" HTTP、WSGI、TCP" href="/2020/08/26/HTTP、WSGI、TCP/">&lt; 上一篇</a>
+                    <a title=" shell编程四剑客之awk" href="/2020/08/08/shell编程四剑客之AWK/">&lt; 上一篇</a>
                 </div>
                 
                 
                 <div class="nav-next clearfix">
-                    <a title=" md 用法及其一些常用的语法" href="/2020/09/27/这是第一篇/">下一篇 &gt;</a>
+                    <a title=" Docker 拉取Nginx镜像 和运行" href="/2020/08/13/Docker 拉取Nginx镜像 和运行/">下一篇 &gt;</a>
                 </div>
                 
             </nav>

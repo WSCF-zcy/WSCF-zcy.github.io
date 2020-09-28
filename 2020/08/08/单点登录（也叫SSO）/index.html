@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="utf-8">
+  
+  <title>单点登录 | Cao Fan's Logs</title>
+  <meta name="author" content="Cao Fan" />
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="robots" content="index,follow" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <meta name="format-detection" content="telphone=no, email=no" />
+  
+    
+      <meta name="description" itemprop="description" content="" />
+    
+  
+  <meta name="description" content="单点登录（也叫SSO）1.介绍，什么是单点登录 SSO英文全称Single SignOn，单点登录。SSO是在多个应用系统中，用户只需要登录一次就可以访问所有相互信任的应用系统。它包括可以将这次主要的登录映射到其他应用中用于同一个用户的登录的机制。它是目前比较流行的企业业务整合的解决方案之一。  2.实现机制​    2.当用户第一次访问应用系统1的时候，因为还没有登录，会被引导到认证系统中">
+<meta property="og:type" content="article">
+<meta property="og:title" content="单点登录">
+<meta property="og:url" content="http://example.com/2020/08/08/%E5%8D%95%E7%82%B9%E7%99%BB%E5%BD%95%EF%BC%88%E4%B9%9F%E5%8F%ABSSO%EF%BC%89/index.html">
+<meta property="og:site_name" content="Cao Fan&#39;s Logs">
+<meta property="og:description" content="单点登录（也叫SSO）1.介绍，什么是单点登录 SSO英文全称Single SignOn，单点登录。SSO是在多个应用系统中，用户只需要登录一次就可以访问所有相互信任的应用系统。它包括可以将这次主要的登录映射到其他应用中用于同一个用户的登录的机制。它是目前比较流行的企业业务整合的解决方案之一。  2.实现机制​    2.当用户第一次访问应用系统1的时候，因为还没有登录，会被引导到认证系统中">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/null">
+<meta property="article:published_time" content="2020-08-08T03:26:07.138Z">
+<meta property="article:modified_time" content="2020-09-28T02:38:14.677Z">
+<meta property="article:author" content="Cao Fan">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/null">
+<meta name="twitter:site" content="@Candiinya">
+  
+  <!-- 样式表文件 -->
+  <link rel="stylesheet" id="kratos-css" href="/css/kratosr.min.css" type="text/css" media="all">
+  <link rel="stylesheet" id="highlight-css" href="/css/highlight.min.css" type="text/css" media="all">
+  <link rel="stylesheet" id="fontawe-css" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" type="text/css" media="all">
+  <link rel="stylesheet" id="nprogress-css" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" type="text/css" media="all">
+  
+  
+  
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
+  
+  
+    <link rel="stylesheet" id="darkmode-css" href="/css/kr-dark.min.css" type="text/css" media="all">
+  
+  <!-- 不得不预先加载的一些JS文件 -->
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+  
+    <script async src="https://cdn.jsdelivr.net/npm/qrcode_js@1.0.0/qrcode.min.js"></script>
+  
+  
+<meta name="generator" content="Hexo 5.2.0"></head>
+<body class="custom-background">
+    <div id="kratos-wrapper">
+        <div id="kratos-page">
+            <div id="kratos-header">
+                <div class="nav-toggle"><a class="kratos-nav-toggle js-kratos-nav-toggle"><i></i></a></div>
+                <header id="kratos-header-section">
+                    <div class="container">
+                        <div class="nav-header">
+                            <div class="color-logo"><a href="/">Cao Fan&#39;s Logs</a></div>
+                            <nav id="kratos-menu-wrap">
+                              <ul id="kratos-primary-menu" class="sf-menu">
+                              
+                                
+                                  <li><a href="/"><i class="fa fa-home"></i>首页</a></li>
+                                
+                              
+                                
+                                  <li><a href="/archives/"><i class="fa fa-file"></i>档案馆</a></li>
+                                
+                              
+                                
+                                  <li>
+                                    <a><i class="fa fa-link"></i>链接</a>
+                                    <ul class="sub-menu">
+                                      
+                                        
+                                      
+                                        
+                                          <li><a target="_blank" rel="noopener" href="https://candinya.com">作者博客</a></li>
+                                        
+                                      
+                                        
+                                          <li><a target="_blank" rel="noopener" href="https://github.com/Candinya/Kratos-Rebirth">项目链接</a></li>
+                                        
+                                      
+                                    </ul>
+                                  </li>
+                                
+                              
+                              </ul>
+                            </nav>
+                        </div>
+                    </div>
+                </header>
+            </div>
+
+<div class="kratos-start kratos-hero-2">
+    <!-- <div class="kratos-overlay"></div> -->
+    <div class="kratos-cover kratos-cover-2 text-center">
+        <div class="desc desc2 animate-box">
+            <a href="/"><h2>Cao Fan&#39;s Logs</h2><br><span></span></a>
+        </div>
+    </div>
+</div>
+
+<div id="kratos-blog-post">
+    <div class="container">
+            <div class="row">
+                
+<div id="main">
+    <section class="col-md-8">
+    <article>
+        <div class="kratos-hentry kratos-post-inner clearfix">
+            <header class="kratos-entry-header">
+                <h1 class="kratos-entry-title text-center">单点登录</h1>
+                
+                <div class="kratos-post-meta text-center">
+                    <span>
+                    <i class="fa fa-calendar"></i> 2020-08-08
+                    <i class="fa fa-folder"></i> 分类于 
+                    <i class="fa fa-user"></i> 作者 Cao Fan
+                    </span>
+                </div>
+            </header>
+            <div class="kratos-post-content">
+                
+                <hr />
+                <h1 id="单点登录（也叫SSO）"><a href="#单点登录（也叫SSO）" class="headerlink" title="单点登录（也叫SSO）"></a>单点登录（也叫SSO）</h1><h2 id="1-介绍，什么是单点登录"><a href="#1-介绍，什么是单点登录" class="headerlink" title="1.介绍，什么是单点登录"></a>1.介绍，什么是单点登录</h2><ol>
+<li>SSO英文全称Single SignOn，单点登录。SSO是在多个应用系统中，用户只需要登录一次就可以访问所有相互信任的应用系统。它包括可以将这次主要的登录映射到其他应用中用于同一个用户的登录的机制。它是目前比较流行的企业业务整合的解决方案之一。</li>
+</ol>
+<h2 id="2-实现机制"><a href="#2-实现机制" class="headerlink" title="2.实现机制"></a>2.实现机制</h2><p>​    2.当用户第一次访问应用系统1的时候，因为还没有登录，会被引导到认证系统中    进行登录；根据用户提供的登录信息，认证系统进行身份校验，如果通过校验，    应该返回给用户一个认证的凭据－－ticket；用户再访问别的应用的时候就会将这    个ticket带上，作为自己认证的凭据，应用系统接受到请求之后会把ticket送到认    证系统进行校验，检查ticket的合法性。如果通过校验，用户就可以在不用再次登    录的情况下访问应用系统2和应用系统3了。</p>
+<h2 id="3-为什么要使用SSO（它的好处）"><a href="#3-为什么要使用SSO（它的好处）" class="headerlink" title="3.为什么要使用SSO（它的好处）"></a>3.为什么要使用SSO（它的好处）</h2><ul>
+<li><h3 id="3-1方便用户"><a href="#3-1方便用户" class="headerlink" title="3.1方便用户"></a>3.1方便用户</h3><blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">用户使用应用系统时，能够一次登录，多次使用。用户不再需要每次输入用户名称和用户密码，也不需要牢记多套用户名称和用户密码。单点登录平台能够改善用户使用应用系统的体验。</span><br></pre></td></tr></table></figure>
+</blockquote>
+</li>
+</ul>
+<ul>
+<li><h3 id="3-2方便管理员"><a href="#3-2方便管理员" class="headerlink" title="3.2方便管理员"></a>3.2方便管理员</h3><blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">系统管理员只需要维护一套统一的用户账号，方便、简单。相比之下，系统管理员以前需要管理很多套的用户账号。每一个应用系统就有一套用户账号，不仅给管理上带来不方便，而且，也容易出现管理漏洞。</span><br></pre></td></tr></table></figure>
+</blockquote>
+</li>
+</ul>
+<ul>
+<li><h3 id="3-3简化应用系统开发"><a href="#3-3简化应用系统开发" class="headerlink" title="3.3简化应用系统开发"></a>3.3简化应用系统开发</h3><blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">开发新的应用系统时，可以直接使用单点登录平台的用户认证服务，简化开发流程。单点登录平台通过提供统一的认证平台，实现单点登录。因此，应用系统并不需要开发用户认证程序。</span><br></pre></td></tr></table></figure>
+</blockquote>
+</li>
+</ul>
+<h2 id="4-SSO实现方案"><a href="#4-SSO实现方案" class="headerlink" title="4.SSO实现方案"></a>4.SSO实现方案</h2><h3 id="常见的跨域登录问题"><a href="#常见的跨域登录问题" class="headerlink" title="常见的跨域登录问题"></a>常见的跨域登录问题</h3><ul>
+<li><h4 id="1-对于同一个根域下的登录问题"><a href="#1-对于同一个根域下的登录问题" class="headerlink" title="1.对于同一个根域下的登录问题"></a>1.对于同一个根域下的登录问题</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">如果我们的站点有不止一个业务，那么他们可能部署在不同的机器上，也往往需要不同的域名进行区分。但是所有的业务又都是依赖于一套账户体系，那么我们这时候需要通过一次登录解决所有站点的登录问题，那么我们这个时候可以使用一个最笨的方法：那就是一次登录成功，将Cookie写到根域下，那么这样所有的站点就能实现，同一个根域下的Cookie共享，自然实现了“单点登录”。</span><br></pre></td></tr></table></figure>
+
+
+
+</li>
+</ul>
+<ul>
+<li><h3 id="2-对于多个根域下的登录问题"><a href="#2-对于多个根域下的登录问题" class="headerlink" title="2.对于多个根域下的登录问题"></a>2.对于多个根域下的登录问题</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">如果是多个根域名，那么这种情况下上面的机制就不能实现“单点登录”了。因为之所以上面可以实现“单点登录”的效果。是因为浏览器和Http协议的支持。但是对于跨根域的站点之间进行Cookie的共享是比较复杂的。</span><br></pre></td></tr></table></figure>
+<ul>
+<li><h4 id="方法一：登录成功后将Cookie回写到多个域名下"><a href="#方法一：登录成功后将Cookie回写到多个域名下" class="headerlink" title="方法一：登录成功后将Cookie回写到多个域名下"></a>方法一：登录成功后将Cookie回写到多个域名下</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">这种办法可能十分简单，你可以通过后端的response写，也可以用前端js去写，但是必须有对所有需要“单点登录”的站点进行逐一的写入。用脚想这种办法也是行不通的，因为你需要维护一个站点的列表，维护工作十分复杂，同时对于增加站点也会特别痛苦。对于Cookie的销毁也是十分复杂的，因为还是要对所有域名下的Cookie进行删除。也就是说将原来需要做的工作增加了n倍。对于小型站点这种办法是可取的。</span><br></pre></td></tr></table></figure></li>
+<li><h4 id="方法二：jsonp"><a href="#方法二：jsonp" class="headerlink" title="方法二：jsonp"></a>方法二：jsonp</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">扩展：</span><br><span class="line"><span class="number">1.</span>什么是jsopn</span><br><span class="line">  首先我们要先知道它是做什么的，</span><br><span class="line">    	jsonp的核心原理就是目标页面回调本地页面的方法,并带入参数我们常用的动态页面有jsp,php,aspx</span><br><span class="line"></span><br><span class="line"><span class="number">2.j</span>sopn应用</span><br><span class="line">jsonp是使用方法回调的原理.</span><br><span class="line">	在网页里,你如果引入其他网页的js,那这个页面的js是可以调用你网页的代码的，直接请求js 和 请求的动态页面(jsp,php,aspx)里输出的javascript代码 效果一样</span><br><span class="line"></span><br><span class="line">代码展示：</span><br><span class="line">function showjson(json)&#123;</span><br><span class="line">    alert(json.url);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">搞过前端的可能都知道用jsonp可以做跨域的请求，而我们解决的就是多个域下的统一登录的问题，好像很顺理成章的样子。但是，登录是Server端做的吧？我们在Client端做跨域的处理，这怎么看也不是很合理。同时这种办法需要很大的维护成本，每一次请求都要去固定的域下取相应的Cookie之后再做请求。</span><br></pre></td></tr></table></figure></li>
+<li><h4 id="方法三：引入一个中间态的Server"><a href="#方法三：引入一个中间态的Server" class="headerlink" title="方法三：引入一个中间态的Server"></a>方法三：引入一个中间态的Server</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">这种办法算是一个简化版的SSO，实现思想也十分的“狡猾”。但是对于小网站做跨域登录的处理却十分的有用，具体思路如下：</span><br><span class="line"></span><br><span class="line">  首先，我们有两个域名要实现单点登录，同时我们需要一个中间的Server。</span><br><span class="line"></span><br><span class="line">  <span class="number">1</span>、我们有一个系统域名为xulingbo.net,当我们登录的时候访问xulingbo.net/wp-login进行登录，登录成功之后将Cookie回写到xulingbo这个域名下。</span><br><span class="line">  <span class="number">2</span>、我们还有一个系统域名为javaWeb.com，当我们访问inside-javaWeb的时候，我们没有Cookie，那么请求跳转到中间系统jump。此时需要将当前域名带到参数中便于jump校验。这个jump系统是在xulingbo域下的即：jump.xulingbo.net。这时候就能拿到之前写在xulingbo域下的Cookie。</span><br><span class="line">  <span class="number">3</span>、jump系统在收到了xulingbo域下的Cookie之后，取出xulingbo域下的Cookie，并redirect请求jump.inside-javaWeb.net,这个接口也是在jump系统中，请求后jump系统将Cookie回写到inside-javaWeb域名下，这样就实现了简易的单点登录。</span><br><span class="line"></span><br><span class="line">该方法缺点：</span><br><span class="line">但是这种方式不是很灵活，对于数据传输的安全性没有保障，并且在销毁Cookie的时候无能为力，只能全部遍历的销毁。</span><br></pre></td></tr></table></figure>
+
+<p>如下图所示：<img src="https://upload-images.jianshu.io/upload_images/2177145-9d502ed0a6193452.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1102/format/webp" alt="img"></p>
+</li>
+<li><h4 id="方法四：基于CAS的OSS系统"><a href="#方法四：基于CAS的OSS系统" class="headerlink" title="方法四：基于CAS的OSS系统"></a>方法四：基于CAS的OSS系统</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">方法四：基于CAS的OSS系统(<span class="number">1</span>)</span><br><span class="line">CAS全称为：Central Authentication Service,是一款不错的针对web应用的单点登录框架，包括java，.net，PHP，Prel，Apache，uPortal，Ruby等。。实现的机制不算复杂但是思想十分灵巧。用CAS也可以快速实现单点登录。</span><br></pre></td></tr></table></figure>
+
+<p>盗图一张说明sso单个域的登录和验证流程：</p>
+</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://upload-images.jianshu.io/upload_images/2177145-3f9bf02557ab23ac.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/677/format/webp" alt="2177145-3f9bf02557ab23ac"></p>
+  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">方法四：基于CAS的OSS系统(<span class="number">2</span>)</span><br><span class="line">CAS主要分为CAS Client 和CAS Server ，其中Client主要是内嵌在需要SSO登录站点的拦截器或过滤器上。</span><br><span class="line"><span class="number">1</span>、首先浏览器向站点<span class="number">1</span>发起请求。</span><br><span class="line"><span class="number">2</span>、站点<span class="number">1</span>发现当前请求没有合法的Cookie，那么重定向到CAS Server上，也就是SSO Server。</span><br><span class="line"><span class="number">3</span>、CAS Server展示登录界面，要求用户登录。</span><br><span class="line"><span class="number">4</span>、用户登录后，会写CAS Server的Cookie到浏览器，同时生产ticket，利用一个<span class="number">302</span>跳转到CASClient。这样能保证用户无感知。</span><br><span class="line"><span class="number">5</span>、CAS Client利用生成的ticket发送到CAS Server进行验证，验证通过后，站点<span class="number">1</span>生成自己的Cookie并回写到用户浏览器，然后进行登录成功的跳转。</span><br><span class="line"></span><br><span class="line">这样就能保证当前浏览器在站点<span class="number">1</span>的域名下，有站点<span class="number">1</span>的Cookie，同时当前浏览器也有CAS Server的Cookie。</span><br></pre></td></tr></table></figure>
+<p>  接下来看下站点2的登录：</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/2177145-405d5f8869f90c14.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/808/format/webp" alt="img"></p>
+  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">站点<span class="number">2</span>，在进行登录时和站点<span class="number">1</span>初次登录流程一致，但是在访问CAS Server的时候，由于当前浏览器已经有了CAS Server的Cookie，那么直接校验通过返回ticket。</span><br><span class="line">ticket通过<span class="number">302</span>跳转跳转到CAS Client上，之后的流程就和站点<span class="number">1</span>是一样的了。如果此时认证失败，那么需要重新走一次登录的过程。</span><br><span class="line"></span><br><span class="line">注意的问题：</span><br><span class="line"><span class="number">1</span>、CAS Server的Cookie劫持问题，如果CAS Server的Cookie被劫持掉，那么就相当于拿到了一切，所以必须要用HTTPS实现这个过程。</span><br><span class="line"><span class="number">2</span>、ticket的使用，ticket只能被使用一次，一次校验后立即失效。同时需要有时效性，一般<span class="number">5</span>分钟。最后ticket生成规则要随机，不能被碰撞出来。</span><br><span class="line"><span class="number">3</span>、对于各自系统自己的Session，也可以依赖于SSO，这样就能保证所有的Session规则一致，便于集中控制。</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><h3 id="注：运营系统也是采用这种方式处理的"><a href="#注：运营系统也是采用这种方式处理的" class="headerlink" title="注：运营系统也是采用这种方式处理的"></a>注：运营系统也是采用这种方式处理的</h3><ul>
+<li><p>基于当前现状，单点登录系统可以有一下处理</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">调用Soa服务实现登录登出</span><br><span class="line">缺点：得自己实现判断用户是否登录、session是否过期；缺乏权限控制，得自己实现</span><br><span class="line">优点：实现简单</span><br></pre></td></tr></table></figure>
+<h2 id="5-Spring-Security-介绍"><a href="#5-Spring-Security-介绍" class="headerlink" title="5.Spring Security 介绍"></a>5.Spring Security 介绍</h2></li>
+</ul>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">Spring Security是什么?</span><br><span class="line">Spring security 是一个强大的和高度可定制的身份验证和访问控制框架,它提供了基于javaEE的企业应有个你软件全面的安全服务。它是保护基于Spring的应用程序的事实上的标准。主要作用是“认证”和“授权”（或者访问控制）。</span><br><span class="line">在身份验证层，Spring Security 的支持多种认证模式。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">核心功能</span><br><span class="line"><span class="number">1</span>、认证（你是谁）</span><br><span class="line"><span class="number">2</span>、授权（你能干什么）</span><br><span class="line"><span class="number">3</span>、攻击防护（防止伪造身份）</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">什么是Spring Security验证?</span><br><span class="line"><span class="number">1</span>、提示用户输入用户名和密码进行登录。</span><br><span class="line"></span><br><span class="line"><span class="number">2</span>、该系统 (成功) 验证该用户名的密码正确。</span><br><span class="line"></span><br><span class="line"><span class="number">3</span>、获取该用户的环境信息 (他们的角色列表等).</span><br><span class="line"></span><br><span class="line"><span class="number">4</span>、为用户建立安全的环境。</span><br><span class="line"></span><br><span class="line"><span class="number">5</span>、用户进行，可能执行一些操作，这是潜在的保护的访问控制机制，检查所需权限，对当前的安全的环境信息的操作。</span><br><span class="line"></span><br><span class="line">验证流程介绍</span><br><span class="line"><span class="number">1</span>、用户名和密码进行组合成一个实例UsernamePasswordAuthenticationToken (一个Authentication接口的实例, 我们之前看到的).</span><br><span class="line"></span><br><span class="line"><span class="number">2</span>、令牌传递到AuthenticationManager实例进行验证。</span><br><span class="line"></span><br><span class="line"><span class="number">3</span>、该AuthenticationManager完全填充Authentication实例返回成功验证。</span><br><span class="line"></span><br><span class="line"><span class="number">4</span>、安全环境是通过调用 SecurityContextHolder.getContext().setAuthentication(…​), 传递到返回的验证对象建立的。</span><br></pre></td></tr></table></figure>
+
+<h2 id="6-OAUTH2-类似于中间商"><a href="#6-OAUTH2-类似于中间商" class="headerlink" title="6.OAUTH2(类似于中间商)"></a>6.OAUTH2(类似于中间商)</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">OAuth在<span class="string">&quot;客户端&quot;</span>与<span class="string">&quot;服务提供商&quot;</span>之间，设置了一个授权层（authorization layer）。<span class="string">&quot;客户端&quot;</span>不能直接登录<span class="string">&quot;服务提供商&quot;</span>，只能登录授权层，以此将用户与客户端区分开来。<span class="string">&quot;客户端&quot;</span>登录授权层所用的令牌（token），与用户的密码不同。用户可以在登录的时候，指定授权层令牌的权限范围和有效期。</span><br><span class="line"><span class="string">&quot;客户端&quot;</span>登录授权层以后，<span class="string">&quot;服务提供商&quot;</span>根据令牌的权限范围和有效期，向<span class="string">&quot;客户端&quot;</span>开放用户储存的资料。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">运行流程</span><br><span class="line">（A）用户打开客户端以后，客户端要求用户给予授权。</span><br><span class="line">（B）用户同意给予客户端授权。</span><br><span class="line">（C）客户端使用上一步获得的授权，向认证服务器申请令牌。</span><br><span class="line">（D）认证服务器对客户端进行认证以后，确认无误，同意发放令牌。</span><br><span class="line">（E）客户端使用令牌，向资源服务器申请获取资源。</span><br><span class="line">（F）资源服务器确认令牌无误，同意向客户端开放资源。</span><br></pre></td></tr></table></figure>
+
+<h2 id="7-授权模式讲解（有多种不同的授权方式）"><a href="#7-授权模式讲解（有多种不同的授权方式）" class="headerlink" title="7.授权模式讲解（有多种不同的授权方式）"></a>7.授权模式讲解（有多种不同的授权方式）</h2><ul>
+<li><h4 id="授权码模式"><a href="#授权码模式" class="headerlink" title="授权码模式"></a>授权码模式</h4></li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">（A）用户访问客户端，后者将前者导向认证服务器。</span><br><span class="line">（B）用户选择是否给予客户端授权。</span><br><span class="line">（C）假设用户给予授权，认证服务器将用户导向客户端事先指定的<span class="string">&quot;重定向URI&quot;</span>（redirection URI），同时附上一个授权码。</span><br><span class="line">（D）客户端收到授权码，附上早先的<span class="string">&quot;重定向URI&quot;</span>，向认证服务器申请令牌。这一步是在客户端的后台的服务器上完成的，对用户不可见。</span><br><span class="line">（E）认证服务器核对了授权码和重定向URI，确认无误后，向客户端发送访问令牌（access token）和更新令牌（refresh token）。</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><h4 id="下面是上面这些步骤所需要的参数。"><a href="#下面是上面这些步骤所需要的参数。" class="headerlink" title="下面是上面这些步骤所需要的参数。"></a>下面是上面这些步骤所需要的参数。</h4><p>A步骤中，客户端申请认证的URI，包含以下参数：</p>
+<p>–response_type：表示授权类型，必选项，此处的值固定为”code”<br>–client_id：表示客户端的ID，必选项<br>–redirect_uri：表示重定向URI，可选项<br>–scope：表示申请的权限范围，可选项<br>–state：表示客户端的当前状态，可以指定任意值，认证服务器会原封不动地返回这个值</p>
+</li>
+</ul>
+<p>  C步骤中，服务器回应客户端的URI，包含以下参数：<br>   –code：表示授权码，必选项。该码的有效期应该很短，通常设为10分钟，客户端只能使用该码一次，否则会被授权服务器拒绝。该码与客户端ID和重定向URI，是一一对应关系。<br>   –state：如果客户端的请求中包含这个参数，认证服务器的回应也必须一模一样包含这个参数。</p>
+<p>  D步骤中，客户端向认证服务器申请令牌的HTTP请求，包含以下参数：<br>   –grant_type：表示使用的授权模式，必选项，此处的值固定为”authorization_code”。<br>   –code：表示上一步获得的授权码，必选项。<br>   –redirect_uri：表示重定向URI，必选项，且必须与A步骤中的该参数值保持一致。<br>   –client_id：表示客户端ID，必选项。</p>
+<p>  E步骤中，认证服务器发送的HTTP回复，包含以下参数：<br>   –access_token：表示访问令牌，必选项。<br>   –token_type：表示令牌类型，该值大小写不敏感，必选项，可以是bearer类型或mac类型。<br>   –expires_in：表示过期时间，单位为秒。如果省略该参数，必须其他方式设置过期时间。<br>   –refresh_token：表示更新令牌，用来获取下一次的访问令牌，可选项。<br>   –scope：表示权限范围，如果与客户端申请的范围一致，此项可省略。</p>
+<ul>
+<li><h4 id="简化模式"><a href="#简化模式" class="headerlink" title="简化模式"></a>简化模式</h4>   简化模式（implicit grant type）不通过第三方应用程序的服务器，直接在浏览器中向认证服务器申请令牌，跳过了”授权码”这个步骤，因此得名。所有步骤在浏览器中完成，令牌对访问者是可见的，且客户端不需要认证。</li>
+</ul>
+<pre><code> 它的步骤如下：
+  （A）客户端将用户导向认证服务器。
+  （B）用户决定是否给于客户端授权。
+  （C）假设用户给予授权，认证服务器将用户导向客户端指定的&quot;重定向URI&quot;，并在URI的Hash部分包含了访问令牌。
+  （D）浏览器向资源服务器发出请求，其中不包括上一步收到的Hash值。
+  （E）资源服务器返回一个网页，其中包含的代码可以获取Hash值中的令牌。
+  （F）浏览器执行上一步获得的脚本，提取出令牌。
+  （G）浏览器将令牌发给客户端。
+
+ * 下面是上面这些步骤所需要的参数。
+   A步骤中，客户端发出的HTTP请求，包含以下参数：
+   -response_type：表示授权类型，此处的值固定为&quot;token&quot;，必选项。
+   -client_id：表示客户端的ID，必选项。
+   -redirect_uri：表示重定向的URI，可选项。
+   -scope：表示权限范围，可选项。
+   -state：表示客户端的当前状态，可以指定任意值，认证服务器会原封不动地返回这个值。
+
+   C步骤中，认证服务器回应客户端的URI，包含以下参数：
+    -access_token：表示访问令牌，必选项。
+    -token_type：表示令牌类型，该值大小写不敏感，必选项。
+    -expires_in：表示过期时间，单位为秒。如果省略该参数，必须其他方式设置过期时间。
+    -scope：表示权限范围，如果与客户端申请的范围一致，此项可省略。
+    -state：如果客户端的请求中包含这个参数，认证服务器的回应也必须一模一样包含这个参数。</code></pre>
+<ul>
+<li><h4 id="密码模式"><a href="#密码模式" class="headerlink" title="密码模式"></a>密码模式</h4><p>密码模式（Resource Owner Password Credentials Grant）中，用户向客户端提供自己的用户名和密码。客户端使用这些信息，向”服务商提供商”索要授权。<br> 在这种模式中，用户必须把自己的密码给客户端，但是客户端不得储存密码。这通常用在用户对客户端高度信任的情况下，比如客户端是操作系统的一部分，或者由一个著名公司出品。而认证服务器只有在其他授权模式无法执行的情况下，才能考虑使用这种模式。</p>
+<p>它的步骤如下：<br> （A）用户向客户端提供用户名和密码。<br> （B）客户端将用户名和密码发给认证服务器，向后者请求令牌。<br> （C）认证服务器确认无误后，向客户端提供访问令牌。</p>
+</li>
+</ul>
+<p>  B步骤中，客户端发出的HTTP请求，包含以下参数：</p>
+<p>   -grant_type：表示授权类型，此处的值固定为”password”，必选项。<br>   -username：表示用户名，必选项。<br>   -password：表示用户的密码，必选项。<br>   -scope：表示权限范围，可选项。</p>
+<p>  C步骤中，认证服务器向客户端发送访问令牌，下面是一个例子。</p>
+  <figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">HTTP/<span class="number">1.1</span> <span class="number">200</span> OK</span><br><span class="line">     Content-<span class="built_in">Type</span>: application/json;charset=UTF<span class="number">-8</span></span><br><span class="line">     Cache-Control: no-store</span><br><span class="line">     Pragma: no-cache</span><br><span class="line"></span><br><span class="line">     &#123;</span><br><span class="line">       <span class="string">&quot;access_token&quot;</span>:<span class="string">&quot;2YotnFZFEjr1zCsicMWpAA&quot;</span>,</span><br><span class="line">       <span class="string">&quot;token_type&quot;</span>:<span class="string">&quot;example&quot;</span>,</span><br><span class="line">       <span class="string">&quot;expires_in&quot;</span>:<span class="number">3600</span>,</span><br><span class="line">       <span class="string">&quot;refresh_token&quot;</span>:<span class="string">&quot;tGzv3JOkF0XG5Qx2TlKWIA&quot;</span>,</span><br><span class="line">       <span class="string">&quot;example_parameter&quot;</span>:<span class="string">&quot;example_value&quot;</span></span><br><span class="line">     &#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<ul>
+<li><h4 id="客户端模式"><a href="#客户端模式" class="headerlink" title="客户端模式"></a>客户端模式</h4><p> 客户端模式（Client Credentials Grant）指客户端以自己的名义，而不是以用户的名义，向”服务提供商”进行认证。严格地说，客户端模式并不属于OAuth框架所要解决的问题。在这种模式中，用户直接向客户端注册，客户端以自己的名义要求”服务提供商”提供服务，其实不存在授权问题。</p>
+<p> 它的步骤如下：<br> （A）客户端向认证服务器进行身份认证，并要求一个访问令牌。<br> （B）认证服务器确认无误后，向客户端提供访问令牌。</p>
+</li>
+</ul>
+<p>   A步骤中，客户端发出的HTTP请求，包含以下参数：<br>   -granttype：表示授权类型，此处的值固定为”clientcredentials”，必选项。<br>   -scope：表示权限范围，可选项。</p>
+<p>   B步骤中，认证服务器向客户端发送访问令牌，下面是一个例子。</p>
+   <figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">HTTP/<span class="number">1.1</span> <span class="number">200</span> OK</span><br><span class="line">     Content-<span class="built_in">Type</span>: application/json;charset=UTF<span class="number">-8</span></span><br><span class="line">     Cache-Control: no-store</span><br><span class="line">     Pragma: no-cache</span><br><span class="line"></span><br><span class="line">     &#123;</span><br><span class="line">       <span class="string">&quot;access_token&quot;</span>:<span class="string">&quot;2YotnFZFEjr1zCsicMWpAA&quot;</span>,</span><br><span class="line">       <span class="string">&quot;token_type&quot;</span>:<span class="string">&quot;example&quot;</span>,</span><br><span class="line">       <span class="string">&quot;expires_in&quot;</span>:<span class="number">3600</span>,</span><br><span class="line">       <span class="string">&quot;example_parameter&quot;</span>:<span class="string">&quot;example_value&quot;</span></span><br><span class="line">     &#125;</span><br></pre></td></tr></table></figure>
+            </div>
+            
+                <div class="kratos-copyright text-center clearfix">
+                    <h5>本作品采用 <a rel="license nofollow" target="_blank" href="http://creativecommons.org/licenses/by-sa/4.0/">知识共享署名-相同方式共享 4.0 国际许可协议</a> 进行许可</h5>
+                </div>
+            
+            <footer class="kratos-entry-footer clearfix">
+                
+                    <div class="post-like-donate text-center clearfix" id="post-like-donate">
+                    
+                    
+                        <a class="share" href="javascript:;"><i class="fa fa-share-alt"></i> 分享</a>
+                        <div class="share-wrap" style="display: none;">
+    <div class="share-group">
+        <a href="javascript:;" class="share-plain qq" onclick="share('qq');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-qq"></i>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain qzone" onclick="share('qzone');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-star"></i>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain weixin pop style-plain" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-weixin"></i>
+            </div>
+            <div class="share-int">
+                <div class="qrcode" id="wechat-qr"></div>
+                <p>打开微信“扫一扫”，打开网页后点击屏幕右上角分享按钮</p>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain weibo" onclick="share('weibo');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-weibo"></i>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain facebook style-plain" onclick="share('facebook');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-facebook"></i>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain twitter style-plain" onclick="share('twitter');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-twitter"></i>
+            </div>
+        </a>
+    </div>
+    <script type="text/javascript">
+        $(()=>{
+            new QRCode("wechat-qr", {
+                text: "http://example.com/2020/08/08/%E5%8D%95%E7%82%B9%E7%99%BB%E5%BD%95%EF%BC%88%E4%B9%9F%E5%8F%ABSSO%EF%BC%89/",
+                width: 150,
+                height: 150,
+                correctLevel : QRCode.CorrectLevel.H
+            });
+        });
+        function share(dest) {
+            const qqBase        = "https://connect.qq.com/widget/shareqq/index.html?";
+            const weiboBase     = "https://service.weibo.com/share/share.php?";
+            const qzoneBase     = "https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?";
+            const facebookBase  = "https://www.facebook.com/sharer/sharer.php?";
+            const twitterBase   = "https://twitter.com/intent/tweet?";
+            const hostUrl       = "http://example.com/2020/08/08/%E5%8D%95%E7%82%B9%E7%99%BB%E5%BD%95%EF%BC%88%E4%B9%9F%E5%8F%ABSSO%EF%BC%89/";
+            const title         = "「单点登录」";
+            const excerpt       = `单点登录（也叫SSO）1.介绍，什么是单点登录
+SSO英文全称Single SignOn，单点登录。SSO是在多个应用系统中，用户只需要登录一次就可以访问所有相互信任的应用系统。它包括可以将这次主要的登录映射到其他应用中用于同一个用户...`;
+            let _URL;
+            switch (dest) {
+                case "qq"       : _URL = qqBase+"url="+hostUrl+"&title="+title+"&desc=&summary="+excerpt+"&site=cxpy";     break;
+                case "weibo"    : _URL = weiboBase+"url="+hostUrl+"&title="+title+excerpt;                                 break;
+                case "qzone"    : _URL = qzoneBase+"url="+hostUrl+"&title="+title+"&desc=&summary="+excerpt+"&site=cxpy";  break;
+                case "facebook" : _URL = facebookBase+"u="+hostUrl;                                                        break;
+                case "twitter"  : _URL = twitterBase+"text="+title+excerpt+"&url="+hostUrl;                                break;
+            }
+            window.open(_URL);
+        };
+    </script>
+</div>
+                    
+                    </div>
+                
+                <div class="footer-tag clearfix">
+                    <div class="pull-left">
+                    <i class="fa fa-tags"></i>
+                        
+                    </div>
+                    <div class="pull-date">
+                    <span>最后编辑：2020-09-28</span>
+                    </div>
+                </div>
+            </footer>
+        </div>
+        
+            <nav class="navigation post-navigation clearfix" role="navigation">
+                
+                <div class="nav-previous clearfix">
+                    <a title=" CKEditor" href="/2020/08/04/CKEditor/">&lt; 上一篇</a>
+                </div>
+                
+                
+                <div class="nav-next clearfix">
+                    <a title=" SHELL编程四剑客之Grep" href="/2020/08/08/Shell编程四剑客之GREP/">下一篇 &gt;</a>
+                </div>
+                
+            </nav>
+        
+        
+    </article>
+</section>
+</div>
+        
+            <section id="kratos-widget-area" class="col-md-4 hidden-xs hidden-sm">
+                
+                    <aside id="krw-about" class="widget widget-kratos-about clearfix">
+    
+    <div class="photo-background"></div>
+    <div class="photo-wrapper clearfix">
+        <div class="photo-wrapper-tip text-center">
+            <img class="about-photo" src="/images/头像.webp" />
+        </div>
+    </div>
+    <div class="textwidget">
+        
+            <p class="text-center"></p>
+        
+    </div>
+</aside>
+                
+                    <!-- Moved to about.ejs -->
+                
+                    
+
+                
+                    
+                
+                    
+  <aside id="krw-posts" class="widget widget-kratos-poststab">
+  <h4 class="widget-title"><i class="fa fa-file"></i>最新文章</h4>
+  <div class="tab-content">
+      <ul class="list-group">
+        
+        
+          
+          
+            <a class="list-group-item" href="/2020/09/28/%E5%9F%BA%E4%BA%8E%E6%97%B6%E9%97%B4%E8%A1%B0%E5%87%8F%E7%9A%84%E7%83%AD%E5%BA%A6%E7%AE%97%E6%B3%95/"><i class="fa  fa-book"></i> 基于时间衰减的热度算法</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2020/09/28/webssh/"><i class="fa  fa-book"></i> WebSSH</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2020/09/28/paramiko/"><i class="fa  fa-book"></i> Paramiko</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2020/09/28/Mysql%E6%90%AD%E5%BB%BA%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6/"><i class="fa  fa-book"></i> Mysql搭建主从复制</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2020/09/28/fastdfs%E6%96%87%E4%BB%B6%E5%AD%98%E5%82%A8%E7%B3%BB%E7%BB%9F/"><i class="fa  fa-book"></i> FastDFS文件存储系统</a>
+            
+          
+        
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+      </ul>
+  </div>
+  </aside>
+
+                
+            </section>
+        
+        </div>
+    </div>
+</div>
+<footer>
+    <div id="footer">
+        <div class="kr-tool text-center">
+            <div class="tool">
+                
+                    <div class="box search-box">
+                        <a href="/search/">
+                            <span class="fa fa-search"></span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="box theme-box" id="darkmode-switch">
+                        <span class="fa fa-adjust"></span>
+                    </div>
+                
+                
+            </div>
+            <div class="box gotop-box">
+                <span class="fa fa-chevron-up"></span>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3 footer-list text-center">
+                    <ul class="kratos-social-icons">
+                        
+                        
+                        <li><a target="_blank" rel="nofollow" href="https://t.me/CandyUnion"><i class="fa fa-telegram"></i></a></li>
+                        <li><a target="_blank" rel="nofollow" href="https://twitter.com/Candiinya"><i class="fa fa-twitter"></i></a></li>
+                        
+                        
+                        
+                        <li><a target="_blank" rel="nofollow" href="https://github.com/Candinya"><i class="fa fa-github"></i></a></li>
+                        
+                    </ul>
+                    <ul class="kratos-copyright">
+                        <div>
+                            <li>&copy; 2020 Cao Fan 版权所有.</li>
+                            <li>本站已运行<span id="span_dt">Loading...</span></li>
+                        </div>
+                        <div>
+                            <li>Theme <a href="https://github.com/Candinya/Kratos-Rebirth" target="_blank">Kratos:Rebirth</a></li>
+                            <li>Made with&nbsp;<i class="fa fa-heart throb" style="color:#d43f57"></i>&nbsp;by <a href="https://candinya.com" target="_blank" rel="nofollow">Candinya</a>.</li>
+                        </div>
+                        <div>
+                            <li>Powered by <a href="https://hexo.io" target="_blank" rel="nofollow">Hexo</a></li>
+                            <li>Hosted on <a href="https://github.io" target="_blank">Github Pages</a></li>
+                        </div>
+                        <div>
+                            
+                            
+                        </div>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+</div>
+</div>
+<script defer src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.4/dist/js/bootstrap.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.js"></script>
+<script>const notMobile = (!(navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)));</script>
+
+<script async src="/js/candy.min.js"></script>
+
+
+    <script defer src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+
+<script defer src="/js/kratosr.min.js"></script>
+<script defer src="/js/pjax.min.js"></script>
+
+
+    <script defer src="/js/kr-dark.min.js"></script>
+
+
+
+
+</body>
+</html>
