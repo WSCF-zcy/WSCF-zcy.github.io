@@ -192,27 +192,30 @@
                 
             
                 
-                    <article class="kratos-hentry kratos-entry-border-new clearfix">
-                        <div class="kratos-status">
+                    <article class="kratos-hentry clearfix">
+                        <div class="kratos-entry-border-new clearfix">
                             
-                                <i class="fa fa-refresh"></i>
-                            
-                            <div class="kratos-status-inner">
-                                <div class="kratos-status-content">
+                            <div class="kratos-entry-thumb-new">
+                                <a href="/2020/09/30/vue%E5%8F%91%E9%80%81%E7%9F%AD%E4%BF%A160%E7%A7%92%E5%80%92%E8%AE%A1%E6%97%B6/">
                                     
-                                        <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">title: vue 发送短信60秒倒计时</span><br></pre></td></tr></table></figure>
-
-
-
-<p>代码:</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;div&gt;</span><br><span class="line">    &lt;h1&gt;注册页面&lt;/h1&gt;</span><br><span class="line">    用户名：&lt;input <span class="built_in">type</span>=<span class="string">&quot;text&quot;</span> v-model=<span class="string">&quot;name&quot;</span> placeholder=<span class="string">&quot;请输入用户名&quot;</span>&gt;&lt;br&gt;</span><br><span class="line">    密码：&lt;input <span class="built_in">type</span>=<span class="string">&quot;password&quot;</span> v-model=<span class="string">&quot;password&quot;</span> placeholder=<span class="string">&quot;请输入密码&quot;</span>&gt;&lt;br&gt;</span><br><span class="line">    确认密码：&lt;input <span class="built_in">type</span>=<span class="string">&quot;password&quot;</span> v-model=<span class="string">&#x27;password2&#x27;</span> placeholder=<span class="string">&quot;请输入确认密码&quot;</span>&gt;&lt;br&gt;</span><br><span class="line">    手机号: &lt;input <span class="built_in">type</span>=<span class="string">&quot;text&quot;</span> v-model=<span class="string">&quot;phono&quot;</span> placeholder=<span class="string">&quot;请输入手机号&quot;</span>&gt;&lt;br&gt;</span><br><span class="line">    验证码：&lt;input <span class="built_in">type</span>=<span class="string">&quot;text&quot;</span> v-model=<span class="string">&quot;acode&quot;</span> placeholder=<span class="string">&quot;请输入验证码&quot;</span>&gt;</span><br><span class="line">    &lt;el-button :disabled=<span class="string">&quot;disabled&quot;</span> @click=<span class="string">&quot;get_code&quot;</span> class=<span class="string">&quot;el-button&quot;</span> <span class="built_in">type</span>=<span class="string">&quot;info&quot;</span> plain&gt;&#123;&#123;codevalue&#125;&#125;&lt;/el-button&gt;&lt;br&gt;</span><br><span class="line">    &lt;el-button <span class="built_in">type</span>=<span class="string">&quot;success&quot;</span> round @click=<span class="string">&quot;register&quot;</span> class=<span class="string">&quot;el-button&quot;</span>&gt;注册&lt;/el-button&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line"><span class="built_in">export</span> default &#123;</span><br><span class="line">  <span class="function"><span class="title">data</span></span>() &#123;</span><br><span class="line">    <span class="built_in">return</span> &#123;</span><br><span class="line">        name:<span class="string">&#x27;&#x27;</span>,</span><br><span class="line">        password:<span class="string">&#x27;&#x27;</span>,</span><br><span class="line">        password2:<span class="string">&#x27;&#x27;</span>,</span><br><span class="line">        phono:<span class="string">&#x27;&#x27;</span>,</span><br><span class="line">        acode:<span class="string">&#x27;&#x27;</span>,</span><br><span class="line">        codevalue:<span class="string">&#x27;获取验证码&#x27;</span>,</span><br><span class="line">        disabled: <span class="literal">false</span>,</span><br><span class="line">        time: 60,   </span><br><span class="line">    &#125;;</span><br><span class="line">  &#125;,</span><br><span class="line">  methods: &#123;</span><br><span class="line">      // 获取验证码</span><br><span class="line">      <span class="function"><span class="title">get_code</span></span>()&#123;</span><br><span class="line">          this.time = 5;</span><br><span class="line">          this.timer()</span><br><span class="line">        //   this.axios.get(<span class="string">&#x27;&#x27;</span>).<span class="keyword">then</span>(res=&gt;&#123;</span><br><span class="line"></span><br><span class="line">        //   &#125;)</span><br><span class="line">      &#125;,</span><br><span class="line">      // 倒计时</span><br><span class="line">      <span class="function"><span class="title">timer</span></span>()&#123;</span><br><span class="line">          <span class="keyword">if</span> (this.time &gt; 0)&#123;</span><br><span class="line">              this.disabled = <span class="literal">true</span>;</span><br><span class="line">              this.time--;</span><br><span class="line">              this.codevalue = this.time + <span class="string">&#x27;秒&#x27;</span>;</span><br><span class="line">              setTimeout(this.timer, 1000)  // setTimeout（）属于window的method，一般用来做时间延迟</span><br><span class="line">          &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">              this.time = 0;</span><br><span class="line">              this.codevalue = <span class="string">&#x27;重新发送验证码&#x27;</span></span><br><span class="line">              this.disabled = <span class="literal">false</span>;   </span><br><span class="line">          &#125;</span><br><span class="line">      &#125;,</span><br><span class="line">      // 注册</span><br><span class="line">      <span class="function"><span class="title">register</span></span>()&#123;</span><br><span class="line"></span><br><span class="line">      &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="function"><span class="title">mounted</span></span>() &#123;&#125;,</span><br><span class="line">&#125;;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line">&lt;style scoped&gt;</span><br><span class="line"></span><br><span class="line">&lt;/style&gt;</span><br></pre></td></tr></table></figure>
-
-
+                                        <img class="kratos-entry-thumb-new-img">
                                     
+                                </a>
+                            </div>
+                            <div class="kratos-post-inner-new">
+                                <header class="kratos-entry-header-new">
+                                        
+                                    <h2 class="kratos-entry-title-new"><a href="/2020/09/30/vue%E5%8F%91%E9%80%81%E7%9F%AD%E4%BF%A160%E7%A7%92%E5%80%92%E8%AE%A1%E6%97%B6/">vue 发送短信60秒倒计时</a>
+                                </header>
+                                <div class="kratos-entry-content-new">
+                                    <p>
+                                        
+                                            代码:
+123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960&l...
+                                        
+                                    </p>
                                 </div>
                             </div>
-                        </div>
-                        
                             <footer class="kratos-post-meta-new">
                                 <span class="pull-left">
                                     <a><i class="fa fa-calendar"></i></a><a>2020-09-30</a>
@@ -223,409 +226,38 @@
                                     <a class="read-more" href="/2020/09/30/vue%E5%8F%91%E9%80%81%E7%9F%AD%E4%BF%A160%E7%A7%92%E5%80%92%E8%AE%A1%E6%97%B6/" title="阅读全文">阅读全文<i class="fa fa-chevron-circle-right"></i></a>
                                 </span>
                             </footer>
-                        
+                        </div>
                     </article>
                 
             
                 
-                    <article class="kratos-hentry kratos-entry-border-new clearfix">
-                        <div class="kratos-status">
+                    <article class="kratos-hentry clearfix">
+                        <div class="kratos-entry-border-new clearfix">
                             
-                                <i class="fa fa-refresh"></i>
-                            
-                            <div class="kratos-status-inner">
-                                <div class="kratos-status-content">
+                            <div class="kratos-entry-thumb-new">
+                                <a href="/2020/09/29/MySQL%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/">
                                     
-                                        <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">title: MySQL基本操作</span><br></pre></td></tr></table></figure>
-
-<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a><strong>前言</strong></h1><p><strong>Django框架功能齐全自带数据库操作功能，本文主要介绍Django的ORM框架</strong></p>
-<p>到目前为止，当我们的程序涉及到数据库相关操作时，我们一般都会这么搞：</p>
-<ul>
-<li>创建数据库，设计表结构和字段</li>
-<li>使用 MySQLdb 来连接数据库，并编写数据访问层代码</li>
-<li>业务逻辑层去调用数据访问层执行数据库操作</li>
-</ul>
-<p><strong>ORM是什么？：(在django中，根据代码中的类自动生成数据库的表也叫–code first)</strong></p>
-<p>ORM：<strong>Object Relational Mapping(关系对象映射)</strong></p>
-<p>类名对应——》数据库中的表名</p>
-<p>类属性对应———》数据库里的字段</p>
-<p>类实例对应———》数据库表里的一行数据</p>
-<p>obj.id  obj.name…..类实例对象的属性</p>
-<p><strong>Django orm的优势：</strong></p>
-<p>Django的orm操作本质上会根据对接的数据库引擎，翻译成对应的sql语句；所有使用Django开发的项目无需关心程序底层使用的是MySQL、Oracle、sqlite….，如果数据库迁移，只需要更换Django的数据库引擎即可；</p>
-<h1 id="一、Django连接MySQL"><a href="#一、Django连接MySQL" class="headerlink" title="一、Django连接MySQL"></a><strong>一、Django连接MySQL</strong></h1><p><strong>1、创建数据库 （注意设置 数据的字符编码）</strong></p>
-<p>由于Django自带的orm是data_first类型的ORM，使用前必须先创建数据库</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">create database day70 default character set utf8 collate utf8_general_ci;</span><br></pre></td></tr></table></figure>
-
-<p><strong>2、修改project中的settings.py文件中设置  连接 MySQL数据库（Django默认使用的是sqllite数据库）</strong></p>
-<p><a href="javascript:void(0);"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">DATABASES &#x3D; &#123;</span><br><span class="line">    &#39;default&#39;: &#123;</span><br><span class="line">    &#39;ENGINE&#39;: &#39;django.db.backends.mysql&#39;,</span><br><span class="line">    &#39;NAME&#39;:&#39;day70&#39;,</span><br><span class="line">    &#39;USER&#39;: &#39;eric&#39;,</span><br><span class="line">    &#39;PASSWORD&#39;: &#39;123123&#39;,</span><br><span class="line">    &#39;HOST&#39;: &#39;192.168.182.128&#39;,</span><br><span class="line">    &#39;PORT&#39;: &#39;3306&#39;,</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><a href="javascript:void(0);"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a></p>
-<p>扩展：查看orm操作执行的原生SQL语句</p>
-<p>在project中的settings.py文件增加</p>
-<p><a href="javascript:void(0);"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">LOGGING &#x3D; &#123;</span><br><span class="line">    &#39;version&#39;: 1,</span><br><span class="line">    &#39;disable_existing_loggers&#39;: False,</span><br><span class="line">    &#39;handlers&#39;: &#123;</span><br><span class="line">        &#39;console&#39;:&#123;</span><br><span class="line">            &#39;level&#39;:&#39;DEBUG&#39;,</span><br><span class="line">            &#39;class&#39;:&#39;logging.StreamHandler&#39;,</span><br><span class="line">        &#125;,</span><br><span class="line">    &#125;,</span><br><span class="line">    &#39;loggers&#39;: &#123;</span><br><span class="line">        &#39;django.db.backends&#39;: &#123;</span><br><span class="line">            &#39;handlers&#39;: [&#39;console&#39;],</span><br><span class="line">            &#39;propagate&#39;: True,</span><br><span class="line">            &#39;level&#39;:&#39;DEBUG&#39;,</span><br><span class="line">        &#125;,</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><a href="javascript:void(0);"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a></p>
-<p><strong>3、修改project 中的__init__py 文件设置 Django默认连接MySQL的方式</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">import pymysql</span><br><span class="line">pymysql.install_as_MySQLdb()</span><br></pre></td></tr></table></figure>
-
-
-
-<p><strong>4、setings文件注册APP</strong></p>
-<p><a href="javascript:void(0);"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">INSTALLED_APPS &#x3D; [</span><br><span class="line">    &#39;django.contrib.admin&#39;,</span><br><span class="line">    &#39;django.contrib.auth&#39;,</span><br><span class="line">    &#39;django.contrib.contenttypes&#39;,</span><br><span class="line">    &#39;django.contrib.sessions&#39;,</span><br><span class="line">    &#39;django.contrib.messages&#39;,</span><br><span class="line">    &#39;django.contrib.staticfiles&#39;,</span><br><span class="line">    &#39;app01.apps.App01Config&#39;,</span><br><span class="line">   </span><br><span class="line">]</span><br></pre></td></tr></table></figure>
-
-<p><a href="javascript:void(0);"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a></p>
-<p> <strong>5、models.py创建表</strong></p>
-<p><strong>6、进行数据迁移</strong></p>
-<p>6.1、在winds cmd或者Linux shell的项目的manage.py目录下执行</p>
-<p><a href="javascript:void(0);"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">python manage.py makemigrations  #根据app下的migrations目录中的记录，检测当前model层代码是否发生变化？</span><br><span class="line"></span><br><span class="line">python manage.py migrate         #把orm代码转换成sql语句去数据库执行</span><br><span class="line">python manage.py migrate --fake    #只记录变化，不提交数据库操作</span><br><span class="line">python manage.py inspectdb &gt; models.py #检查DB中已经创建完毕的表结构，生成model.py</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p><a href="javascript:void(0);"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a></p>
-<p><strong>扩展：修改表结构之后常见报错</strong></p>
-<p><img src="https://images2017.cnblogs.com/blog/1122865/201708/1122865-20170806081338725-1520381166.png" alt="img"></p>
-<p>这个报错：因为表创建之时，新增字段既没有设置默认值，也没有设置新增字段可为空，去对应原有数据导致；</p>
-<p>2中解决方法：</p>
-<p>1.设置新增字段可以为空</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">startdate &#x3D; models.CharField(max_length&#x3D;255, verbose_name&#x3D;&quot;任务开始时间&quot;,null&#x3D;True, blank&#x3D;True)</span><br><span class="line">Handledate &#x3D; models.CharField(max_length&#x3D;255, verbose_name&#x3D;&quot;开始处理时间&quot;,null&#x3D;True, blank&#x3D;True)</span><br><span class="line">Handledone &#x3D; models.CharField(max_length&#x3D;255, verbose_name&#x3D;&quot;处理完毕时间&quot;, null&#x3D;True, blank&#x3D;True)</span><br><span class="line">enddate &#x3D; models.CharField(max_length&#x3D;255, verbose_name&#x3D;&quot;任务结束时间&quot;,null&#x3D;True, blank&#x3D;True)</span><br><span class="line">WorkTime_cost&#x3D;models.CharField(max_length&#x3D;255,verbose_name&#x3D;&#39;工作耗时&#39;,null&#x3D;True, blank&#x3D;True)</span><br></pre></td></tr></table></figure>
-
-
-
-<p>2.设置新增字段默认值为 当前时间</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Please enter the default value now, as valid Python</span><br><span class="line">The datetime and django.utils.timezone modules are available, so you can do e.g. timezone.now</span><br><span class="line">Type &#39;exit&#39; to exit this prompt</span><br><span class="line">&gt;&gt;&gt; timezone.now()</span><br></pre></td></tr></table></figure>
-
-
-
-<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/nunchakushuang/article/details/80024753">3.更多</a>问题</p>
-<p>python manage.py makemigrations :把你写在models中的代码翻译成增、删、改的 SQL 语句；</p>
-<p>python manage.py migrate；讲python manage.py makemigrations翻译的SQL语句去数据库执行； </p>
-<p>python manage.py migrate –fake；假设 migrate 把所有SQL语句执行成功了；</p>
-<p>我在使用Django构建表结构的时候很长一段时间都是没有了解以上3条语句的执行意义，所有经常在修改表结构之后出现报错；</p>
-<p>出现报错的原因：</p>
-<p>无非就是   makemigrations翻译的 SQL，跟数据库里面真实的表结构 相互冲突,增加、删除不了表、外键关系；</p>
-<p>所以遇到报错 你应该先把model中的代码注释掉—–》python manage.py migrate –fake——》python manage.py makemigrations</p>
-<p>去数据库把已经存在的表、外键删掉（确保数据库目前的状态，可以让makemigrations翻译出来的SQL语句在数据库里执行成功；然后migrate）——–》 python manage.py migrate；</p>
-<p><strong>7.设置pycharm可视化MySQL</strong></p>
-<p><img src="https://images2017.cnblogs.com/blog/1122865/201802/1122865-20180209113627435-128206701.png" alt="img"></p>
-<p><img src="https://images2017.cnblogs.com/blog/1122865/201802/1122865-20180209113740154-845278729.png" alt="img"></p>
-<p> <img src="https://images2017.cnblogs.com/blog/1122865/201802/1122865-20180209113811310-6902154.png" alt="img"></p>
-<h1 id="二、modles-py创建表"><a href="#二、modles-py创建表" class="headerlink" title="二、modles.py创建表"></a>二、modles.py创建表</h1><h3 id=""><a href="#" class="headerlink" title=""></a></h3><h3 id="ORM字段介绍"><a href="#ORM字段介绍" class="headerlink" title="ORM字段介绍"></a><strong>ORM字段介绍</strong></h3><p>Djan提供了很多字段类型，比如URL/Email/IP/ 但是mysql数据没有这些类型，这类型存储到数据库上本质是字符串数据类型,其主要目的是为了封装底层SQL语句；</p>
-<p><strong>1、字符串类（以下都是在数据库中本质都是字符串数据类型，此类字段只是在Django自带的admin中生效）</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">name&#x3D;models.CharField(max_length&#x3D;32)</span><br></pre></td></tr></table></figure>
-
-<p><a href="javascript:void(0);"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">EmailField(CharField)：</span><br><span class="line">IPAddressField(Field)</span><br><span class="line">URLField(CharField)</span><br><span class="line">SlugField(CharField)</span><br><span class="line">UUIDField(Field)</span><br><span class="line">FilePathField(Field)</span><br><span class="line">FileField(Field)</span><br><span class="line">ImageField(FileField)</span><br><span class="line">CommaSeparatedIntegerField(CharField)</span><br></pre></td></tr></table></figure>
-
-<p><a href="javascript:void(0);"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a></p>
-<p> 扩展</p>
-<p>models.CharField  对应的是MySQL的varchar数据类型</p>
-<p><strong>char 和 varchar的区</strong>别 :</p>
-<p>char和varchar的共同点是存储数据的长度，不能 超过max_length限制，</p>
-<p>不同点是varchar根据数据实际长度存储，char按指定max_length（）存储数据；所有前者更节省硬盘空间；</p>
-<p><strong>2、时间字段</strong></p>
-<p>models.DateTimeField(null=True)</p>
-<p>date=models.DateField()</p>
-<p><strong>3、数字字段</strong></p>
-<p>(max_digits=30,decimal_places=10)总长度30小数位 10位）</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">数字：</span><br><span class="line">num &#x3D; models.IntegerField()</span><br><span class="line">num &#x3D; models.FloatField() 浮点</span><br><span class="line">price&#x3D;models.DecimalField(max_digits&#x3D;8,decimal_places&#x3D;3) 精确浮点</span><br></pre></td></tr></table></figure>
-
-
-
-<p><strong>4、枚举字段</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"> choice&#x3D;(</span><br><span class="line">        (1,&#39;男人&#39;),</span><br><span class="line">        (2,&#39;女人&#39;),</span><br><span class="line">        (3,&#39;其他&#39;)</span><br><span class="line">    )</span><br><span class="line">lover&#x3D;models.IntegerField(choices&#x3D;choice) #枚举类型</span><br></pre></td></tr></table></figure>
-
-
-
-<p><strong>扩展</strong></p>
-<p>在数据库存储枚举类型，比外键有什么优势？</p>
-<p>1、无需连表查询性能低，省硬盘空间(选项不固定时用外键)<br>2、在modle文件里不能动态增加（选项一成不变用Django的choice）</p>
-<p><strong>其他字段</strong></p>
-<p><a href="javascript:void(0);"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">db_index &#x3D; True 表示设置索引</span><br><span class="line">unique(唯一的意思) &#x3D; True 设置唯一索引</span><br><span class="line"></span><br><span class="line">联合唯一索引</span><br><span class="line">class Meta:</span><br><span class="line">unique_together &#x3D; (</span><br><span class="line"> (&#39;email&#39;,&#39;ctime&#39;),</span><br><span class="line">)</span><br><span class="line">联合索引（不做限制）</span><br><span class="line">index_together &#x3D; (</span><br><span class="line">(&#39;email&#39;,&#39;ctime&#39;),</span><br><span class="line">)</span><br><span class="line">ManyToManyField(RelatedField)  #多对多操作</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p><a href="javascript:void(0);"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a></p>
-<h3 id="字段参数介绍"><a href="#字段参数介绍" class="headerlink" title="字段参数介绍"></a><strong>字段参数介绍</strong></h3><p><strong>1.数据库级别生效</strong></p>
-<p><img src="https://images.cnblogs.com/OutliningIndicators/ContractedBlock.gif" alt="img"> View Code</p>
-<p><strong>2、Django admin级别生效</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">针对 dango_admin生效的参数（正则匹配）（使用Django admin就需要关心以下参数！！））</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://images.cnblogs.com/OutliningIndicators/ContractedBlock.gif" alt="img"> View Code</p>
-<h1 id="三、ORM单表操作"><a href="#三、ORM单表操作" class="headerlink" title="三、ORM单表操作"></a>三、ORM单表操作</h1><h3 id="0、orm操作前戏"><a href="#0、orm操作前戏" class="headerlink" title="0、orm操作前戏"></a><strong>0、orm操作前戏</strong></h3><p>orm使用方式：</p>
-<p>orm操作可以使用类实例化，obj.save的方式，也可以使用create（）的形式</p>
-<p><strong>QuerySet数据类型介绍</strong></p>
-<p>QuerySet与惰性机制</p>
-<p>所谓惰性机制：Publisher.objects.all()或者.filter()等都只是返回了一个QuerySet（查询结果集对象），它并不会马上执行sql，而是当调用QuerySet的时候才执行。</p>
-<p>QuerySet特点：</p>
-<pre><code>   &lt;1&gt;  可迭代的 
-
-   &lt;2&gt;  可切片
-
-&lt;3&gt;惰性计算和缓存机制</code></pre>
-<p><img src="https://images.cnblogs.com/OutliningIndicators/ContractedBlock.gif" alt="img"> View Code</p>
-<p><strong>增加和查询操作</strong></p>
-<p>增</p>
-<p><img src="https://images.cnblogs.com/OutliningIndicators/ContractedBlock.gif" alt="img"> View Code</p>
-<p>根据条件判断，增加？更新？</p>
-<p><img src="https://images.cnblogs.com/OutliningIndicators/ContractedBlock.gif" alt="img"> View Code</p>
-<p>删</p>
-<p><img src="https://images.cnblogs.com/OutliningIndicators/ContractedBlock.gif" alt="img"> View Code</p>
-<p>改</p>
-<p><img src="https://images.cnblogs.com/OutliningIndicators/ContractedBlock.gif" alt="img"> View Code</p>
-<p>查</p>
-<p><img src="https://images.cnblogs.com/OutliningIndicators/ContractedBlock.gif" alt="img"> View Code</p>
-<p>连表查询</p>
-<p><img src="https://images.cnblogs.com/OutliningIndicators/ContractedBlock.gif" alt="img"> View Code</p>
-<h3 id="1、基本操作"><a href="#1、基本操作" class="headerlink" title="1、基本操作"></a><strong>1、基本操作</strong></h3><p><img src="https://images.cnblogs.com/OutliningIndicators/ContractedBlock.gif" alt="img"> View Code</p>
-<h3 id="2、进阶操作（了不起的双下划线）"><a href="#2、进阶操作（了不起的双下划线）" class="headerlink" title="2、进阶操作（了不起的双下划线）"></a><strong>2、进阶操作（了不起的双下划线）</strong></h3><p>利用双下划线将字段和对应的操作连接起来</p>
-<p><img src="https://images.cnblogs.com/OutliningIndicators/ContractedBlock.gif" alt="img"> View Code</p>
-<h3 id="3、其他操作（执行原生SQL）"><a href="#3、其他操作（执行原生SQL）" class="headerlink" title="3、其他操作（执行原生SQL）"></a><strong>3、其他操作（执行原生SQL）</strong></h3><p><a href="javascript:void(0);"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"># 执行原生SQL</span><br><span class="line"></span><br><span class="line">   1.执行自定义SQL</span><br><span class="line">    # from django.db import connection, connections</span><br><span class="line">    # cursor &#x3D; connection.cursor()  # cursor &#x3D; connections[&#39;default&#39;].cursor()</span><br><span class="line">    # cursor.execute(&quot;&quot;&quot;SELECT * from auth_user where id &#x3D; %s&quot;&quot;&quot;, [1])</span><br><span class="line">    # row &#x3D; cursor.fetchone()</span><br><span class="line"></span><br><span class="line">  2.使用extra方法 </span><br><span class="line">    #</span><br><span class="line">    # extra(self, select&#x3D;None, where&#x3D;None, params&#x3D;None, tables&#x3D;None, order_by&#x3D;None, select_params&#x3D;None)</span><br><span class="line">    #    Entry.objects.extra(select&#x3D;&#123;&#39;new_id&#39;: &quot;select col from sometable where othercol &gt; %s&quot;&#125;, select_params&#x3D;(1,))</span><br><span class="line">    #    Entry.objects.extra(where&#x3D;[&#39;headline&#x3D;%s&#39;], params&#x3D;[&#39;Lennon&#39;])</span><br><span class="line">    #    Entry.objects.extra(where&#x3D;[&quot;foo&#x3D;&#39;a&#39; OR bar &#x3D; &#39;a&#39;&quot;, &quot;baz &#x3D; &#39;a&#39;&quot;])</span><br><span class="line">    #    Entry.objects.extra(select&#x3D;&#123;&#39;new_id&#39;: &quot;select id from tb where id &gt; %s&quot;&#125;, select_params&#x3D;(1,), order_by&#x3D;[&#39;-nid&#39;])</span><br><span class="line"></span><br><span class="line">   3.使用raw方法</span><br><span class="line">　　解释：执行原始sql并返回模型</span><br><span class="line">　　说明：依赖model多用于查询</span><br><span class="line">　　用法：</span><br><span class="line">　　　　book &#x3D; Book.objects.raw(&quot;select * from hello_book&quot;)</span><br><span class="line">　　　　for item in book:</span><br><span class="line">　　　　　　print(item.title)</span><br><span class="line">https:&#x2F;&#x2F;www.cnblogs.com&#x2F;413xiaol&#x2F;p&#x2F;6504856.html</span><br><span class="line"></span><br><span class="line">    # F</span><br><span class="line">    #</span><br><span class="line">    # from django.db.models import F</span><br><span class="line">    # models.Tb1.objects.update(num&#x3D;F(&#39;num&#39;)+1)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    # Q</span><br><span class="line">    #</span><br><span class="line">    # 方式一：</span><br><span class="line">    # Q(nid__gt&#x3D;10)</span><br><span class="line">    # Q(nid&#x3D;8) | Q(nid__gt&#x3D;10)</span><br><span class="line">    # Q(Q(nid&#x3D;8) | Q(nid__gt&#x3D;10)) &amp; Q(caption&#x3D;&#39;root&#39;)</span><br><span class="line">    # 方式二：</span><br><span class="line">    # con &#x3D; Q()</span><br><span class="line">    # q1 &#x3D; Q()</span><br><span class="line">    # q1.connector &#x3D; &#39;OR&#39;</span><br><span class="line">    # q1.children.append((&#39;id&#39;, 1))</span><br><span class="line">    # q1.children.append((&#39;id&#39;, 10))</span><br><span class="line">    # q1.children.append((&#39;id&#39;, 9))</span><br><span class="line">    # q2 &#x3D; Q()</span><br><span class="line">    # q2.connector &#x3D; &#39;OR&#39;</span><br><span class="line">    # q2.children.append((&#39;c1&#39;, 1))</span><br><span class="line">    # q2.children.append((&#39;c1&#39;, 10))</span><br><span class="line">    # q2.children.append((&#39;c1&#39;, 9))</span><br><span class="line">    # con.add(q1, &#39;AND&#39;)</span><br><span class="line">    # con.add(q2, &#39;AND&#39;)</span><br><span class="line">    #</span><br><span class="line">    # models.Tb1.objects.filter(con)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    </span><br></pre></td></tr></table></figure>
-
-<p><a href="javascript:void(0);"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a></p>
-<h1 id="四、ORM连表操作"><a href="#四、ORM连表操作" class="headerlink" title="四、ORM连表操作"></a>四、ORM连表操作</h1><p>我们在学习django中的orm的时候，我们可以把一对多，多对多，分为正向和反向查找两种方式。</p>
-<p>正向查找：ForeignKey在 UserInfo表中，如果从UserInfo表开始向其他的表进行查询，这个就是正向操作，反之如果从UserType表去查询其他的表这个就是反向操作。</p>
-<ul>
-<li>一对多：models.ForeignKey(其他表)</li>
-<li>多对多：models.ManyToManyField(其他表)</li>
-<li>一对一：models.OneToOneField(其他表)</li>
-</ul>
-<p><strong>正向连表操作总结：</strong></p>
-<p>所谓正、反向连表操作的认定无非是Foreign_Key字段在哪张表决定的，</p>
-<p>Foreign_Key字段在哪张表就可以哪张表使用Foreign_Key字段连表，反之没有Foreign_Key字段就使用与其关联的 小写表名；</p>
-<p>1对多：对象.外键.关联表字段，values(外键字段__关联表字段)</p>
-<p>多对多：外键字段.all()</p>
-<p><strong>反向连表操作总结：</strong></p>
-<p> 通过value、value_list、fifter 方式反向跨表：小写表名__关联表字段</p>
-<p>通过对象的形式反向跨表：小写表面_set().all()</p>
-<p><img src="https://images.cnblogs.com/OutliningIndicators/ContractedBlock.gif" alt="img"> 前端ajax需要携带的参数</p>
-<p><img src="https://images.cnblogs.com/OutliningIndicators/ContractedBlock.gif" alt="img"> 根据前端参数，返回不同数据库结果</p>
-<p>　　</p>
-<p><strong>应用场景：</strong></p>
-<p><strong>一对多</strong>：当一张表中创建一行数据时，有一个单选的下拉框（可以被重复选择）</p>
-<p>例如：创建用户信息时候，需要选择一个用户类型【普通用户】【金牌用户】【铂金用户】等。</p>
-<p><strong>多对多</strong>：在某表中创建一行数据是，有一个可以多选的下拉框</p>
-<p>例如：创建用户信息，需要为用户指定多个爱好</p>
-<p> <img src="https://images2015.cnblogs.com/blog/1122865/201707/1122865-20170702210818008-563783809.png" alt="img"></p>
-<p><strong>一对一</strong>：在某表中创建一行数据时，有一个单选的下拉框（下拉框中的内容被用过一次就消失了</p>
-<p>例如：原有含10列数据的一张表保存相关信息，经过一段时间之后，10列无法满足需求，需要为原来的表再添加5列数据</p>
-<h2 id="1、1对多"><a href="#1、1对多" class="headerlink" title="1、1对多"></a>1、1对多</h2><p>如果A表的1条记录对应B表中N条记录成立，两表之间就是1对多关系；在1对多关系中 A表就是主表，B表为子表，ForeignKey字段就建在子表；</p>
-<p>如果B表的1条记录也对应A表中N条记录，两表之间就是双向1对多关系，也称为多对多关系；</p>
-<p>在orm中设置如果 A表设置了外键字段user=models.ForeignKey(‘UserType’)到B表(注意外键表名加引号)</p>
-<p>就意味着 写在写A表的B表主键， （一列），代表B表的多个（一行）称为1对多，</p>
-<p><strong>查询</strong></p>
-<p>总结：利用orm获取 数据库表中多个数据</p>
-<p>获取到的数据类型本质上都是 queryset类型，<br>类似于列表，<br>内部有3种表现形式（对象，字典，列表）</p>
-<p>modle.表名.objects.all()<br>modle.表名.objects.values()<br>modle.表名.objects.values()</p>
-<p><strong>跨表</strong></p>
-<p> 正操作</p>
-<p>所以表间只要有外键关系就可以一直点下去。。。点到天荒地老</p>
-<p>所以可以通过obj.外键.B表的列表跨表操作（注意！！orm连表操作必须选拿单个对象，不像SQL中直接表和表join就可以了）</p>
-<p>print(obj.cls.title)</p>
-<p>foreignkey字段在那个表里，那个表里一个”空格”代表那个表的多个（一行）</p>
-<p><a href="javascript:void(0);"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">class UserGroup(models.Model):</span><br><span class="line">            &quot;&quot;&quot;</span><br><span class="line">            部门 3</span><br><span class="line">            &quot;&quot;&quot;</span><br><span class="line">            title &#x3D; models.CharField(max_length&#x3D;32)</span><br><span class="line">        class UserInfo(models.Model):</span><br><span class="line">            &quot;&quot;&quot;</span><br><span class="line">            员工4</span><br><span class="line">            &quot;&quot;&quot;</span><br><span class="line">            nid &#x3D; models.BigAutoField(primary_key&#x3D;True)</span><br><span class="line">            user &#x3D; models.CharField(max_length&#x3D;32)</span><br><span class="line">            password &#x3D; models.CharField(max_length&#x3D;64)</span><br><span class="line">            age &#x3D; models.IntegerField(default&#x3D;1)</span><br><span class="line">            # ug_id 1</span><br><span class="line">            ug &#x3D; models.ForeignKey(&quot;UserGroup&quot;,null&#x3D;True)</span><br></pre></td></tr></table></figure>
-
-<p><a href="javascript:void(0);"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a></p>
-<p>\1. 在取得时候跨表<br>q = UserInfo.objects.all().first()<br>q.ug.title<br>\2. 在查的时候就跨表了<br>UserInfo.objects.values(‘nid’,’ug_id’)<br>UserInfo.objects.values(‘nid’,’ug_id’,’ug__title’)    #注意正向连表是  外键__外键列 反向是小写的表名<br>\3. UserInfo.objects.values_list(‘nid’,’ug_id’,’ug__title’)</p>
-<p>反向连表：</p>
-<p>反向操作无非2种方式：</p>
-<p>1、通过对象的形式反向跨表：小写表面_set().all()</p>
-<p>2、通过value和value_list方式反向跨表：小写表名__字段</p>
-<p>\1. 小写的表名_set 得到有外键关系的对象</p>
-<p>obj = UserGroup.objects.all().first()<br>result = obj.<strong>userinfo_set</strong>.all() [userinfo对象,userinfo对象,]<br>\2. 小写的表名 得到有外键关系的列 #因为使用values取值取得是字典的不是对象，所以需要 小写表名（外键表）__</p>
-<p>v = UserGroup.objects.values(‘id’,’title’)<br>v = UserGroup.objects.values(‘id’,’title’,’小写的表名称’)<br>v = UserGroup.objects.values(‘id’,’title’,’小写的表名称__age’)<br>\3. 小写的表名 得到有外键关系的列</p>
-<p>v = UserGroup.objects.values_list(‘id’,’title’)<br>v = UserGroup.objects.values_list(‘id’,’title’,’小写的表名称’)<br>v = UserGroup.objects.values_list(‘id’,’title’,’小写的表名称__age’)</p>
-<p> <strong>1对多自关联（ 由原来的2张表，变成一张表！ ）</strong></p>
-<p> 想象有第二张表，关联自己表中的 行</p>
-<p><strong><img src="https://images2015.cnblogs.com/blog/1122865/201707/1122865-20170702142521821-1428389180.png" alt="img"></strong></p>
-<p><strong><img src="https://images2015.cnblogs.com/blog/1122865/201707/1122865-20170702141415071-981867748.png" alt="img"></strong></p>
-<p><strong>代码</strong></p>
-<p><a href="javascript:void(0);"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">class Comment(models.Model):</span><br><span class="line">            &quot;&quot;&quot;</span><br><span class="line">            评论表</span><br><span class="line">            &quot;&quot;&quot;</span><br><span class="line">            news_id &#x3D; models.IntegerField()            # 新闻ID</span><br><span class="line">            content &#x3D; models.CharField(max_length&#x3D;32)  # 评论内容</span><br><span class="line">            user &#x3D; models.CharField(max_length&#x3D;32)     # 评论者</span><br><span class="line">            reply &#x3D; models.ForeignKey(&#39;Comment&#39;,null&#x3D;True,blank&#x3D;True,related_name&#x3D;&#39;xxxx&#39;) #回复ID</span><br></pre></td></tr></table></figure>
-
-<p><a href="javascript:void(0);"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a></p>
-<h2 id="2、-多对多："><a href="#2、-多对多：" class="headerlink" title="2、 多对多："></a>2、 多对多：</h2><p><strong>1、自己写第3张关系表</strong></p>
-<p>ORM多对多查询：</p>
-<p>女士表：</p>
-<p><img src="https://images2015.cnblogs.com/blog/1122865/201706/1122865-20170628141553586-2033550260.png" alt="img"></p>
-<p>男生表：</p>
-<p><img src="https://images2015.cnblogs.com/blog/1122865/201706/1122865-20170628141608414-263325505.png" alt="img"></p>
-<p>男女关系表</p>
-<p><img src="https://images2015.cnblogs.com/blog/1122865/201706/1122865-20170628141623821-613723842.png" alt="img"></p>
-<p><strong>多对跨表操作</strong></p>
-<p><img src="https://images.cnblogs.com/OutliningIndicators/ContractedBlock.gif" alt="img"> View Code</p>
-<p><strong>多对多关系表   数据查找思路</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">1、找到该对象</span><br><span class="line">2.通过该对象 反向操作 找到第三张关系表</span><br><span class="line">3.通过第三张关系表 正向操作 找到 和该对象有关系对象</span><br><span class="line">总结（只要对象1和对象2 中间有关系表建立了关系； 对象1反向操作 到关系表 ,关系表正向操作到对象2,反之亦然</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-
-
-
-
-<h2 id="2、第3张关系表不用写-m-models-ManyToManyField-‘-要关联的表’-自动生成"><a href="#2、第3张关系表不用写-m-models-ManyToManyField-‘-要关联的表’-自动生成" class="headerlink" title="2、第3张关系表不用写(m=models.ManyToManyField(‘ 要关联的表’) 自动生成  )"></a><strong>2、第3张关系表不用写(m=models.ManyToManyField(‘ 要关联的表’) 自动生成  )</strong></h2><p> <img src="https://images2015.cnblogs.com/blog/1122865/201707/1122865-20170707184911003-1629756809.png" alt="img"></p>
-<p><strong>由于 DjangoORM中一个类名对应一张表，要想操作表就modles.类直接操作那张表，但**</strong>使用ManyToManyField字段生成 “第三张”关系表怎么操作它呢？**</p>
-<p><strong>答案：通过单个objd对象 间接操作</strong></p>
-<p><img src="https://images.cnblogs.com/OutliningIndicators/ContractedBlock.gif" alt="img"> View Code</p>
-<p>正向操作: obj.m.all()</p>
-<p><img src="https://images.cnblogs.com/OutliningIndicators/ContractedBlock.gif" alt="img"> View Code</p>
-<p>反向操作 :obj.小写的表名_set</p>
-<p>多对多和外键跨表一样都是 小写的表名_set</p>
-<h2 id="3、既自定义第三张关系表-也使用ManyToManyField-‘Boy’-字段-杂交类型"><a href="#3、既自定义第三张关系表-也使用ManyToManyField-‘Boy’-字段-杂交类型" class="headerlink" title="3、既自定义第三张关系表 也使用ManyToManyField(‘Boy’)字段(杂交类型)"></a>3、既自定义第三张关系表 也使用ManyToManyField(‘Boy’)字段(杂交类型)</h2><p>ManyToManyField()字段创建第3张关系表，可以使用字段跨表查询，但无法直接操作第3张表，</p>
-<p>自建第3表关系表可以直接操作，但无法通过字段 查询，我们可以把他们结合起来使用；</p>
-<p>作用：</p>
-<p>1、既可以使用字段跨表查询，也可以直接操作第3张关系表</p>
-<p>2、obj.m.all() 只有查询和清空 方法</p>
-<p><img src="https://images.cnblogs.com/OutliningIndicators/ContractedBlock.gif" alt="img"> View Code</p>
-<p><img src="https://images.cnblogs.com/OutliningIndicators/ContractedBlock.gif" alt="img"> View Code</p>
-<h2 id="-1"><a href="#-1" class="headerlink" title=""></a></h2><h2 id="外键反向查找别名（方便反向查找）"><a href="#外键反向查找别名（方便反向查找）" class="headerlink" title="外键反向查找别名（方便反向查找）"></a><strong>外键反向查找别名（方便反向查找）</strong></h2><p>在写ForeignKey字段的时候，如果想要在反向查找时不使用默认的 小写的表名_set，就在定义这个字段的时间加<strong>related参数！</strong></p>
-<p><strong>related_name、related_query_name 字段=什么别名 反向查找时就使用什么别名！</strong></p>
-<p><strong>反向查找：</strong></p>
-<p><strong>设置了related_query_name 反向查找时就是obj.别名_set.all（）保留了_set</strong></p>
-<p><strong>related_query_name</strong></p>
-<p><img src="https://images.cnblogs.com/OutliningIndicators/ContractedBlock.gif" alt="img"> View Code</p>
-<h2 id="related-name"><a href="#related-name" class="headerlink" title="related_name"></a><strong>related_name</strong></h2><p><strong>反向查找：</strong></p>
-<p><strong>设置了relatedname就是 反向查找时就说 obj.别名.all()</strong>  </p>
-<p><img src="https://images.cnblogs.com/OutliningIndicators/ContractedBlock.gif" alt="img"> View Code</p>
-<p><strong>操作</strong></p>
-<p><img src="https://images.cnblogs.com/OutliningIndicators/ContractedBlock.gif" alt="img"> View Code</p>
-<h2 id="多对多自关联（由原来的3张表，变成只有2张表）"><a href="#多对多自关联（由原来的3张表，变成只有2张表）" class="headerlink" title="多对多自关联（由原来的3张表，变成只有2张表）"></a><strong>多对多自关联（由原来的3张表，变成只有2张表）</strong></h2><p><strong>把两张表通过 choices字段合并为一张表</strong></p>
-<p><strong>‘第三张关系表’ 使用models.ManyToManyField(‘Userinfo’)生成</strong></p>
-<p><strong>特性：</strong></p>
-<p>obj = models.UserInfo.objects.filter(id=1).first()  获取对象</p>
-<p><strong>1、查询第三张关系表前面那一列：obj.m</strong></p>
-<p><strong>select xx from xx where from_userinfo_id = 1</strong></p>
-<p><strong>2、查询第三张关系表后面那一列：obj.userinfo_set</strong><br>select xx from xx where to_userinfo_id = 1</p>
-<p><img src="https://images.cnblogs.com/OutliningIndicators/ContractedBlock.gif" alt="img"> View Code</p>
-<p> 查找方法</p>
-<p><img src="https://images.cnblogs.com/OutliningIndicators/ContractedBlock.gif" alt="img"> View Code</p>
-<p><strong>多对多自关联特性：</strong></p>
-<p><strong><img src="https://images2015.cnblogs.com/blog/1122865/201707/1122865-20170702134010821-14566384.png" alt="img"></strong></p>
-<p><strong>ManyToManyField生成的第三张表</strong></p>
-<p><strong><img src="https://images2015.cnblogs.com/blog/1122865/201707/1122865-20170702132600696-975142662.png" alt="img"></strong></p>
-<h2 id="五、浅谈ORM查询性能"><a href="#五、浅谈ORM查询性能" class="headerlink" title="五、浅谈ORM查询性能"></a>五、浅谈ORM查询性能</h2><p><img src="https://images.cnblogs.com/OutliningIndicators/ContractedBlock.gif" alt="img"> View Code</p>
-<h2 id="六、分组和聚合查询"><a href="#六、分组和聚合查询" class="headerlink" title="六、分组和聚合查询"></a>六、分组和聚合查询</h2><p>1、aggregate(*args,**kwargs)  聚合函数</p>
-<p>通过对QuerySet进行计算，返回一个聚合值的字典。aggregate()中每一个参数都指定一个包含在字典中的返回值。即在查询集上生成聚合。</p>
-<p><img src="https://images.cnblogs.com/OutliningIndicators/ContractedBlock.gif" alt="img"> View Code</p>
-<p>2、annotate(*args,**kwargs)  分组函数</p>
-<p><img src="https://images.cnblogs.com/OutliningIndicators/ContractedBlock.gif" alt="img"> View Code</p>
-<h2 id="-2"><a href="#-2" class="headerlink" title=""></a></h2><h2 id="七、F查询与Q查询"><a href="#七、F查询与Q查询" class="headerlink" title="七、F查询与Q查询"></a><strong>七、F查询与Q查询</strong></h2><p>仅仅靠单一的关键字参数查询已经很难满足查询要求。此时Django为我们提供了F和Q查询：</p>
-<p><strong>1、F 可以获取对象中的字段的属性（列），并对其进行操作；</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">from django.db.models import F,Q</span><br><span class="line">#F 可以获取对象中的字段的属性（列），并且对其进行操作；</span><br><span class="line">models.Book.objects.all().update(price&#x3D;F(&#39;price&#39;)+1)   #对图书馆里的每一本书的价格 上调1块钱</span><br></pre></td></tr></table></figure>
-
-
-
-<p><strong>2、Q多条件组合查询</strong></p>
-<p> Q（）可以使orm的fifter（）方法支持， 多个查询条件，使用逻辑关系（&amp;、|、~）包含、组合到一起进行多条件查询；</p>
-<p><strong>语法：</strong></p>
-<p>fifter（Q（查询条件1）| Q（查询条件2））</p>
-<p>fifter（Q（查询条件2）&amp; Q（查询条件3））</p>
-<p>fifter（Q（查询条件4）&amp; ~Q（查询条件5））</p>
-<p>fifter（Q（查询条件6）| Q（Q（查询条件4）&amp; ~ Q（Q（查询条件5）&amp; Q（查询条件3）））包含</p>
-<p><img src="https://images.cnblogs.com/OutliningIndicators/ContractedBlock.gif" alt="img"> View Code</p>
-<p><strong>注意：Q查询条件和非Q查询条件混合使用注意，不包Q（）的查询条件一点要放在Q（查询条件）后面</strong></p>
-<p><img src="https://images2017.cnblogs.com/blog/1122865/201708/1122865-20170831153400952-795033525.png" alt="img"></p>
-<h2 id="八、Django自带ContentType表"><a href="#八、Django自带ContentType表" class="headerlink" title="八、Django自带ContentType表"></a>八、Django自带ContentType表</h2><p>首先声明本文介绍的ContentType不是http协议中请求头里Content Type，而是Django程序启动后自带的一张表；</p>
-<p><img src="https://images.cnblogs.com/OutliningIndicators/ContractedBlock.gif" alt="img"> setings.py配置文件</p>
-<p><strong>1、ContentType表内容介绍</strong></p>
-<p><img src="https://images2018.cnblogs.com/blog/1122865/201711/1122865-20171128210825862-1407623329.png" alt="img"></p>
-<p>ContentType表记录了Django程序的所有APP下model中的表名、和所在app的名称；</p>
-<p><strong>2、应用场景：</strong></p>
-<p>2.1 通过ContentType中的app名称和表名，查找到Django model中所有表；</p>
-<p><img src="https://images.cnblogs.com/OutliningIndicators/ContractedBlock.gif" alt="img"> View Code；</p>
-<p>2.2 解决 1张表 同时 其他N张表建立外键，并且多个外键中只能选择1个，关系的复杂问题</p>
-<p><strong><img src="https://images2018.cnblogs.com/blog/1122865/201711/1122865-20171128222457019-307932587.png" alt="img"></strong></p>
-<p><strong>场景1</strong>：你是一家在线教育的DBA，现有N种优惠券，每1种优惠券怎么分别对应 N门课程中的一1门课程，怎么设计表结构呢？</p>
-<p><img src="https://images.cnblogs.com/OutliningIndicators/ContractedBlock.gif" alt="img"> View Code</p>
-<p><strong>场景2</strong> ：学生 学习成绩如何要奖惩、 作业写得如何要奖惩、学习进度如何要奖惩、。。。。。。学生各种行为都要奖惩怎么设计表结构？</p>
-<p><img src="https://images.cnblogs.com/OutliningIndicators/ContractedBlock.gif" alt="img"> View Code</p>
-<p><strong>3、content type 操作</strong></p>
-<p><img src="https://images.cnblogs.com/OutliningIndicators/ContractedBlock.gif" alt="img"> model</p>
-<p><img src="https://images.cnblogs.com/OutliningIndicators/ContractedBlock.gif" alt="img"> 视图</p>
-<p><strong>3.1 GenericForeignKey 创建</strong></p>
-<p>给学位课1，创建优惠券100</p>
-<p><img src="https://images.cnblogs.com/OutliningIndicators/ContractedBlock.gif" alt="img"> 方式1</p>
-<p>方式2</p>
-<p><img src="https://images.cnblogs.com/OutliningIndicators/ContractedBlock.gif" alt="img"> model</p>
-<p><img src="https://images.cnblogs.com/OutliningIndicators/ContractedBlock.gif" alt="img"> 视图</p>
-<p><strong>3.2</strong>  <strong>GenericRelation  查询</strong></p>
-<p>当前课程都有哪些优惠券？</p>
-<p><img src="https://images.cnblogs.com/OutliningIndicators/ContractedBlock.gif" alt="img"> model</p>
-<p><img src="https://images.cnblogs.com/OutliningIndicators/ContractedBlock.gif" alt="img"> 视图</p>
-<h2 id="九、补充"><a href="#九、补充" class="headerlink" title="九、补充"></a>九、补充</h2><p>1.oder_by(-id)：按照某种规则排序</p>
-<p> 2.exclude(字段)：字段获取数据时排除</p>
-<p><img src="https://images.cnblogs.com/OutliningIndicators/ContractedBlock.gif" alt="img"> View Code</p>
-<p><strong>3.按时间查询</strong></p>
-<p>Django的orm支持按时间查询数据，前提是你在models中设置了该字段为DateTimeField 以及该字段存储的数据类型为 python的datime时间类型。</p>
-<p>提示:</p>
-<p>如果在通过时间查询的时候出现 warning 在setings.py中设置如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">USE_TZ &#x3D; True</span><br></pre></td></tr></table></figure>
-
-
-
-<p>如果时间格式显示英文在setings.py中设置如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">LANGUAGE_CODE &#x3D; &#39;zh-Hans&#39;</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-
-
-<p>A.查询大于某个时间点产生的数据。（在某个时间点之后）</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">#gt：大于某个时间</span><br><span class="line">now &#x3D; datetime.datetime.now()</span><br><span class="line">start &#x3D; now-datetime.timedelta(hours&#x3D;23,minutes&#x3D;59,seconds&#x3D;59)</span><br><span class="line">#查询 前一天的数据</span><br><span class="line">obj&#x3D;models.TaskLog.objects.filter(date__gt&#x3D;start)</span><br><span class="line">print(obj)</span><br></pre></td></tr></table></figure>
-
-
-
-<p>B.大于等于某个时间点</p>
-<p><a href="javascript:void(0);"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">import datetime</span><br><span class="line">start_date &#x3D; datetime.date(2018, 9, 5)</span><br><span class="line">#gte：大于等于某个时间点</span><br><span class="line">now &#x3D; datetime.datetime.now()</span><br><span class="line">start &#x3D; now-datetime.timedelta(hours&#x3D;23,minutes&#x3D;59,seconds&#x3D;59)</span><br><span class="line">#查询 前一天的数据</span><br><span class="line">obj&#x3D;models.TaskLog.objects.filter(date__gte&#x3D;start)</span><br><span class="line">print(obj)</span><br></pre></td></tr></table></figure>
-
-<p><a href="javascript:void(0);"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a></p>
-<p>C.小于某个时间点（在某个时间点之前）</p>
-<p><a href="javascript:void(0);"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">import datetime</span><br><span class="line">start_date &#x3D; datetime.date(2018, 9, 5)</span><br><span class="line">#lt：小于某个时间点</span><br><span class="line">now &#x3D; datetime.datetime.now()</span><br><span class="line">start &#x3D; now-datetime.timedelta(hours&#x3D;23,minutes&#x3D;59,seconds&#x3D;59)</span><br><span class="line">#查询 2018年9月4日，之前产生的日志。</span><br><span class="line">obj&#x3D;models.TaskLog.objects.filter(date__lt&#x3D;start)</span><br><span class="line">print(obj)</span><br></pre></td></tr></table></figure>
-
-<p><a href="javascript:void(0);"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a></p>
-<p>D.小于等于某个时间点</p>
-<p><a href="javascript:void(0);"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">import datetime</span><br><span class="line">start_date &#x3D; datetime.date(2018, 9, 5)</span><br><span class="line">#lte：小于等于某个时间点</span><br><span class="line">now &#x3D; datetime.datetime.now()</span><br><span class="line">start &#x3D; now-datetime.timedelta(hours&#x3D;23,minutes&#x3D;59,seconds&#x3D;59)</span><br><span class="line">#查询 2018年9月4日当日以及当天之前产生的日志。</span><br><span class="line">obj&#x3D;models.TaskLog.objects.filter(date__lte&#x3D;start)</span><br><span class="line">print(obj)</span><br></pre></td></tr></table></figure>
-
-<p><a href="javascript:void(0);"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a></p>
-<p> E.range：查询某个明确时间段数据 (某个时间段）</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">import datetime</span><br><span class="line">start_date &#x3D; datetime.date(2018, 9, 5)</span><br><span class="line">end_date &#x3D; datetime.date(2018, 9,8)</span><br><span class="line">#查询 2018年9月5日 ------- 2018年9月8日 期间产生的日志</span><br><span class="line">obj&#x3D;models.TaskLog.objects.filter(date__range&#x3D;(start_date,end_date))</span><br><span class="line">print(obj)</span><br></pre></td></tr></table></figure>
-
-
-
-<p>F.__year查询某年产生数据（例如：2018）</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">#查询2018年产生的日志</span><br><span class="line">obj&#x3D;models.TaskLog.objects.filter(date__year&#x3D;2018)</span><br><span class="line">print(obj)</span><br></pre></td></tr></table></figure>
-
-
-
-<p>G.__month查询 某月产生的数据（例：2018年9月）</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">#查询9月产生的数据</span><br><span class="line">obj&#x3D;models.TaskLog.objects.filter(date__year&#x3D;2018,date__month&#x3D;9)</span><br><span class="line">print(obj)</span><br></pre></td></tr></table></figure>
-
-
-
-<p>H.__week_day查询某年、某月、星期几产生的数据（例如：2018年9月份 每个星期5）</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">#查询 某年 某月  周几 产生的数据</span><br><span class="line">#                                                              0-6表示：周1至周五</span><br><span class="line">obj&#x3D;models.TaskLog.objects.filter(date__year&#x3D;2018,date__month&#x3D;9,date__week_day&#x3D;4).count()</span><br><span class="line">print(obj)</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-<p> I.查询某年、某月、某天产生的数据 （例：2018年9月10日）</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">obj&#x3D;models.TaskLog.objects.filter(date__year&#x3D;2018,date__month&#x3D;9,date__day&#x3D;10).count()</span><br><span class="line">print(obj)</span><br></pre></td></tr></table></figure>
+                                        <img class="kratos-entry-thumb-new-img">
                                     
+                                </a>
+                            </div>
+                            <div class="kratos-post-inner-new">
+                                <header class="kratos-entry-header-new">
+                                        
+                                    <h2 class="kratos-entry-title-new"><a href="/2020/09/29/MySQL%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/">MySQL基本操作</a>
+                                </header>
+                                <div class="kratos-entry-content-new">
+                                    <p>
+                                        
+                                            前言Django框架功能齐全自带数据库操作功能，本文主要介绍Django的ORM框架
+到目前为止，当我们的程序涉及到数据库相关操作时，我们一般都会这么搞：
+
+创建数据库，设计表结构和字段
+使用 MySQLdb 来连接数据库，并编写数据...
+                                        
+                                    </p>
                                 </div>
                             </div>
-                        </div>
-                        
                             <footer class="kratos-post-meta-new">
                                 <span class="pull-left">
                                     <a><i class="fa fa-calendar"></i></a><a>2020-09-29</a>
@@ -636,7 +268,7 @@
                                     <a class="read-more" href="/2020/09/29/MySQL%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/" title="阅读全文">阅读全文<i class="fa fa-chevron-circle-right"></i></a>
                                 </span>
                             </footer>
-                        
+                        </div>
                     </article>
                 
             
@@ -944,8 +576,14 @@ FastDFS 是用 c 语言编写的一款开源的分布式文件系统。FastDFS �
         
           
           
+            <a class="list-group-item" href="/2020/09/30/vue%E5%8F%91%E9%80%81%E7%9F%AD%E4%BF%A160%E7%A7%92%E5%80%92%E8%AE%A1%E6%97%B6/"><i class="fa  fa-book"></i> vue 发送短信60秒倒计时</a>
+            
+          
         
           
+          
+            <a class="list-group-item" href="/2020/09/29/MySQL%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/"><i class="fa  fa-book"></i> MySQL基本操作</a>
+            
           
         
           
@@ -955,17 +593,9 @@ FastDFS 是用 c 语言编写的一款开源的分布式文件系统。FastDFS �
           
         
           
-          
-            <a class="list-group-item" href="/2020/09/28/%E5%9F%BA%E4%BA%8E%E6%97%B6%E9%97%B4%E8%A1%B0%E5%87%8F%E7%9A%84%E7%83%AD%E5%BA%A6%E7%AE%97%E6%B3%95/"><i class="fa  fa-book"></i> 基于时间衰减的热度算法</a>
             
           
-        
-          
-          
-            <a class="list-group-item" href="/2020/09/28/webssh/"><i class="fa  fa-book"></i> WebSSH</a>
             
-          
-        
           
             
           

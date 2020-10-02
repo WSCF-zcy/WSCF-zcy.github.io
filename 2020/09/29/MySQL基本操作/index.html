@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Cao Fan's Logs</title>
+  <title>MySQL基本操作 | Cao Fan's Logs</title>
   <meta name="author" content="Cao Fan" />
   <meta http-equiv="Cache-Control" content="no-transform" />
   <meta http-equiv="Cache-Control" content="no-siteapp" />
@@ -16,16 +16,16 @@
       <meta name="description" itemprop="description" content="" />
     
   
-  <meta name="description" content="1title: MySQL基本操作  前言Django框架功能齐全自带数据库操作功能，本文主要介绍Django的ORM框架 到目前为止，当我们的程序涉及到数据库相关操作时，我们一般都会这么搞：  创建数据库，设计表结构和字段 使用 MySQLdb 来连接数据库，并编写数据访问层代码 业务逻辑层去调用数据访问层执行数据库操作  ORM是什么？：(在django中，根据代码中的类自动生成数据库的表也叫">
+  <meta name="description" content="前言Django框架功能齐全自带数据库操作功能，本文主要介绍Django的ORM框架 到目前为止，当我们的程序涉及到数据库相关操作时，我们一般都会这么搞：  创建数据库，设计表结构和字段 使用 MySQLdb 来连接数据库，并编写数据访问层代码 业务逻辑层去调用数据访问层执行数据库操作  ORM是什么？：(在django中，根据代码中的类自动生成数据库的表也叫–code first) ORM：Ob">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Cao Fan&#39;s Logs">
+<meta property="og:title" content="MySQL基本操作">
 <meta property="og:url" content="http://example.com/2020/09/29/MySQL%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/index.html">
 <meta property="og:site_name" content="Cao Fan&#39;s Logs">
-<meta property="og:description" content="1title: MySQL基本操作  前言Django框架功能齐全自带数据库操作功能，本文主要介绍Django的ORM框架 到目前为止，当我们的程序涉及到数据库相关操作时，我们一般都会这么搞：  创建数据库，设计表结构和字段 使用 MySQLdb 来连接数据库，并编写数据访问层代码 业务逻辑层去调用数据访问层执行数据库操作  ORM是什么？：(在django中，根据代码中的类自动生成数据库的表也叫">
+<meta property="og:description" content="前言Django框架功能齐全自带数据库操作功能，本文主要介绍Django的ORM框架 到目前为止，当我们的程序涉及到数据库相关操作时，我们一般都会这么搞：  创建数据库，设计表结构和字段 使用 MySQLdb 来连接数据库，并编写数据访问层代码 业务逻辑层去调用数据访问层执行数据库操作  ORM是什么？：(在django中，根据代码中的类自动生成数据库的表也叫–code first) ORM：Ob">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="http://example.com/null">
 <meta property="article:published_time" content="2020-09-29T11:33:48.694Z">
-<meta property="article:modified_time" content="2020-10-02T08:36:56.193Z">
+<meta property="article:modified_time" content="2020-10-02T12:12:27.312Z">
 <meta property="article:author" content="Cao Fan">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://example.com/null">
@@ -115,7 +115,7 @@
     <article>
         <div class="kratos-hentry kratos-post-inner clearfix">
             <header class="kratos-entry-header">
-                <h1 class="kratos-entry-title text-center"></h1>
+                <h1 class="kratos-entry-title text-center">MySQL基本操作</h1>
                 
                 <div class="kratos-post-meta text-center">
                     <span>
@@ -128,9 +128,7 @@
             <div class="kratos-post-content">
                 
                 <hr />
-                <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">title: MySQL基本操作</span><br></pre></td></tr></table></figure>
-
-<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a><strong>前言</strong></h1><p><strong>Django框架功能齐全自带数据库操作功能，本文主要介绍Django的ORM框架</strong></p>
+                <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a><strong>前言</strong></h1><p><strong>Django框架功能齐全自带数据库操作功能，本文主要介绍Django的ORM框架</strong></p>
 <p>到目前为止，当我们的程序涉及到数据库相关操作时，我们一般都会这么搞：</p>
 <ul>
 <li>创建数据库，设计表结构和字段</li>
@@ -578,14 +576,12 @@
             const facebookBase  = "https://www.facebook.com/sharer/sharer.php?";
             const twitterBase   = "https://twitter.com/intent/tweet?";
             const hostUrl       = "http://example.com/2020/09/29/MySQL%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/";
-            const title         = "「」";
-            const excerpt       = `1title: MySQL基本操作
-
-前言Django框架功能齐全自带数据库操作功能，本文主要介绍Django的ORM框架
+            const title         = "「MySQL基本操作」";
+            const excerpt       = `前言Django框架功能齐全自带数据库操作功能，本文主要介绍Django的ORM框架
 到目前为止，当我们的程序涉及到数据库相关操作时，我们一般都会这么搞：
 
 创建数据库，设计表结构和字段
-使用 M...`;
+使用 MySQLdb 来连接数据库，并编写数据...`;
             let _URL;
             switch (dest) {
                 case "qq"       : _URL = qqBase+"url="+hostUrl+"&title="+title+"&desc=&summary="+excerpt+"&site=cxpy";     break;
@@ -621,7 +617,7 @@
                 
                 
                 <div class="nav-next clearfix">
-                    <a title=" (no title)" href="/2020/09/30/vue发送短信60秒倒计时/">下一篇 &gt;</a>
+                    <a title=" vue 发送短信60秒倒计时" href="/2020/09/30/vue发送短信60秒倒计时/">下一篇 &gt;</a>
                 </div>
                 
             </nav>
@@ -676,8 +672,14 @@
         
           
           
+            <a class="list-group-item" href="/2020/09/30/vue%E5%8F%91%E9%80%81%E7%9F%AD%E4%BF%A160%E7%A7%92%E5%80%92%E8%AE%A1%E6%97%B6/"><i class="fa  fa-book"></i> vue 发送短信60秒倒计时</a>
+            
+          
         
           
+          
+            <a class="list-group-item" href="/2020/09/29/MySQL%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/"><i class="fa  fa-book"></i> MySQL基本操作</a>
+            
           
         
           
@@ -687,17 +689,9 @@
           
         
           
-          
-            <a class="list-group-item" href="/2020/09/28/%E5%9F%BA%E4%BA%8E%E6%97%B6%E9%97%B4%E8%A1%B0%E5%87%8F%E7%9A%84%E7%83%AD%E5%BA%A6%E7%AE%97%E6%B3%95/"><i class="fa  fa-book"></i> 基于时间衰减的热度算法</a>
             
           
-        
-          
-          
-            <a class="list-group-item" href="/2020/09/28/webssh/"><i class="fa  fa-book"></i> WebSSH</a>
             
-          
-        
           
             
           
