@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="utf-8">
+  
+  <title>Celery 异步发送基于阿里云的短信 | Cao Fan's Logs</title>
+  <meta name="author" content="Cao Fan" />
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="robots" content="index,follow" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <meta name="format-detection" content="telphone=no, email=no" />
+  
+    
+      <meta name="description" itemprop="description" content="" />
+    
+  
+  <meta name="description" content="步骤1：　　在阿里云 “短信服务” 中创建一个签名 步骤2：　　在阿里云 “短信服务” 中创建一个短信模块 1234567891011121314151617181920212223242526# 我的项目office_demo&quot;&quot;&quot;环境：	celery	celery-with-redis	Django	redis	aliyun-python-sdk-core&amp;quo">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Celery 异步发送基于阿里云的短信">
+<meta property="og:url" content="http://example.com/2020/09/30/celery%20%E5%BC%82%E6%AD%A5%E5%8F%91%E9%80%81%20%E9%98%BF%E9%87%8C%E4%BA%91%E7%9F%AD%E4%BF%A1/index.html">
+<meta property="og:site_name" content="Cao Fan&#39;s Logs">
+<meta property="og:description" content="步骤1：　　在阿里云 “短信服务” 中创建一个签名 步骤2：　　在阿里云 “短信服务” 中创建一个短信模块 1234567891011121314151617181920212223242526# 我的项目office_demo&quot;&quot;&quot;环境：	celery	celery-with-redis	Django	redis	aliyun-python-sdk-core&amp;quo">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/null">
+<meta property="article:published_time" content="2020-09-30T02:59:56.644Z">
+<meta property="article:modified_time" content="2020-10-02T09:10:45.818Z">
+<meta property="article:author" content="Cao Fan">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/null">
+<meta name="twitter:site" content="@Candiinya">
+  
+  <!-- 样式表文件 -->
+  <link rel="stylesheet" id="kratos-css" href="/css/kratosr.min.css" type="text/css" media="all">
+  <link rel="stylesheet" id="highlight-css" href="/css/highlight.min.css" type="text/css" media="all">
+  <link rel="stylesheet" id="fontawe-css" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" type="text/css" media="all">
+  <link rel="stylesheet" id="nprogress-css" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" type="text/css" media="all">
+  
+  
+  
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
+  
+  
+    <link rel="stylesheet" id="darkmode-css" href="/css/kr-dark.min.css" type="text/css" media="all">
+  
+  <!-- 不得不预先加载的一些JS文件 -->
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+  
+    <script async src="https://cdn.jsdelivr.net/npm/qrcode_js@1.0.0/qrcode.min.js"></script>
+  
+  
+<meta name="generator" content="Hexo 5.2.0"></head>
+<body class="custom-background">
+    <div id="kratos-wrapper">
+        <div id="kratos-page">
+            <div id="kratos-header">
+                <div class="nav-toggle"><a class="kratos-nav-toggle js-kratos-nav-toggle"><i></i></a></div>
+                <header id="kratos-header-section">
+                    <div class="container">
+                        <div class="nav-header">
+                            <div class="color-logo"><a href="/">Cao Fan&#39;s Logs</a></div>
+                            <nav id="kratos-menu-wrap">
+                              <ul id="kratos-primary-menu" class="sf-menu">
+                              
+                                
+                                  <li><a href="/"><i class="fa fa-home"></i>首页</a></li>
+                                
+                              
+                                
+                                  <li><a href="/archives/"><i class="fa fa-file"></i>档案馆</a></li>
+                                
+                              
+                                
+                                  <li>
+                                    <a><i class="fa fa-link"></i>链接</a>
+                                    <ul class="sub-menu">
+                                      
+                                        
+                                      
+                                        
+                                          <li><a target="_blank" rel="noopener" href="https://candinya.com">作者博客</a></li>
+                                        
+                                      
+                                        
+                                          <li><a target="_blank" rel="noopener" href="https://github.com/Candinya/Kratos-Rebirth">项目链接</a></li>
+                                        
+                                      
+                                    </ul>
+                                  </li>
+                                
+                              
+                              </ul>
+                            </nav>
+                        </div>
+                    </div>
+                </header>
+            </div>
+
+<div class="kratos-start kratos-hero-2">
+    <!-- <div class="kratos-overlay"></div> -->
+    <div class="kratos-cover kratos-cover-2 text-center">
+        <div class="desc desc2 animate-box">
+            <a href="/"><h2>Cao Fan&#39;s Logs</h2><br><span></span></a>
+        </div>
+    </div>
+</div>
+
+<div id="kratos-blog-post">
+    <div class="container">
+            <div class="row">
+                
+<div id="main">
+    <section class="col-md-8">
+    <article>
+        <div class="kratos-hentry kratos-post-inner clearfix">
+            <header class="kratos-entry-header">
+                <h1 class="kratos-entry-title text-center">Celery 异步发送基于阿里云的短信</h1>
+                
+                <div class="kratos-post-meta text-center">
+                    <span>
+                    <i class="fa fa-calendar"></i> 2020-09-30
+                    <i class="fa fa-folder"></i> 分类于 
+                    <i class="fa fa-user"></i> 作者 Cao Fan
+                    </span>
+                </div>
+            </header>
+            <div class="kratos-post-content">
+                
+                <hr />
+                <h3 id="步骤1："><a href="#步骤1：" class="headerlink" title="步骤1："></a>步骤1：</h3><p>　　在阿里云 “短信服务” 中创建一个签名</p>
+<h4 id="步骤2："><a href="#步骤2：" class="headerlink" title="步骤2："></a>步骤2：</h4><p>　　在阿里云 “短信服务” 中创建一个短信模块</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 我的项目office_demo</span></span><br><span class="line"><span class="string">&quot;&quot;</span><span class="string">&quot;</span></span><br><span class="line"><span class="string">环境：</span></span><br><span class="line"><span class="string">	celery</span></span><br><span class="line"><span class="string">	celery-with-redis</span></span><br><span class="line"><span class="string">	Django</span></span><br><span class="line"><span class="string">	redis</span></span><br><span class="line"><span class="string">	aliyun-python-sdk-core</span></span><br><span class="line"><span class="string">&quot;</span><span class="string">&quot;&quot;</span></span><br><span class="line"><span class="comment"># 项目结构</span></span><br><span class="line">--office_demo</span><br><span class="line">	--myapp</span><br><span class="line">		--migrations</span><br><span class="line">		--admin.py</span><br><span class="line">		--apps.py</span><br><span class="line">		--celery_sms.py</span><br><span class="line">		--models.py</span><br><span class="line">		--tests.py</span><br><span class="line">		--url.py</span><br><span class="line">		--view.py</span><br><span class="line">	--office_demo</span><br><span class="line">		--__init__.py</span><br><span class="line">		--settings.py</span><br><span class="line">		--urls.py</span><br><span class="line">		--wsgi.py</span><br><span class="line">	--manage.py</span><br></pre></td></tr></table></figure>
+
+<h2 id="office-demo下："><a href="#office-demo下：" class="headerlink" title="office_demo下："></a>office_demo下：</h2><p>配置:</p>
+<p>settings.py 中添加</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">### celery 配置</span></span><br><span class="line">BROKER_URL = <span class="string">&#x27;redis://localhost:6379/0&#x27;</span></span><br><span class="line">CELERY_ACCEPT_CONTENT = [<span class="string">&#x27;json&#x27;</span>] 	<span class="comment"># 接受内容</span></span><br><span class="line">CELERY_TASK_SERIALIZER = <span class="string">&#x27;json&#x27;</span>		<span class="comment"># 任务</span></span><br><span class="line">CELERY_RESULT_SERIALIZER = <span class="string">&#x27;json&#x27;</span>	<span class="comment"># 结果</span></span><br><span class="line"><span class="comment">###</span></span><br></pre></td></tr></table></figure>
+
+<p>url.py 中添加</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">from django.urls import path</span><br><span class="line">from .views import RegisterView</span><br><span class="line"></span><br><span class="line">urlpatterns = [</span><br><span class="line">    path(<span class="string">&#x27;register&#x27;</span>, RegisterView.as_view()),    <span class="comment"># 注册路由</span></span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<p>celery_sms.py中</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br></pre></td><td class="code"><pre><span class="line">from __future__ import absolute_import, unicode_literals</span><br><span class="line">from celery import Celery</span><br><span class="line">from django.conf import settings</span><br><span class="line"></span><br><span class="line">import os</span><br><span class="line"></span><br><span class="line"><span class="comment"># 设置环境变量  (您不需要此行，但它可以避免您始终将设置模块传递给celery程序。它必须始终在创建)</span></span><br><span class="line">os.environ.setdefault(<span class="string">&#x27;DJANGO_SETTINGS_MODULE&#x27;</span>, <span class="string">&#x27;你的django文件名.settings&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建 celery 应用 并起别名</span></span><br><span class="line">app = Celery(<span class="string">&#x27;celerytest&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 导入 celery 配置</span></span><br><span class="line">app.config_from_object(<span class="string">&#x27;django.conf:settings&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 加载所有注册应用</span></span><br><span class="line">app.autodiscover_tasks(lambda: settings.INSTALLED_APPS)</span><br><span class="line"><span class="comment"># 手动注册 celery 任务</span></span><br><span class="line"><span class="comment"># app.autodiscover_tasks([&#x27;DjCelery.celery_test&#x27;])</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 配置部分</span></span><br><span class="line">REGION = <span class="string">&#x27;cn-beijing&#x27;</span></span><br><span class="line">PRODUCT_NAME = <span class="string">&#x27;SMSapi&#x27;</span></span><br><span class="line">DOMAIN = <span class="string">&#x27;dysmsapi.aliyuncs.com&#x27;</span></span><br><span class="line">ACCESS_KEY_ID = <span class="string">&#x27;你的AKID&#x27;</span></span><br><span class="line">ACCESS_KEY_SECRET = <span class="string">&#x27;你的AKS&#x27;</span></span><br><span class="line"></span><br><span class="line">from aliyunsdkcore.client import AcsClient</span><br><span class="line">from aliyunsdkcore.profile import region_provider</span><br><span class="line"></span><br><span class="line"><span class="comment"># 初始化</span></span><br><span class="line">acs_client = AcsClient(ACCESS_KEY_ID, ACCESS_KEY_SECRET, REGION)</span><br><span class="line">region_provider.modify_point(PRODUCT_NAME, REGION, DOMAIN)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">from aliyunsdkcore.request import RpcRequest</span><br><span class="line"></span><br><span class="line">class SendSmsRequest(RpcRequest):</span><br><span class="line">    def __init__(self):</span><br><span class="line">        RpcRequest.__init__(self, <span class="string">&#x27;Dysmsapi&#x27;</span>, <span class="string">&#x27;2017-05-25&#x27;</span>, <span class="string">&#x27;SendSms&#x27;</span>)</span><br><span class="line"></span><br><span class="line">    def set_TemplateCode(self, TemplateCode):</span><br><span class="line">        <span class="string">&quot;&quot;</span><span class="string">&quot;模板CODE&quot;</span><span class="string">&quot;&quot;</span></span><br><span class="line">        self.add_query_param(<span class="string">&#x27;TemplateCode&#x27;</span>, TemplateCode)</span><br><span class="line"></span><br><span class="line">    def set_TemplateParam(self, TemplateParam):</span><br><span class="line">        <span class="string">&quot;&quot;</span><span class="string">&quot;模板参数，变量&quot;</span><span class="string">&quot;&quot;</span></span><br><span class="line">        self.add_query_param(<span class="string">&#x27;TemplateParam&#x27;</span>, TemplateParam)</span><br><span class="line"></span><br><span class="line">    def set_PhoneNumbers(self, PhoneNumbers):</span><br><span class="line">        <span class="string">&quot;&quot;</span><span class="string">&quot;要发送的手机号&quot;</span><span class="string">&quot;&quot;</span></span><br><span class="line">        self.add_query_param(<span class="string">&#x27;PhoneNumbers&#x27;</span>, PhoneNumbers)</span><br><span class="line"></span><br><span class="line">    def set_SignName(self, SignName):</span><br><span class="line">        <span class="string">&quot;&quot;</span><span class="string">&quot;短信签名名称&quot;</span><span class="string">&quot;&quot;</span></span><br><span class="line">        self.add_query_param(<span class="string">&#x27;SignName&#x27;</span>, SignName)</span><br><span class="line">import redis</span><br><span class="line">import random</span><br><span class="line"></span><br><span class="line"><span class="comment"># 链接redis</span></span><br><span class="line">def connect_redis():</span><br><span class="line">    <span class="string">&#x27;&#x27;</span><span class="string">&#x27;</span></span><br><span class="line"><span class="string">    链接redis</span></span><br><span class="line"><span class="string">    &#x27;</span><span class="string">&#x27;&#x27;</span></span><br><span class="line">    pool = redis.ConnectionPool(host=<span class="string">&#x27;127.0.0.1&#x27;</span>, port=6379, decode_responses=True)</span><br><span class="line">    <span class="built_in">return</span> redis.Redis(connection_pool=pool)</span><br><span class="line"></span><br><span class="line">def scode():</span><br><span class="line">    code = <span class="string">&#x27;&#x27;</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(4):</span><br><span class="line">        code = code + str(random.choice(range(0, 10)))</span><br><span class="line">    rd = connect_redis()   <span class="comment"># 调用链接redis</span></span><br><span class="line">    rd.set(<span class="string">&#x27;code&#x27;</span>, code)   <span class="comment"># 把验证码存入redis</span></span><br><span class="line">    rd.expire(<span class="string">&#x27;code&#x27;</span>, 60)  <span class="comment"># 设置验证码过期时间</span></span><br><span class="line">    <span class="built_in">return</span> code</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">from celery import shared_task</span><br><span class="line"></span><br><span class="line">@shared_task</span><br><span class="line">def send_sms(phone_numbers,</span><br><span class="line">             sign_name=<span class="string">&#x27;短信签名名称&#x27;</span>,</span><br><span class="line">             template_code=<span class="string">&#x27;模板code&#x27;</span>,</span><br><span class="line">             template_param=<span class="string">&#x27;&#123;&quot;code&quot;:%s&#125;&#x27;</span>% scode()):</span><br><span class="line">    <span class="string">&quot;&quot;</span><span class="string">&quot;</span></span><br><span class="line"><span class="string">    调用短信接口</span></span><br><span class="line"><span class="string">    :param phone_numbers: 手机号</span></span><br><span class="line"><span class="string">    :param sign_name: 短信签名名称</span></span><br><span class="line"><span class="string">    :param template_code: 模板code</span></span><br><span class="line"><span class="string">    :param template_param: 模板参数，变量</span></span><br><span class="line"><span class="string">    :return:  返回结果</span></span><br><span class="line"><span class="string">    &quot;</span><span class="string">&quot;&quot;</span></span><br><span class="line">    sign_name = sign_name</span><br><span class="line">    sms_request = SendSmsRequest()</span><br><span class="line">    sms_request.set_TemplateCode(template_code)   <span class="comment"># 短信模板code</span></span><br><span class="line">    <span class="keyword">if</span> template_param:</span><br><span class="line">        sms_request.set_TemplateParam(template_param)  <span class="comment"># 短信模板验证码变量</span></span><br><span class="line">    sms_request.set_SignName(sign_name)</span><br><span class="line">    sms_request.set_PhoneNumbers(phone_numbers)  <span class="comment"># 要发送的手机号</span></span><br><span class="line">    sms_response = acs_client.do_action_with_exception(sms_request)  <span class="comment"># 调用短信发送接口， 返回json</span></span><br><span class="line">    <span class="built_in">return</span> sms_response</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># Celery -A myapp.celery_sms worker -l info -P eventlet    启动celery命令</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>view.py 中</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">from django.shortcuts import render</span><br><span class="line">from rest_framework.response import Response</span><br><span class="line">from rest_framework.views import APIView</span><br><span class="line">from django.views.decorators.csrf import csrf_exempt</span><br><span class="line">from .celery_sms import send_sms</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 注册</span></span><br><span class="line">class RegisterView(APIView):</span><br><span class="line">    def get(self, request):</span><br><span class="line">        phono = request.GET.get(<span class="string">&#x27;phono&#x27;</span>)</span><br><span class="line">        <span class="built_in">print</span>(phono)</span><br><span class="line">        <span class="built_in">print</span>(<span class="built_in">type</span>(phono))</span><br><span class="line">        result = send_sms.delay(要发送的手机号)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;result:&#x27;</span>, result)</span><br><span class="line">        <span class="keyword">if</span> result:</span><br><span class="line">            <span class="built_in">return</span> Response(&#123;<span class="string">&#x27;code&#x27;</span>: 200, <span class="string">&#x27;message&#x27;</span>: <span class="string">&#x27;验证码已发送！！！&#x27;</span>&#125;)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="built_in">return</span> Response(&#123;<span class="string">&#x27;code&#x27;</span>: 400, <span class="string">&#x27;message&#x27;</span>: <span class="string">&#x27;验证码发送失败！！！&#x27;</span>&#125;)</span><br><span class="line"></span><br><span class="line">    def post(self, request):</span><br><span class="line">        pass</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<p>记录返回的数据转换方式：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Django问题记录：</span><br><span class="line">  Django中，接收到的参数在request.body中，json格式的参数接收到时为byte类型，需要将byte格式的参数转换为json才方便后续使用</span><br><span class="line">  Python数据类型转换（byte转json）:</span><br><span class="line">     json &#x3D; json.loads(byte.decode())</span><br><span class="line">  django接收参数写法： concat &#x3D; json.loads(request.body.decode()) </span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+            </div>
+            
+                <div class="kratos-copyright text-center clearfix">
+                    <h5>本作品采用 <a rel="license nofollow" target="_blank" href="http://creativecommons.org/licenses/by-sa/4.0/">知识共享署名-相同方式共享 4.0 国际许可协议</a> 进行许可</h5>
+                </div>
+            
+            <footer class="kratos-entry-footer clearfix">
+                
+                    <div class="post-like-donate text-center clearfix" id="post-like-donate">
+                    
+                    
+                        <a class="share" href="javascript:;"><i class="fa fa-share-alt"></i> 分享</a>
+                        <div class="share-wrap" style="display: none;">
+    <div class="share-group">
+        <a href="javascript:;" class="share-plain qq" onclick="share('qq');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-qq"></i>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain qzone" onclick="share('qzone');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-star"></i>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain weixin pop style-plain" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-weixin"></i>
+            </div>
+            <div class="share-int">
+                <div class="qrcode" id="wechat-qr"></div>
+                <p>打开微信“扫一扫”，打开网页后点击屏幕右上角分享按钮</p>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain weibo" onclick="share('weibo');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-weibo"></i>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain facebook style-plain" onclick="share('facebook');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-facebook"></i>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain twitter style-plain" onclick="share('twitter');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-twitter"></i>
+            </div>
+        </a>
+    </div>
+    <script type="text/javascript">
+        $(()=>{
+            new QRCode("wechat-qr", {
+                text: "http://example.com/2020/09/30/celery%20%E5%BC%82%E6%AD%A5%E5%8F%91%E9%80%81%20%E9%98%BF%E9%87%8C%E4%BA%91%E7%9F%AD%E4%BF%A1/",
+                width: 150,
+                height: 150,
+                correctLevel : QRCode.CorrectLevel.H
+            });
+        });
+        function share(dest) {
+            const qqBase        = "https://connect.qq.com/widget/shareqq/index.html?";
+            const weiboBase     = "https://service.weibo.com/share/share.php?";
+            const qzoneBase     = "https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?";
+            const facebookBase  = "https://www.facebook.com/sharer/sharer.php?";
+            const twitterBase   = "https://twitter.com/intent/tweet?";
+            const hostUrl       = "http://example.com/2020/09/30/celery%20%E5%BC%82%E6%AD%A5%E5%8F%91%E9%80%81%20%E9%98%BF%E9%87%8C%E4%BA%91%E7%9F%AD%E4%BF%A1/";
+            const title         = "「Celery 异步发送基于阿里云的短信」";
+            const excerpt       = `步骤1：　　在阿里云 “短信服务” 中创建一个签名
+步骤2：　　在阿里云 “短信服务” 中创建一个短信模块
+1234567891011121314151617181920212223242526# 我的项目office_demo&qu...`;
+            let _URL;
+            switch (dest) {
+                case "qq"       : _URL = qqBase+"url="+hostUrl+"&title="+title+"&desc=&summary="+excerpt+"&site=cxpy";     break;
+                case "weibo"    : _URL = weiboBase+"url="+hostUrl+"&title="+title+excerpt;                                 break;
+                case "qzone"    : _URL = qzoneBase+"url="+hostUrl+"&title="+title+"&desc=&summary="+excerpt+"&site=cxpy";  break;
+                case "facebook" : _URL = facebookBase+"u="+hostUrl;                                                        break;
+                case "twitter"  : _URL = twitterBase+"text="+title+excerpt+"&url="+hostUrl;                                break;
+            }
+            window.open(_URL);
+        };
+    </script>
+</div>
+                    
+                    </div>
+                
+                <div class="footer-tag clearfix">
+                    <div class="pull-left">
+                    <i class="fa fa-tags"></i>
+                        
+                    </div>
+                    <div class="pull-date">
+                    <span>最后编辑：2020-10-02</span>
+                    </div>
+                </div>
+            </footer>
+        </div>
+        
+            <nav class="navigation post-navigation clearfix" role="navigation">
+                
+                <div class="nav-previous clearfix">
+                    <a title=" (no title)" href="/2020/09/30/vue发送短信60秒倒计时/">&lt; 上一篇</a>
+                </div>
+                
+                
+                <div class="nav-next clearfix">
+                    <a title=" django 对接elasticsearch实现全文检索" href="/2020/10/02/使用es 实现检索功能/">下一篇 &gt;</a>
+                </div>
+                
+            </nav>
+        
+        
+    </article>
+</section>
+</div>
+        
+            <section id="kratos-widget-area" class="col-md-4 hidden-xs hidden-sm">
+                
+                    <aside id="krw-about" class="widget widget-kratos-about clearfix">
+    
+    <div class="photo-background"></div>
+    <div class="photo-wrapper clearfix">
+        <div class="photo-wrapper-tip text-center">
+            <img class="about-photo" src="/images/头像.webp" />
+        </div>
+    </div>
+    <div class="textwidget">
+        
+            <p class="text-center"></p>
+        
+    </div>
+</aside>
+                
+                    <!-- Moved to about.ejs -->
+                
+                    
+
+                
+                    
+                
+                    
+  <aside id="krw-posts" class="widget widget-kratos-poststab">
+  <h4 class="widget-title"><i class="fa fa-file"></i>最新文章</h4>
+  <div class="tab-content">
+      <ul class="list-group">
+        
+        
+          
+          
+            <a class="list-group-item" href="/2020/10/02/%E4%BD%BF%E7%94%A8es%20%E5%AE%9E%E7%8E%B0%E6%A3%80%E7%B4%A2%E5%8A%9F%E8%83%BD/"><i class="fa  fa-book"></i> django 对接elasticsearch实现全文检索</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2020/09/30/celery%20%E5%BC%82%E6%AD%A5%E5%8F%91%E9%80%81%20%E9%98%BF%E9%87%8C%E4%BA%91%E7%9F%AD%E4%BF%A1/"><i class="fa  fa-book"></i> Celery 异步发送基于阿里云的短信</a>
+            
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+            <a class="list-group-item" href="/2020/09/28/%E5%9F%BA%E4%BA%8E%E9%98%BF%E9%87%8C%E4%BA%91%E7%82%B9%E6%92%AD/"><i class="fa  fa-book"></i> 基于阿里云点播</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2020/09/28/%E5%9F%BA%E4%BA%8E%E6%97%B6%E9%97%B4%E8%A1%B0%E5%87%8F%E7%9A%84%E7%83%AD%E5%BA%A6%E7%AE%97%E6%B3%95/"><i class="fa  fa-book"></i> 基于时间衰减的热度算法</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2020/09/28/webssh/"><i class="fa  fa-book"></i> WebSSH</a>
+            
+          
+        
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+      </ul>
+  </div>
+  </aside>
+
+                
+            </section>
+        
+        </div>
+    </div>
+</div>
+<footer>
+    <div id="footer">
+        <div class="kr-tool text-center">
+            <div class="tool">
+                
+                    <div class="box search-box">
+                        <a href="/search/">
+                            <span class="fa fa-search"></span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="box theme-box" id="darkmode-switch">
+                        <span class="fa fa-adjust"></span>
+                    </div>
+                
+                
+            </div>
+            <div class="box gotop-box">
+                <span class="fa fa-chevron-up"></span>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3 footer-list text-center">
+                    <ul class="kratos-social-icons">
+                        
+                        
+                        <li><a target="_blank" rel="nofollow" href="https://t.me/CandyUnion"><i class="fa fa-telegram"></i></a></li>
+                        <li><a target="_blank" rel="nofollow" href="https://twitter.com/Candiinya"><i class="fa fa-twitter"></i></a></li>
+                        
+                        
+                        
+                        <li><a target="_blank" rel="nofollow" href="https://github.com/Candinya"><i class="fa fa-github"></i></a></li>
+                        
+                    </ul>
+                    <ul class="kratos-copyright">
+                        <div>
+                            <li>&copy; 2020 Cao Fan 版权所有.</li>
+                            <li>本站已运行<span id="span_dt">Loading...</span></li>
+                        </div>
+                        <div>
+                            <li>Theme <a href="https://github.com/Candinya/Kratos-Rebirth" target="_blank">Kratos:Rebirth</a></li>
+                            <li>Made with&nbsp;<i class="fa fa-heart throb" style="color:#d43f57"></i>&nbsp;by <a href="https://candinya.com" target="_blank" rel="nofollow">Candinya</a>.</li>
+                        </div>
+                        <div>
+                            <li>Powered by <a href="https://hexo.io" target="_blank" rel="nofollow">Hexo</a></li>
+                            <li>Hosted on <a href="https://github.io" target="_blank">Github Pages</a></li>
+                        </div>
+                        <div>
+                            
+                            
+                        </div>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+</div>
+</div>
+<script defer src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.4/dist/js/bootstrap.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.js"></script>
+<script>const notMobile = (!(navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)));</script>
+
+<script async src="/js/candy.min.js"></script>
+
+
+    <script defer src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+
+<script defer src="/js/kratosr.min.js"></script>
+<script defer src="/js/pjax.min.js"></script>
+
+
+    <script defer src="/js/kr-dark.min.js"></script>
+
+
+
+
+</body>
+</html>
