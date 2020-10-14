@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="utf-8">
+  
+  <title>Cao Fan's Logs</title>
+  <meta name="author" content="Cao Fan" />
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="robots" content="index,follow" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <meta name="format-detection" content="telphone=no, email=no" />
+  
+    <meta name="description" itemprop="description" content="" />
+    <meta name="keywords" content="" />
+  
+  <meta property="og:type" content="website">
+<meta property="og:title" content="Cao Fan&#39;s Logs">
+<meta property="og:url" content="http://example.com/tags/django/index.html">
+<meta property="og:site_name" content="Cao Fan&#39;s Logs">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/null">
+<meta property="article:author" content="Cao Fan">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/null">
+<meta name="twitter:site" content="@Candiinya">
+  
+  <!-- 样式表文件 -->
+  <link rel="stylesheet" id="kratos-css" href="/css/kratosr.min.css" type="text/css" media="all">
+  <link rel="stylesheet" id="highlight-css" href="/css/highlight.min.css" type="text/css" media="all">
+  <link rel="stylesheet" id="fontawe-css" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" type="text/css" media="all">
+  <link rel="stylesheet" id="nprogress-css" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" type="text/css" media="all">
+  
+  
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.css">
+  
+  
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
+  
+  
+    <link rel="stylesheet" id="darkmode-css" href="/css/kr-dark.min.css" type="text/css" media="all">
+  
+  <!-- 不得不预先加载的一些JS文件 -->
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+  
+  
+<meta name="generator" content="Hexo 5.2.0"></head>
+<body class="custom-background">
+    <div id="kratos-wrapper">
+        <div id="kratos-page">
+            <div id="kratos-header">
+                <div class="nav-toggle"><a class="kratos-nav-toggle js-kratos-nav-toggle"><i></i></a></div>
+                <header id="kratos-header-section">
+                    <div class="container">
+                        <div class="nav-header">
+                            <div class="color-logo"><a href="/">Cao Fan&#39;s Logs</a></div>
+                            <nav id="kratos-menu-wrap">
+                              <ul id="kratos-primary-menu" class="sf-menu">
+                              
+                                
+                                  <li><a href="/"><i class="fa fa-home"></i>首页</a></li>
+                                
+                              
+                                
+                                  <li><a href="/archives/"><i class="fa fa-file"></i>档案馆</a></li>
+                                
+                              
+                                
+                                  <li>
+                                    <a><i class="fa fa-link"></i>链接</a>
+                                    <ul class="sub-menu">
+                                      
+                                        
+                                      
+                                        
+                                          <li><a target="_blank" rel="noopener" href="https://candinya.com">作者博客</a></li>
+                                        
+                                      
+                                        
+                                          <li><a target="_blank" rel="noopener" href="https://github.com/Candinya/Kratos-Rebirth">项目链接</a></li>
+                                        
+                                      
+                                    </ul>
+                                  </li>
+                                
+                              
+                              </ul>
+                            </nav>
+                        </div>
+                    </div>
+                </header>
+            </div>
+
+<div class="kratos-start kratos-hero-2">
+    <!-- <div class="kratos-overlay"></div> -->
+    <div class="kratos-cover kratos-cover-2 text-center">
+        <div class="desc desc2 animate-box">
+            <a href="/"><h2>Cao Fan&#39;s Logs</h2><br><span></span></a>
+        </div>
+    </div>
+</div>
+
+<div id="kratos-blog-post">
+    <div class="container">
+            <div class="row">
+                
+<div id="main">
+    
+        <section class="col-md-8">
+            
+                
+                    <article class="kratos-hentry clearfix">
+                        <div class="kratos-entry-border-new clearfix">
+                            
+                            <div class="kratos-entry-thumb-new">
+                                <a href="/2020/10/06/django%20orm%20%E5%88%9B%E8%A1%A8%E5%AD%97%E6%AE%B5%E7%B1%BB%E5%9E%8B/">
+                                    
+                                        <img class="kratos-entry-thumb-new-img">
+                                    
+                                </a>
+                            </div>
+                            <div class="kratos-post-inner-new">
+                                <header class="kratos-entry-header-new">
+                                        <a class="label-link" href="/categories/django/">django</a>
+                                    <h2 class="kratos-entry-title-new"><a href="/2020/10/06/django%20orm%20%E5%88%9B%E8%A1%A8%E5%AD%97%E6%AE%B5%E7%B1%BB%E5%9E%8B/">Django orm创表字段类型</a>
+                                </header>
+                                <div class="kratos-entry-content-new">
+                                    <p>
+                                        
+                                            Django通过model层不可以创建数据库，但可以创建数据库表，以下是创建表的字段以及表字段的参数。一、字段1、models.AutoField　　自增列= int(11)　　如果没有的话，默认会生成一个名称为 id 的列，如果要显...
+                                        
+                                    </p>
+                                </div>
+                            </div>
+                            <footer class="kratos-post-meta-new">
+                                <span class="pull-left">
+                                    <a><i class="fa fa-calendar"></i></a><a>2020-10-06</a>
+                                    <a><i class="fa fa-tags"></i></a>
+                                    <a class="tag-none-link" href="/tags/django/" rel="tag">django</a>
+                                </span>
+                                <span class="pull-right">
+                                    <a class="read-more" href="/2020/10/06/django%20orm%20%E5%88%9B%E8%A1%A8%E5%AD%97%E6%AE%B5%E7%B1%BB%E5%9E%8B/" title="阅读全文">阅读全文<i class="fa fa-chevron-circle-right"></i></a>
+                                </span>
+                            </footer>
+                        </div>
+                    </article>
+                
+            
+                
+                    <article class="kratos-hentry clearfix">
+                        <div class="kratos-entry-border-new clearfix">
+                            
+                            <div class="kratos-entry-thumb-new">
+                                <a href="/2020/10/05/django%E9%85%8D%E7%BD%AExadmin%E5%90%8E%E5%8F%B0%E7%AE%A1%E7%90%86/">
+                                    
+                                        <img class="kratos-entry-thumb-new-img">
+                                    
+                                </a>
+                            </div>
+                            <div class="kratos-post-inner-new">
+                                <header class="kratos-entry-header-new">
+                                        <a class="label-link" href="/categories/django/">django</a>
+                                    <h2 class="kratos-entry-title-new"><a href="/2020/10/05/django%E9%85%8D%E7%BD%AExadmin%E5%90%8E%E5%8F%B0%E7%AE%A1%E7%90%86/">Django配置xadmin后台管理</a>
+                                </header>
+                                <div class="kratos-entry-content-new">
+                                    <p>
+                                        
+                                            注意：Django2.1 和 mysql 5.5 有冲突， 需要把MySQL升级5.7
+根据此博客升级mysql : https://www.cnblogs.com/xkfeng/p/7860124.html
+一、用pycharm创建...
+                                        
+                                    </p>
+                                </div>
+                            </div>
+                            <footer class="kratos-post-meta-new">
+                                <span class="pull-left">
+                                    <a><i class="fa fa-calendar"></i></a><a>2020-10-05</a>
+                                    <a><i class="fa fa-tags"></i></a>
+                                    <a class="tag-none-link" href="/tags/django/" rel="tag">django</a>
+                                </span>
+                                <span class="pull-right">
+                                    <a class="read-more" href="/2020/10/05/django%E9%85%8D%E7%BD%AExadmin%E5%90%8E%E5%8F%B0%E7%AE%A1%E7%90%86/" title="阅读全文">阅读全文<i class="fa fa-chevron-circle-right"></i></a>
+                                </span>
+                            </footer>
+                        </div>
+                    </article>
+                
+            
+                
+                    <article class="kratos-hentry clearfix">
+                        <div class="kratos-entry-border-new clearfix">
+                            
+                            <div class="kratos-entry-thumb-new">
+                                <a href="/2020/10/02/%E4%BD%BF%E7%94%A8es%20%E5%AE%9E%E7%8E%B0%E6%A3%80%E7%B4%A2%E5%8A%9F%E8%83%BD/">
+                                    
+                                        <img class="kratos-entry-thumb-new-img">
+                                    
+                                </a>
+                            </div>
+                            <div class="kratos-post-inner-new">
+                                <header class="kratos-entry-header-new">
+                                        <a class="label-link" href="/categories/django/">django</a>
+                                    <h2 class="kratos-entry-title-new"><a href="/2020/10/02/%E4%BD%BF%E7%94%A8es%20%E5%AE%9E%E7%8E%B0%E6%A3%80%E7%B4%A2%E5%8A%9F%E8%83%BD/">django 对接elasticsearch实现全文检索</a>
+                                </header>
+                                <div class="kratos-entry-content-new">
+                                    <p>
+                                        
+                                            第一步：安装elasticsearch环境（docker 安装）拉取镜像
+1docker image pull delron/elasticsearch-ik:2.4.6-1.0
+
+运行容器
+1docker run -d -p 920...
+                                        
+                                    </p>
+                                </div>
+                            </div>
+                            <footer class="kratos-post-meta-new">
+                                <span class="pull-left">
+                                    <a><i class="fa fa-calendar"></i></a><a>2020-10-02</a>
+                                    <a><i class="fa fa-tags"></i></a>
+                                    <a class="tag-none-link" href="/tags/django/" rel="tag">django</a>
+                                </span>
+                                <span class="pull-right">
+                                    <a class="read-more" href="/2020/10/02/%E4%BD%BF%E7%94%A8es%20%E5%AE%9E%E7%8E%B0%E6%A3%80%E7%B4%A2%E5%8A%9F%E8%83%BD/" title="阅读全文">阅读全文<i class="fa fa-chevron-circle-right"></i></a>
+                                </span>
+                            </footer>
+                        </div>
+                    </article>
+                
+            
+                
+                    <article class="kratos-hentry clearfix">
+                        <div class="kratos-entry-border-new clearfix">
+                            
+                            <div class="kratos-entry-thumb-new">
+                                <a href="/2020/09/30/celery%20%E5%BC%82%E6%AD%A5%E5%8F%91%E9%80%81%20%E9%98%BF%E9%87%8C%E4%BA%91%E7%9F%AD%E4%BF%A1/">
+                                    
+                                        <img class="kratos-entry-thumb-new-img">
+                                    
+                                </a>
+                            </div>
+                            <div class="kratos-post-inner-new">
+                                <header class="kratos-entry-header-new">
+                                        <a class="label-link" href="/categories/django/">django</a>
+                                    <h2 class="kratos-entry-title-new"><a href="/2020/09/30/celery%20%E5%BC%82%E6%AD%A5%E5%8F%91%E9%80%81%20%E9%98%BF%E9%87%8C%E4%BA%91%E7%9F%AD%E4%BF%A1/">Celery 异步发送基于阿里云的短信</a>
+                                </header>
+                                <div class="kratos-entry-content-new">
+                                    <p>
+                                        
+                                            步骤1：　　在阿里云 “短信服务” 中创建一个签名
+步骤2：　　在阿里云 “短信服务” 中创建一个短信模块
+1234567891011121314151617181920212223242526# 我的项目office_demo&qu...
+                                        
+                                    </p>
+                                </div>
+                            </div>
+                            <footer class="kratos-post-meta-new">
+                                <span class="pull-left">
+                                    <a><i class="fa fa-calendar"></i></a><a>2020-09-30</a>
+                                    <a><i class="fa fa-tags"></i></a>
+                                    <a class="tag-none-link" href="/tags/django/" rel="tag">django</a>
+                                </span>
+                                <span class="pull-right">
+                                    <a class="read-more" href="/2020/09/30/celery%20%E5%BC%82%E6%AD%A5%E5%8F%91%E9%80%81%20%E9%98%BF%E9%87%8C%E4%BA%91%E7%9F%AD%E4%BF%A1/" title="阅读全文">阅读全文<i class="fa fa-chevron-circle-right"></i></a>
+                                </span>
+                            </footer>
+                        </div>
+                    </article>
+                
+            
+                
+                    <article class="kratos-hentry clearfix">
+                        <div class="kratos-entry-border-new clearfix">
+                            
+                            <div class="kratos-entry-thumb-new">
+                                <a href="/2020/09/28/%E5%9F%BA%E4%BA%8E%E6%97%B6%E9%97%B4%E8%A1%B0%E5%87%8F%E7%9A%84%E7%83%AD%E5%BA%A6%E7%AE%97%E6%B3%95/">
+                                    
+                                        <img class="kratos-entry-thumb-new-img">
+                                    
+                                </a>
+                            </div>
+                            <div class="kratos-post-inner-new">
+                                <header class="kratos-entry-header-new">
+                                        <a class="label-link" href="/categories/django/">django</a>
+                                    <h2 class="kratos-entry-title-new"><a href="/2020/09/28/%E5%9F%BA%E4%BA%8E%E6%97%B6%E9%97%B4%E8%A1%B0%E5%87%8F%E7%9A%84%E7%83%AD%E5%BA%A6%E7%AE%97%E6%B3%95/">基于时间衰减的热度算法</a>
+                                </header>
+                                <div class="kratos-entry-content-new">
+                                    <p>
+                                        
+                                            热度算法热门推荐是互联网产品中最常见的功能之一，比如“大家都在看”、“今日热卖榜”这些在各大网站上都随意可见，堪称标配。而其中推荐算法的好坏，则不仅密切关系着内容对用户的吸引程度，也同时反应了产品对内容的分发能力
+
+在一个产品中，如果...
+                                        
+                                    </p>
+                                </div>
+                            </div>
+                            <footer class="kratos-post-meta-new">
+                                <span class="pull-left">
+                                    <a><i class="fa fa-calendar"></i></a><a>2020-09-28</a>
+                                    <a><i class="fa fa-tags"></i></a>
+                                    <a class="tag-none-link" href="/tags/django/" rel="tag">django</a>
+                                </span>
+                                <span class="pull-right">
+                                    <a class="read-more" href="/2020/09/28/%E5%9F%BA%E4%BA%8E%E6%97%B6%E9%97%B4%E8%A1%B0%E5%87%8F%E7%9A%84%E7%83%AD%E5%BA%A6%E7%AE%97%E6%B3%95/" title="阅读全文">阅读全文<i class="fa fa-chevron-circle-right"></i></a>
+                                </span>
+                            </footer>
+                        </div>
+                    </article>
+                
+            
+                
+                    <article class="kratos-hentry clearfix">
+                        <div class="kratos-entry-border-new clearfix">
+                            
+                            <div class="kratos-entry-thumb-new">
+                                <a href="/2020/09/28/webssh/">
+                                    
+                                        <img class="kratos-entry-thumb-new-img">
+                                    
+                                </a>
+                            </div>
+                            <div class="kratos-post-inner-new">
+                                <header class="kratos-entry-header-new">
+                                        <a class="label-link" href="/categories/django/">django</a>
+                                    <h2 class="kratos-entry-title-new"><a href="/2020/09/28/webssh/">WebSSH</a>
+                                </header>
+                                <div class="kratos-entry-content-new">
+                                    <p>
+                                        
+                                            WebSSH
+webssh泛指一种技术可以在网页上实现一个SSH终端。从而无需Xshell之类的模拟终端工具进行SSH连接，将SSH这一比较低层的操作也从C/S架构扭成了B/S架构
+这样的架构常用在运维制作开发一些堡垒机等系统中，或是目前比较新型的在线教育方式，通过WebSSH向学生提供一个可以直接使用浏览器进行相关Linux操作或代码编写的学习方式
+WebSSh主要是建立客户端与服务端的即时通信
+
+                                        
+                                    </p>
+                                </div>
+                            </div>
+                            <footer class="kratos-post-meta-new">
+                                <span class="pull-left">
+                                    <a><i class="fa fa-calendar"></i></a><a>2020-09-28</a>
+                                    <a><i class="fa fa-tags"></i></a>
+                                    <a class="tag-none-link" href="/tags/django/" rel="tag">django</a>
+                                </span>
+                                <span class="pull-right">
+                                    <a class="read-more" href="/2020/09/28/webssh/" title="阅读全文">阅读全文<i class="fa fa-chevron-circle-right"></i></a>
+                                </span>
+                            </footer>
+                        </div>
+                    </article>
+                
+            
+                
+                    <article class="kratos-hentry clearfix">
+                        <div class="kratos-entry-border-new clearfix">
+                            
+                            <div class="kratos-entry-thumb-new">
+                                <a href="/2020/09/28/paramiko/">
+                                    
+                                        <img class="kratos-entry-thumb-new-img">
+                                    
+                                </a>
+                            </div>
+                            <div class="kratos-post-inner-new">
+                                <header class="kratos-entry-header-new">
+                                        <a class="label-link" href="/categories/django/">django</a>
+                                    <h2 class="kratos-entry-title-new"><a href="/2020/09/28/paramiko/">Paramiko</a>
+                                </header>
+                                <div class="kratos-entry-content-new">
+                                    <p>
+                                        
+                                            ParamikoParamiko是SSHv2协议的Python实现，提供客户端和服务器功能
+Paramiko本身是一个围绕SSH网络概念的纯Python接口
+利用paramiko我们可以通过Python方便的进行ssh操作
+
+para...
+                                        
+                                    </p>
+                                </div>
+                            </div>
+                            <footer class="kratos-post-meta-new">
+                                <span class="pull-left">
+                                    <a><i class="fa fa-calendar"></i></a><a>2020-09-28</a>
+                                    <a><i class="fa fa-tags"></i></a>
+                                    <a class="tag-none-link" href="/tags/django/" rel="tag">django</a>
+                                </span>
+                                <span class="pull-right">
+                                    <a class="read-more" href="/2020/09/28/paramiko/" title="阅读全文">阅读全文<i class="fa fa-chevron-circle-right"></i></a>
+                                </span>
+                            </footer>
+                        </div>
+                    </article>
+                
+            
+                
+                    <article class="kratos-hentry clearfix">
+                        <div class="kratos-entry-border-new clearfix">
+                            
+                            <div class="kratos-entry-thumb-new">
+                                <a href="/2020/08/26/HTTP%E3%80%81WSGI%E3%80%81TCP/">
+                                    
+                                        <img class="kratos-entry-thumb-new-img">
+                                    
+                                </a>
+                            </div>
+                            <div class="kratos-post-inner-new">
+                                <header class="kratos-entry-header-new">
+                                        <a class="label-link" href="/categories/django/">django</a>
+                                    <h2 class="kratos-entry-title-new"><a href="/2020/08/26/HTTP%E3%80%81WSGI%E3%80%81TCP/">HTTP、WSGI、TCP</a>
+                                </header>
+                                <div class="kratos-entry-content-new">
+                                    <p>
+                                        
+                                            [TOC]
+
+一、HTTP的十个问题123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354...
+                                        
+                                    </p>
+                                </div>
+                            </div>
+                            <footer class="kratos-post-meta-new">
+                                <span class="pull-left">
+                                    <a><i class="fa fa-calendar"></i></a><a>2020-08-26</a>
+                                    <a><i class="fa fa-tags"></i></a>
+                                    <a class="tag-none-link" href="/tags/django/" rel="tag">django</a>
+                                </span>
+                                <span class="pull-right">
+                                    <a class="read-more" href="/2020/08/26/HTTP%E3%80%81WSGI%E3%80%81TCP/" title="阅读全文">阅读全文<i class="fa fa-chevron-circle-right"></i></a>
+                                </span>
+                            </footer>
+                        </div>
+                    </article>
+                
+            
+                
+                    <article class="kratos-hentry clearfix">
+                        <div class="kratos-entry-border-new clearfix">
+                            
+                            <div class="kratos-entry-thumb-new">
+                                <a href="/2020/08/18/%E6%94%AF%E4%BB%98%E5%AE%9D%E4%B8%89%E6%96%B9%E6%94%AF%E4%BB%98/">
+                                    
+                                        <img class="kratos-entry-thumb-new-img">
+                                    
+                                </a>
+                            </div>
+                            <div class="kratos-post-inner-new">
+                                <header class="kratos-entry-header-new">
+                                        <a class="label-link" href="/categories/django/">django</a>
+                                    <h2 class="kratos-entry-title-new"><a href="/2020/08/18/%E6%94%AF%E4%BB%98%E5%AE%9D%E4%B8%89%E6%96%B9%E6%94%AF%E4%BB%98/">支付宝三方支付</a>
+                                </header>
+                                <div class="kratos-entry-content-new">
+                                    <p>
+                                        
+                                            https://www.cnblogs.com/ctztake/p/8513628.html   支付宝支付
+12345678910111213141516171819202122232425262728293031323334353...
+                                        
+                                    </p>
+                                </div>
+                            </div>
+                            <footer class="kratos-post-meta-new">
+                                <span class="pull-left">
+                                    <a><i class="fa fa-calendar"></i></a><a>2020-08-18</a>
+                                    <a><i class="fa fa-tags"></i></a>
+                                    <a class="tag-none-link" href="/tags/django/" rel="tag">django</a>
+                                </span>
+                                <span class="pull-right">
+                                    <a class="read-more" href="/2020/08/18/%E6%94%AF%E4%BB%98%E5%AE%9D%E4%B8%89%E6%96%B9%E6%94%AF%E4%BB%98/" title="阅读全文">阅读全文<i class="fa fa-chevron-circle-right"></i></a>
+                                </span>
+                            </footer>
+                        </div>
+                    </article>
+                
+            
+                
+                    <article class="kratos-hentry clearfix">
+                        <div class="kratos-entry-border-new clearfix">
+                            
+                            <div class="kratos-entry-thumb-new">
+                                <a href="/2020/08/08/%E5%8D%95%E7%82%B9%E7%99%BB%E5%BD%95%EF%BC%88%E4%B9%9F%E5%8F%ABSSO%EF%BC%89/">
+                                    
+                                        <img class="kratos-entry-thumb-new-img">
+                                    
+                                </a>
+                            </div>
+                            <div class="kratos-post-inner-new">
+                                <header class="kratos-entry-header-new">
+                                        <a class="label-link" href="/categories/django/">django</a>
+                                    <h2 class="kratos-entry-title-new"><a href="/2020/08/08/%E5%8D%95%E7%82%B9%E7%99%BB%E5%BD%95%EF%BC%88%E4%B9%9F%E5%8F%ABSSO%EF%BC%89/">单点登录</a>
+                                </header>
+                                <div class="kratos-entry-content-new">
+                                    <p>
+                                        
+                                            单点登录（也叫SSO）1.介绍，什么是单点登录
+SSO英文全称Single SignOn，单点登录。SSO是在多个应用系统中，用户只需要登录一次就可以访问所有相互信任的应用系统。它包括可以将这次主要的登录映射到其他应用中用于同一个用户...
+                                        
+                                    </p>
+                                </div>
+                            </div>
+                            <footer class="kratos-post-meta-new">
+                                <span class="pull-left">
+                                    <a><i class="fa fa-calendar"></i></a><a>2020-08-08</a>
+                                    <a><i class="fa fa-tags"></i></a>
+                                    <a class="tag-none-link" href="/tags/django/" rel="tag">django</a>
+                                </span>
+                                <span class="pull-right">
+                                    <a class="read-more" href="/2020/08/08/%E5%8D%95%E7%82%B9%E7%99%BB%E5%BD%95%EF%BC%88%E4%B9%9F%E5%8F%ABSSO%EF%BC%89/" title="阅读全文">阅读全文<i class="fa fa-chevron-circle-right"></i></a>
+                                </span>
+                            </footer>
+                        </div>
+                    </article>
+                
+            
+            
+            
+                <div class='text-center pagination'>
+                <span class="page-number current">1</span><a class="page-number" href="/tags/django/page/2/">2</a><a class="extend next" rel="next" href="/tags/django/page/2/"><i class="fa fa-angle-right"></i></a>
+                </div>
+            
+        </section>
+
+</div>
+        
+            <section id="kratos-widget-area" class="col-md-4 hidden-xs hidden-sm">
+                
+                    <aside id="krw-about" class="widget widget-kratos-about clearfix">
+    
+    <div class="photo-background"></div>
+    <div class="photo-wrapper clearfix">
+        <div class="photo-wrapper-tip text-center">
+            <img class="about-photo" src="/images/头像.webp" />
+        </div>
+    </div>
+    <div class="textwidget">
+        
+            <p class="text-center"></p>
+        
+    </div>
+</aside>
+                
+                    <!-- Moved to about.ejs -->
+                
+                    
+  <aside id="krw-categories" class="widget widget-categories clearfix">
+    <h4 class="widget-title"><i class="fa fa-folder"></i>分类目录</h4>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/django/">django</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/docker/">docker</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/git/">git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/gitlab/">gitlab</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/mysql/">mysql</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/redis/">redis</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/shell/">shell</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/vue/">vue</a><span class="category-list-count">1</span></li></ul>
+  </aside>
+
+
+                
+                    
+  <aside id="krw-tags" class="widget widget-kratos-tags clearfix">
+    <h4 class="widget-title"><i class="fa fa-tags"></i>标签聚合</h4>
+      <div class="tag-clouds">
+        <a href="/tags/django/" style="font-size: 0.8em;">django</a> <a href="/tags/docker/" style="font-size: 0.67em;">docker</a> <a href="/tags/git/" style="font-size: 0.6em;">git</a> <a href="/tags/gitlab/" style="font-size: 0.6em;">gitlab</a> <a href="/tags/mysql/" style="font-size: 0.67em;">mysql</a> <a href="/tags/redis/" style="font-size: 0.6em;">redis</a> <a href="/tags/shell/" style="font-size: 0.73em;">shell</a> <a href="/tags/vue/" style="font-size: 0.6em;">vue</a>
+      </div>
+  </aside>
+
+                
+                    
+  <aside id="krw-posts" class="widget widget-kratos-poststab">
+  <h4 class="widget-title"><i class="fa fa-file"></i>最新文章</h4>
+  <div class="tab-content">
+      <ul class="list-group">
+        
+        
+          
+          
+            <a class="list-group-item" href="/2020/10/09/redis_02/"><i class="fa  fa-book"></i> redis实现排行榜</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2020/10/06/django%20orm%20%E5%88%9B%E8%A1%A8%E5%AD%97%E6%AE%B5%E7%B1%BB%E5%9E%8B/"><i class="fa  fa-book"></i> Django orm创表字段类型</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2020/10/05/django%E9%85%8D%E7%BD%AExadmin%E5%90%8E%E5%8F%B0%E7%AE%A1%E7%90%86/"><i class="fa  fa-book"></i> Django配置xadmin后台管理</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2020/10/02/%E4%BD%BF%E7%94%A8es%20%E5%AE%9E%E7%8E%B0%E6%A3%80%E7%B4%A2%E5%8A%9F%E8%83%BD/"><i class="fa  fa-book"></i> django 对接elasticsearch实现全文检索</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2020/09/30/celery%20%E5%BC%82%E6%AD%A5%E5%8F%91%E9%80%81%20%E9%98%BF%E9%87%8C%E4%BA%91%E7%9F%AD%E4%BF%A1/"><i class="fa  fa-book"></i> Celery 异步发送基于阿里云的短信</a>
+            
+          
+        
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+      </ul>
+  </div>
+  </aside>
+
+                
+            </section>
+        
+        </div>
+    </div>
+</div>
+<footer>
+    <div id="footer">
+        <div class="kr-tool text-center">
+            <div class="tool">
+                
+                    <div class="box search-box">
+                        <a href="/search/">
+                            <span class="fa fa-search"></span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="box theme-box" id="darkmode-switch">
+                        <span class="fa fa-adjust"></span>
+                    </div>
+                
+                
+            </div>
+            <div class="box gotop-box">
+                <span class="fa fa-chevron-up"></span>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3 footer-list text-center">
+                    <ul class="kratos-social-icons">
+                        
+                        
+                        <li><a target="_blank" rel="nofollow" href="https://t.me/CandyUnion"><i class="fa fa-telegram"></i></a></li>
+                        <li><a target="_blank" rel="nofollow" href="https://twitter.com/Candiinya"><i class="fa fa-twitter"></i></a></li>
+                        
+                        
+                        
+                        <li><a target="_blank" rel="nofollow" href="https://github.com/Candinya"><i class="fa fa-github"></i></a></li>
+                        
+                    </ul>
+                    <ul class="kratos-copyright">
+                        <div>
+                            <li>&copy; 2020 Cao Fan 版权所有.</li>
+                            <li>本站已运行<span id="span_dt">Loading...</span></li>
+                        </div>
+                        <div>
+                            <li>Theme <a href="https://github.com/Candinya/Kratos-Rebirth" target="_blank">Kratos:Rebirth</a></li>
+                            <li>Made with&nbsp;<i class="fa fa-heart throb" style="color:#d43f57"></i>&nbsp;by <a href="https://candinya.com" target="_blank" rel="nofollow">Candinya</a>.</li>
+                        </div>
+                        <div>
+                            <li>Powered by <a href="https://hexo.io" target="_blank" rel="nofollow">Hexo</a></li>
+                            <li>Hosted on <a href="https://github.io" target="_blank">Github Pages</a></li>
+                        </div>
+                        <div>
+                            
+                            
+                        </div>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+</div>
+</div>
+<script defer src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.4/dist/js/bootstrap.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.js"></script>
+<script>const notMobile = (!(navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)));</script>
+
+    <div>
+        <canvas id="snow"></canvas>
+        <script async type="text/javascript" src="/js/snow.min.js"></script>
+    </div>
+
+<script async src="/js/candy.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.js"></script>
+    <div id="aplayer"></div>
+<script>
+$.ajax({
+    type:"get",
+    url:"",
+    dataType:"json",
+    success: function(data){
+        new APlayer({
+            container: document.getElementById('aplayer'),
+            fixed: true,
+            order: 'random',
+            lrcType: 3,
+            audio: data
+        });
+    }
+});
+</script>
+
+
+    <script defer src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+
+<script defer src="/js/kratosr.min.js"></script>
+<script defer src="/js/pjax.min.js"></script>
+
+    <script defer src="https://cdn.jsdelivr.net/npm/layui-src@2.5.5/dist/layui.all.js"></script>
+
+
+    <script defer src="/js/kr-dark.min.js"></script>
+
+
+
+
+</body>
+</html>
